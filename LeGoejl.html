@@ -1,8 +1,51 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h3>Så er der sku en headline!</h3>
-<img src="Firefox_Windows_Problem.jpg" alt="Let me innnnn!">
 
+<div id="container" style="width:1200px">
+
+<div id="header" style="background-color:#0B6121;">
+<h3 style="margin-bottom:0;">Så er der sku en headline!</h3></div>
+<div id="menu" style="background-color:#00FF40;height:420px;width:200px;
+float:left;">
+<b>du bist eine dummkopf</b><br>
+Aleksander er en bøv <br>
+Åhhhhh FAD Koteletter!</div>
+
+<div id="content" style="background-color:#EEEEEE;
+float:left;">
+<canvas id="myCanvas" width="400" height="100" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.font = "30px Arial";
+
+
+function flashyText() {
+    var count = 2,
+        timer = setInterval(function() {
+            
+            if( count == 2) {
+                ctx.strokeText("Aleksander er en Numsefisk",10,50);
+				count--;
+            }
+            else {
+			ctx.clearRect(0,0,400,100);
+				count++;
+            }
+            if( count == 0) clearInterval(timer);
+        },1000);
+}
+flashyText();
+
+</script>
+</div>
+<div id="footer" style="background-color:#0B6121;clear:both;
+text-align:center;">
+Aleksander kan ikke spille Dota 2 :P</div>
+</div>
 </body>
 </html>
