@@ -18,12 +18,12 @@
 		<table class ="table table-condensed table-bordered" ng-controller="taskTableController">
 			<thead>
 				<tr>
-					<th>{{taskHeadA}}</th>
-					<th>{{taskHeadB}}</th>
+					<th>{{tableHeadA}}</th>
+					<th>{{tableHeadB}}</th>
 				<tr>
 			</thead>
-			<tbody ng-repeat"item in tableContent">
-				<tr>
+			<tbody>
+				<tr ng-repeat"item in tableContent">
 					<td>{{item}}</td>
 					<td><button type="button" class="btn btn-primary btn" data-toggle="modal" data-target="#myModal">Press</button></td>
 				</tr>

@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.Controller('taskTableController', ['$scope', function($scope){
+myApp.controller('taskTableController', ['$scope', function($scope){
 	$scope.tableContent=['Washer','Owen','Car','Dryer'];
 	
 	$scope.tableHeadA="Items";
