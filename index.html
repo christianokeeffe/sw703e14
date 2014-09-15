@@ -41,17 +41,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in data"> 
-						<td> {{item.price}} </td>
+					<tr ng-repeat="item in content.data"> 
 						<td> {{item.name}} </td>
-					</tr>
-					<tr> 
-						<td> Sun </td>
-						<td> $7 </td>
-					</tr>
-					<tr> 
-						<td> Coal </td>
-						<td> $12 </td>
+						<td> {{item.price | currency}} </td>
 					</tr>
 				</tbody>
 			

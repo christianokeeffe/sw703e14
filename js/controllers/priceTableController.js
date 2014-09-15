@@ -1,18 +1,27 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('priceTableController', ['$scope', function($scope){
-	$scope.tableCategoryContent=['Wind','Sun','Coal','BIO'];
+	$scope.content = {
+		"data": [
+			{
+				"price":"4",
+				"name":"Wind"
+			},
+			{
+				"price":"5",
+				"name":"Sun"
+			},
+			{
+				"price":"12",
+				"name":"Coal"
+			},
+			{
+				"price":"11",
+				"name":"BIO"
+			}
 
-	"data": [
-		{
-			"price":"2",
-			"name":"wind"
-		},
-		{
-			"price":"7",
-			"name":"sun"
-		}
-	];
+		]
+	}
 
 	$scope.tablePriceHeadA="Category";
 	$scope.tablePriceHeadB="Price";
