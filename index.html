@@ -6,6 +6,7 @@
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers/taskmanagerController.js"></script>
     <script type="text/javascript" src="js/controllers/taskTableController.js"></script>
+    <script type="text/javascript" src="js/controllers/priceTableController.js"></script>
   </head>
   <body>
    <script src="js/vendor/jquery.min.js"></script>
@@ -18,12 +19,12 @@
 		<table class ="table table-condensed table-bordered" ng-controller="taskTableController">
 			<thead>
 				<tr>
-					<th>{{tableHeadA}}</th>
-					<th>{{tableHeadB}}</th>
+					<th>{{tableActionHeadA}}</th>
+					<th>{{tableActionHeadB}}</th>
 				<tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in tableContent">
+				<tr ng-repeat="item in tableActionContent">
 					<td>{{item}}</td>
 					<td><button type="button" class="btn btn-primary btn" data-toggle="modal" data-target="#myModal">Press</button></td>
 				</tr>
@@ -32,17 +33,17 @@
 		</div>
 		<div class="col-md-1"/>
 		<div class="col-md-3">
-			<table class="table table-condensed table-bordered">
+			<table class="table table-condensed table-bordered" ng-controller="priceTableController">
 				<thead>
 					<tr>
-						<th> Category </th>
-						<th> Price </th>
+						<th> {{tablePriceHeadA}} </th>
+						<th> {{tablePriceHeadB}} </th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr> 
-						<td> Wind </td>
-						<td> $5 </td>
+					<tr ng-repeat="item in data"> 
+						<td> {{item.price}} </td>
+						<td> {{item.name}} </td>
 					</tr>
 					<tr> 
 						<td> Sun </td>
