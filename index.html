@@ -4,6 +4,8 @@
     <link rel="stylesheet" type="text/css" href="styles/vendor/bootstrap.min.css" />
     <script type="text/javascript" src="js/vendor/angular.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/controllers/taskmanagerController.js"></script>
+    <script type="text/javascript" src="js/controllers/taskTableController.js"></script>
   </head>
   <body>
    <script src="js/vendor/jquery.min.js"></script>
@@ -13,29 +15,17 @@
 		<div class ="row">
 		<div class="col-md-3">
 		
-		<table class ="table table-condensed table-bordered">
+		<table class ="table table-condensed table-bordered" ng-controller="taskTableController">
 			<thead>
 				<tr>
-					<th>Items</th>
-					<th>Activate</th>
+					<th>{{taskHeadA}}</th>
+					<th>{{taskHeadB}}</th>
 				<tr>
 			</thead>
-			<tbody>
+			<tbody ng-repeat"item in tableContent">
 				<tr>
-					<td>Washer</td>
-					<td><button type="button" class="btn btn-primary btn">Press</button></td>
-				</tr>
-				<tr>
-					<td>Owen</td>
-					<td><button type="button" class="btn btn-primary btn">Press</button></td>
-				</tr>
-				<tr>
-					<td>Car</td>
-					<td><button type="button" class="btn btn-primary btn">Press</button></td>
-				</tr>
-				<tr>
-					<td>Dryer</td>
-					<td><button type="button" class="btn btn-primary btn">Press</button></td>
+					<td>{{item}}</td>
+					<td><button type="button" class="btn btn-primary btn" data-toggle="modal" data-target="#myModal">Press</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -68,24 +58,37 @@
 		</div>
 		</div>
 	</div>
-	
-	<div class="modal fade">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			<h4 class="modal-title">Modal title</h4>
-		  </div>
-		  <div class="modal-body">
-			<p>One fine body&hellip;</p>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="button" class="btn btn-primary">Save changes</button>
-		  </div>
-		</div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-	
-  </body>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p> Some task </p>
+		<div class="dropdown" ng-controller="taskmanagerController">
+		  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+			{{selected}}
+			<span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		  <li role="presentation" ng-repeat="action in lifeOfAction">
+		  	<a role="menuitem" tabindex="-1" href="#" ng-click="update(action)">
+		  		{{action}}
+		  	</a>
+		  </li>
+		  </ul>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>	
+</body>
 </html>
