@@ -4,7 +4,7 @@ app.directive("face", function(){
   return {
     restrict: "A",
     link: function(scope, element){
-      var ctx = element[0].getContext('2d');
+      /*var ctx = element[0].getContext('2d');
       
       // variable that decides if something should be drawn on mousemove
       var drawing = false;
@@ -51,7 +51,7 @@ app.directive("face", function(){
 	  //context.arc(eyeX, eyeY, eyeRadius, 0, 2 * Math.PI, false);
 	  context.strokeStyle = 'black';
 	  context.stroke();
-
+*/
     }
   };
 });
