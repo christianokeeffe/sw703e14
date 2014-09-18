@@ -34,9 +34,11 @@ myApp.controller('taskTableController', ['$scope','$modal', function ($scope,$mo
 var actionModalController = function ($scope, $modalInstance, tableActionContent, selectedAction) {
 	$scope.items = tableActionContent;
   	$scope.header = selectedAction;
-  	$scope.selected = {
-    	item: $scope.items[0]
-  	};
+  	$scope.selected = "Select an item";
+
+  	$scope.clicked = function(selectedItem){
+  		$scope.selected = selectedItem;
+  	}
 
   	$scope.ok = function () {
     	$modalInstance.close($scope.selected.item);

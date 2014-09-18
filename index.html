@@ -74,13 +74,18 @@
             <h3 class="modal-title">{{header}}</h3>
         </div>
         <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a ng-click="selected.item = item">{{item}}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>
-        </div>
+        	<div class="btn-group" dropdown is-open="status.isopen">
+      			<button type="button" class="btn btn-danger dropdown-toggle" ng-disabled="disabled">
+        			{{selected}} <span class="caret"></span>
+      			</button>
+      			<ul class="dropdown-menu" role="menu">
+        			<li ng-repeat="item in items">
+        				<a href="#" ng-click="clicked(item);">
+        					{{item}}
+        				</a>
+        			</li>
+      			</ul>
+    		</div>    
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
@@ -89,3 +94,11 @@
 </div>
 </body>
 </html>
+
+<ul>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{item}}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
