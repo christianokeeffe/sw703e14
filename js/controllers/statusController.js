@@ -1,8 +1,32 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('faceController', ['$scope', function($scope){
-	$scope.happiness = 50;
+myApp.controller('statusController', ['$scope', function($scope){
+	$scope.dishes = 100;
+	$scope.hygiene = 100;
+	$scope.laundry = 30;
+	$scope.score = 23000;
 
+	$scope.getStatusType = function(value)
+	{
+		$scope.happiness = ($scope.dishes+$scope.hygiene+$scope.laundry)/3;
+		if(value < 25)
+		{
+			return 'danger';
+		}
+		if(value < 50)
+		{
+			return 'warning';
+		} 
+		else if(value < 75)
+		{
+			return 'info';
+		}
+		else 
+		{
+			return 'success';
+		}
+	};
+	
 	function rgbToHex(r, g, b) {
     	return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 	}
@@ -84,5 +108,4 @@ myApp.controller('faceController', ['$scope', function($scope){
 	  context.strokeStyle = 'black';
 	  context.stroke();
    }); 
-      
 }]);
