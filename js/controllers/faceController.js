@@ -1,40 +1,10 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('faceController', ['$scope', function($scope){
-	$scope.happiness = 50;
-
-	function rgbToHex(r, g, b) {
-    	return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-	}
+	$scope.bezier = 30;
      
-     $scope.$watch('happiness', function() {
-     	if($scope.happiness > 100)
-     	{
-     		$scope.happiness = 100;
-     	}
-     	else if ($scope.happiness < 0)
-     	{
-     		$scope.happiness = 0;
-     	}
-     	var bezier = $scope.happiness - 50;
-
-     	var r = 0.0;
-     	var g = 0.0;
-     	if($scope.happiness <= 50)
-     	{
-     		g = (($scope.happiness)/50)*255;
-     		r = 255;
-     	}
-     	else
-     	{
-     		r = 255-(($scope.happiness-50)/50)*255;
-     		g = 255;
-     	}
-
-     	//alert("R:" + r + " G:" + g);
-
-     	var faceColor = rgbToHex(r,g,0);
-
+     $scope.$watch('bezier', function() {
+     	
        // variable that decides if something should be drawn on mousemove
       var drawing = false;
 	  var canvas = document.getElementById('face');
@@ -47,15 +17,15 @@ myApp.controller('faceController', ['$scope', function($scope){
 	  var eyeXOffset = 25;
 	  var eyeYOffset = 20;
 	  var mouthXOffset = 40;
-	  var mouthYOffset = parseInt(bezier)/3-20;
-	  var bezierOffset = parseInt(bezier);
+	  var mouthYOffset = parseInt($scope.bezier)/3-20;
+	  var bezierOffset = parseInt($scope.bezier);
 
 
 	  
 	  // draw the yellow circle
 	  context.beginPath();
 	  context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-	  context.fillStyle = faceColor;
+	  context.fillStyle = 'yellow';
 	  context.fill();
 	  context.lineWidth = 5;
 	  context.strokeStyle = 'black';
