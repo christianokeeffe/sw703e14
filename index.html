@@ -12,7 +12,6 @@
     <script type="text/javascript" src="js/vendor/ui-bootstrap-0.11.0.min.js"></script>
     <script type="text/javascript" src="js/vendor/ui-bootstrap-tpls-0.11.0.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/controllers/taskmanagerController.js"></script>
     <script type="text/javascript" src="js/controllers/taskTableController.js"></script>
     <script type="text/javascript" src="js/controllers/priceTableController.js"></script>
     <script type="text/javascript" src="js/controllers/statusController.js"></script>
@@ -26,8 +25,8 @@
 	<div class="container-fluid">
 		<div class ="row">
 		<div class="col-md-3">
-		
-		<table class ="table table-condensed table-bordered" ng-controller="taskTableController">
+		<div ng-controller="taskTableController">
+		<table class ="table table-condensed table-bordered">
 			<thead>
 				<tr>
 					<th>{{tableActionHeadA}}</th>
@@ -37,10 +36,12 @@
 			<tbody>
 				<tr ng-repeat="item in tableActionContent">
 					<td>{{item}}</td>
-					<td><button type="button" class="btn btn-primary btn" data-toggle="modal" data-target="#myModal">{{'PRESS' | translate}}</button></td>
+					<td><button type="button" class="btn btn-primary btn" ng-click="open(item)">{{'PRESS' | translate}}</button></td>
 				</tr>
 			</tbody>
 		</table>
+		    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+		</div>
 		</div>
 		<div class="col-md-1"/>
 		<div class="col-md-3">
@@ -52,6 +53,10 @@
 					</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<td>{{tablePriceHighestPrice}}</td>
+						<td>{{findHighestPrice() | currency}}</td>
+					</tr>
 					<tr ng-repeat="item in content.data"> 
 						<td> {{item.name}} </td>
 						<td> {{item.price | currency}} </td>
@@ -64,30 +69,37 @@
 	</div>
 
 
-<div ng-controller="ModalDemoCtrl as md">
-
+<div>
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
             <h3 class="modal-title">{{header}}</h3>
         </div>
         <div class="modal-body">
-            <ul>
+        	<div class="btn-group" dropdown is-open="status.isopen">
+      			<button type="button" class="btn btn-danger dropdown-toggle" ng-disabled="disabled">
+        			{{selected}} <span class="caret"></span>
+      			</button>
+      			<ul class="dropdown-menu" role="menu">
+        			<li ng-repeat="item in items">
+        				<a href="#" ng-click="clicked(item);">
+        					{{item}}
+        				</a>
+        			</li>
+      			</ul>
+    		</div>    
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>
+</body>
+</html>
+
+<ul>
                 <li ng-repeat="item in items">
                     <a ng-click="selected.item = item">{{item}}</a>
                 </li>
             </ul>
             Selected: <b>{{ selected.item }}</b>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-
-    <button class="btn btn-default" ng-click="open('test et')">Open me!</button>
-    <button class="btn btn-default" ng-click="open('test to')">Large modal</button>
-    <button class="btn btn-default" ng-click="open('test tre')">Small modal</button>
-    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
-</div>
-</body>
-</html>

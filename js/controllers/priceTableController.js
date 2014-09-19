@@ -23,6 +23,18 @@ myApp.controller('priceTableController', ['$scope', function($scope){
 		]
 	}
 
+	
+	$scope.findHighestPrice = function(){
+		var HighestPrice = Number.MAX_VALUE;
+		for (var i = 0 ; i <= $scope.content.data.length-1; i++) {
+			if (parseInt($scope.content.data[i].price) < HighestPrice) {
+				HighestPrice = $scope.content.data[i].price;
+			};
+		}
+		return HighestPrice;
+	};
+	$scope.tablePriceHighestPrice = "";
+	
 	$scope.tablePriceHeadA="Category";
 	$scope.tablePriceHeadB="Price";
 
