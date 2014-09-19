@@ -1,12 +1,12 @@
 'use strict';
 
 /* Services */
-var services = angular.module('smartgridgame.js.services');
+var app = angular.module('smartgridgame');
 
 var api_resource_appliances = api_url + "/appliances";
 
-services.factory('appliancesFactory', function($resource) {
-    return $resource(api_resource_appliances, {}, {
+app.factory("appliancesFactory", function($resource, $translate) {
+    return $resource(api_resource_appliances + "/" +$translate.use(), {}, {
         getAppliances : { method: 'GET'}
     });
 });

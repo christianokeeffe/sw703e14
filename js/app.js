@@ -1,6 +1,6 @@
 (function(){
 	
-  var app = angular.module('smartgridgame', ['pascalprecht.translate','ui.bootstrap']);
+  var app = angular.module('smartgridgame', ['pascalprecht.translate','ui.bootstrap','ngResource']);
   app.config(['$translateProvider', function($translateProvider) {
   	// add translation table
   	$translateProvider.useStaticFilesLoader({
