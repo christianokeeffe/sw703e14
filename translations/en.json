@@ -1,4 +1,12 @@
  {
   "HEADLINE": "What an awesome module!",
-  "PRESS":"Press"
+  "PRESS":"Press",
+  "scorearea":
+  {
+  	"score":"Score",
+  	"points":"points",
+  	"dishes":"Dishes",
+  	"laundry":"Laundry",
+  	"hygiene":"Hygiene"
+  }
 }
