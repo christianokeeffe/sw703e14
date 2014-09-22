@@ -1,14 +1,14 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('taskTableController', ['$scope','$modal','appliancesFactory', function($scope, $modal, appliancesFactory){
+myApp.controller('taskTableController', ['$scope','$modal', function($scope, $modal, appliancesFactory){
 
 	$scope.tableActionContent=['Washer','Owen','Car','Dryer'];
 	//$scope.tableActionContent = appliancesFactory.getAppliances("", function (response) {
 								//alert("HEJ");
 							//};
-appliancesFactory.getAppliances(function(data) {
-    alert("hej");
-  });
+//appliancesFactory.getAppliances(function(data) {
+  //  alert("hej");
+//  });
 
 	$scope.tableActionHeadA="Items";
 	$scope.tableActionHeadB="Activate";
@@ -41,6 +41,9 @@ appliancesFactory.getAppliances(function(data) {
 var actionModalController = function ($scope, $modalInstance, tableActionContent, selectedAction) {
 	$scope.items = tableActionContent;
   	$scope.header = selectedAction;
+    $scope.stringActivate = "Activate";
+    $scope.stringDelayedStart = "Set activation time";
+    $scope.stringClose = "Close";
   	$scope.selected = "Select an item";
 
   	$scope.clicked = function(selectedItem){

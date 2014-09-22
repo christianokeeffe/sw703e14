@@ -1,0 +1,18 @@
+<table class="table table-condensed table-bordered" ng-controller="priceTableController">
+	<thead>
+		<tr>
+			<th> {{tablePriceHeadA}} </th>
+			<th> {{tablePriceHeadB}} </th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>{{tablePriceHighestPrice}}</td>
+			<td>{{findHighestPrice() | currency}}</td>
+		</tr>
+		<tr ng-repeat="item in content.data"> 
+			<td> {{item.name}} </td>
+			<td> {{item.price | currency}} </td>
+		</tr>
+	</tbody>
+</table>
