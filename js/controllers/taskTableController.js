@@ -1,8 +1,8 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('taskTableController', ['$scope','$modal', function($scope, $modal, appliancesFactory){
+myApp.controller('taskTableController', ['$scope','$modal','TaskService', function($scope, $modal, TaskService){
 
-	$scope.tableActionContent=['Washer','Owen','Car','Dryer'];
+	$scope.tableActionContent = TaskService.list();
 
 	$scope.selected;
 
@@ -47,3 +47,13 @@ var actionModalController = function ($scope, $modalInstance, tableActionContent
     	$modalInstance.dismiss('cancel');
   	};
 };
+
+myApp.filter('time', function($filter){
+  return function(input){
+    if (input == null){ return ""};
+
+    var _date = $filter('date')(new date(input), 'HH:mm:ss');
+
+    return _date.toUpperCase();
+  };
+});
