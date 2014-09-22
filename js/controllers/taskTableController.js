@@ -1,7 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
  myApp.controller('taskTableController', ['$scope','$modal', 'appliancesFactory','formatRequest', function($scope, $modal, appliancesFactory,formatRequest){
-
 	//$scope.tableActionContent = appliancesFactory.getAppliances("", function (response) {
 								//alert("HEJ");
 							//};
@@ -19,10 +18,7 @@ var myApp = angular.module('smartgridgame');
         document.write(JSON.stringify(response));
     });
 
-	$scope.tableActionHeadA="Items";
-	$scope.tableActionHeadB="Activate";
-
-	$scope.selected = "default";
+	$scope.selected;
 
 	$scope.open = function (selectedAction) {
 
@@ -50,8 +46,6 @@ var myApp = angular.module('smartgridgame');
 var actionModalController = function ($scope, $modalInstance, tableActionContent, selectedAction) {
 	$scope.items = tableActionContent;
   	$scope.header = selectedAction;
-    $scope.stringActivate = "Activate";
-    $scope.stringDelayedStart = "Set activation time";
     $scope.stringClose = "Close";
   	$scope.selected = "Select an item";
 

@@ -1,6 +1,7 @@
  {
-  "HEADLINE": "What an awesome module!",
+  "HEADLINE":"What an awesome module!",
   "PRESS":"Press",
+  "ACTIVATE":"Activate",
   "scorearea":
   {
   	"score":"Score",
@@ -8,5 +9,24 @@
   	"dishes":"Dishes",
   	"laundry":"Laundry",
   	"hygiene":"Hygiene"
+  },
+  "textToPriceTable":
+  {
+  	"category": "Category",
+  	"price":"Price",
+  	"maxPrice" : "Current price",
+  	"name":"name",
+  	"wind":"Wind",
+  	"sun":"Sun",
+  	"coal":"Coal",
+  	"bio":"BIO"
+  },
+  "tasktable":
+  {
+    "items":"Items"
+  },
+  "taskmodal":
+  {
+    "delay":"Set activation time"
   }
 }

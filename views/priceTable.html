@@ -1,14 +1,14 @@
 <table class="table table-condensed table-bordered" ng-controller="priceTableController">
 	<thead>
 		<tr>
-			<th> {{tablePriceHeadA}} </th>
-			<th> {{tablePriceHeadB}} </th>
+			<th> {{'textToPriceTable.category' | translate}} </th>
+			<th> {{'textToPriceTable.price' | translate}} </th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>{{tablePriceHighestPrice}}</td>
-			<td>{{findHighestPrice() | currency}}</td>
+			<td>{{'textToPriceTable.maxPrice' | translate }}</td>
+			<td>{{findLowestPrice() | currency}}</td>
 		</tr>
 		<tr ng-repeat="item in content.data"> 
 			<td> {{item.name}} </td>
