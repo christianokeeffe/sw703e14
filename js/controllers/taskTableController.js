@@ -1,14 +1,23 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('taskTableController', ['$scope','$modal', function($scope, $modal, appliancesFactory){
+ myApp.controller('taskTableController', ['$scope','$modal', 'appliancesFactory','formatRequest', function($scope, $modal, appliancesFactory,formatRequest){
 
-	$scope.tableActionContent=['Washer','Owen','Car','Dryer'];
 	//$scope.tableActionContent = appliancesFactory.getAppliances("", function (response) {
 								//alert("HEJ");
 							//};
-//appliancesFactory.getAppliances(function(data) {
-  //  alert("hej");
-//  });
+  var inputParams ={
+  };
+
+  $scope.appliances = {};
+
+  appliancesFactory.getAppliances(formatRequest.format(inputParams),
+    function (response) {
+        $scope.appliances = response.data;
+    },
+    function (response) {
+        //alert(JSON.stringify(response));
+        document.write(JSON.stringify(response));
+    });
 
 	$scope.tableActionHeadA="Items";
 	$scope.tableActionHeadB="Activate";
