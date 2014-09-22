@@ -14,7 +14,7 @@
   {
   	"category": "Category",
   	"price":"Price",
-  	"maxPrice" : "Max price",
+  	"maxPrice" : "Current price",
   	"name":"name",
   	"wind":"Wind",
   	"sun":"Sun",
