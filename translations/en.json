@@ -1,5 +1,5 @@
  {
-  "HEADLINE": "What an awesome module!",
+  "HEADLINE":"What an awesome module!",
   "PRESS":"Press",
   "scorearea":
   {
@@ -8,5 +8,16 @@
   	"dishes":"Dishes",
   	"laundry":"Laundry",
   	"hygiene":"Hygiene"
+  },
+  "textToPriceTable":
+  {
+  	"category": "Category",
+  	"price":"Price",
+  	"maxPrice" : "Max price",
+  	"name":"name",
+  	"wind":"Wind",
+  	"sun":"Sun",
+  	"coal":"Coal",
+  	"bio":"BIO"
   }
 }
