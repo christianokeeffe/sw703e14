@@ -8,8 +8,19 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in tableActionContent">
-				<td>{{item}}</td>
-				<td><button type="button" class="btn btn-primary btn" ng-click="open(item)">{{'PRESS' | translate}}</button></td>
+				<td>
+					{{item.name}}
+				</td>
+				<td>
+					<button type="button" class="btn btn-primary" ng-click="open(item)">
+						{{'PRESS' | translate}}
+					</button>
+					<span>
+						<timer interval = "1000" countdown="10">
+							{{countdown}}
+						</timer>
+					</span>
+				</td>
 			</tr>
 		</tbody>
 	</table>

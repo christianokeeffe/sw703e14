@@ -1,8 +1,8 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('taskTableController', ['$scope','$modal', function($scope, $modal, appliancesFactory){
+myApp.controller('taskTableController', ['$scope','$modal','TaskService', function($scope, $modal, TaskService){
 
-	$scope.tableActionContent=['Washer','Owen','Car','Dryer'];
+	$scope.tableActionContent = TaskService.list();
 
 	$scope.selected;
   $scope.selectedAction;
@@ -78,3 +78,4 @@ var lowPriceController = function($scope, $modalInstance, selectedItem, selected
     $modalInstance.dismiss("Closed");
   };
 };
+
