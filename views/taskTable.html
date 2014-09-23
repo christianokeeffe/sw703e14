@@ -4,6 +4,7 @@
 			<tr>
 				<th>{{'tasktable.items' | translate}}</th>
 				<th>{{'ACTIVATE' | translate}}</th>
+				<th>{{'tasktable.time | translate'}}</th>
 			<tr>
 		</thead>
 		<tbody>
@@ -16,10 +17,13 @@
 						{{'PRESS' | translate}}
 					</button>
 					<span>
-						<timer interval = "1000" countdown="10">
-							{{countdown}}
-						</timer>
+						<button type="button" class="btn btn-primary" ng-click="item.countDown()">
+						{{"Test"}}
+					</button>
 					</span>
+				</td>
+				<td>
+					<span class="label label-success" ng-bind="item.timeToCountDown">{"hej"}}</span>
 				</td>
 			</tr>
 		</tbody>
