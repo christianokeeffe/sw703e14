@@ -47,13 +47,3 @@ var actionModalController = function ($scope, $modalInstance, tableActionContent
     	$modalInstance.dismiss('cancel');
   	};
 };
-
-myApp.filter('time', function($filter){
-  return function(input){
-    if (input == null){ return ""};
-
-    var _date = $filter('date')(new date(input), 'HH:mm:ss');
-
-    return _date.toUpperCase();
-  };
-});
