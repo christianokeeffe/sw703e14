@@ -32,6 +32,7 @@
   "TrueTaskTable":
   {
     "dailyTasks":"Daily tasks",
-    "optimalTasks": "Optimal tasks"
+    "optimalTasks": "Optimal tasks",
+    "done": "Task Done"
   }
 }

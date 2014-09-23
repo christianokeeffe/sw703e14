@@ -1,12 +1,16 @@
+ <!--ng-table="tableParams" -->
+
 <table class="table table-condensed table-bordered" ng-controller="taskTableController2">
 	<thead>
 		<tr>
 			<th> {{'TrueTaskTable.dailyTasks' | translate}} </th>
+			<th> {{'TrueTaskTable.done' | translate}} </th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="item in content.dailyTasks"> 
 			<td> {{item.task}} </td>
+			<td> {{item.done}} </td>
 		</tr>
 	</tbody>
 </table>
@@ -15,11 +19,13 @@
 	<thead>
 		<tr>
 			<th> {{'TrueTaskTable.optimalTasks' | translate}} </th>
+			<th> {{'TrueTaskTable.done' | translate}} </th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="item in content.optimalTasks"> 
 			<td> {{item.task}} </td>
+			<td> {{item.done}} </td>
 		</tr>
 	</tbody>
 </table>
