@@ -28,5 +28,10 @@
   "taskmodal":
   {
     "delay":"Set activation time"
+  },
+  "TrueTaskTable":
+  {
+    "dailyTasks":"Daily tasks",
+    "optimalTasks": "Optimal tasks"
   }
 }
