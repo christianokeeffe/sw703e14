@@ -13,7 +13,7 @@ var sessionend;
 
 //service style, probably the simplest one
 services.service('formatRequest', ['$translate','authFactory', function($translate, authFactory) {
-    var temp = this;
+    var thisvar = this;
     var isCalled = false;
 	this.checkSession = function()
 	{
@@ -54,19 +54,21 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
 	}
 
     this.post = function(input) {
-    	this.checkSession();
-		input.language = $translate.use();
-		var stringInput = JSON.stringify(input);
-    	var hash = String(CryptoJS.HmacSHA256(stringInput, privateHash));
-    	var headersVar = {
-	    'publicKey': publicHash,
-	    'request': stringInput,
-	    'requestHash':hash
-	    };
-        return headersVar;
+    	if (thisvar.checkSession()) {
+	    	input.language = $translate.use();
+			var stringInput = JSON.stringify(input);
+	    	var hash = String(CryptoJS.HmacSHA256(stringInput, privateHash));
+	    	var headersVar = {
+		    'publicKey': publicHash,
+		    'request': stringInput,
+		    'requestHash':hash
+		    };
+	        return headersVar;
+        }
+		
     };
     this.get = function(input) {
-    	if (temp.checkSession()) {
+    	if (thisvar.checkSession()) {
 	    	input.endurl = "/" + $translate.use() + "/" + sessionid;
 	        return input;
         }
