@@ -1,0 +1,19 @@
+<table class="table table-condensed table-bordered" ng-controller="billController">
+	<thead>
+		<tr>
+			<th> {{'billTable.Item' | translate}} </th>
+			<th> {{'billTable.expense' | translate}} </th>
+		</tr>
+		<tr>
+			<th> {{'billTable.totalBill' | translate}} </th>
+			<th> {{ totalBill() | currency}} </th>
+		</tr>
+
+	</thead>
+	<tbody>
+		<tr ng-repeat="t in content.billList"> 
+			<td> {{t.item}} </td>
+			<td> {{t.expense | currency}} </td>
+		</tr>
+	</tbody>
+</table>

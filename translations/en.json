@@ -34,5 +34,10 @@
     "dailyTasks":"Daily tasks",
     "optimalTasks": "Optimal tasks",
     "done": "Task Done"
+  },
+  "billTable":
+  {
+    "item": "Item"
+    "expense": "Expense"
   }
 }
