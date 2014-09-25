@@ -52,11 +52,13 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
 
 var actionModalController = function ($scope, $modalInstance, tableActionContent, selectedAction) {
 	$scope.items = tableActionContent;
-  	$scope.header = selectedAction;
-  	$scope.selected = "Select an item";
+  	$scope.header = selectedAction.name;
+    $scope.selectedItem = "Select an item"
+  	$scope.selected;
 
   	$scope.clicked = function(selectedItem){
   		$scope.selected = selectedItem;
+      $scope.selectedItem = $scope.selected.name;
   	}
 
   	$scope.ok = function (selectedItem) {
@@ -69,10 +71,8 @@ var actionModalController = function ($scope, $modalInstance, tableActionContent
 };
 
 var lowPriceController = function($scope, $modalInstance, selectedItem, selectedAction){
-  $scope.header = selectedAction;
-  $scope.Hej = selectedItem;
-  alert(selectedItem);
-  alert(selectedAction);
+  $scope.header = selectedAction.name;
+  $scope.Hej = selectedItem.name;
 
   $scope.close = function () {
     $modalInstance.dismiss("Closed");
