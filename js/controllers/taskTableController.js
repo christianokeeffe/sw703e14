@@ -23,9 +23,13 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
       }
     });
 
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-      $scope.openLowPrice(selectedItem, $scope.selectedAction);
+    modalInstance.result.then(function (returnValue) {
+      $scope.selected = returnValue.item;
+      if (returnValue.mode == 'now') {
+      alert("NOW!");
+      } else {
+      $scope.openLowPrice(returnValue.item, $scope.selectedAction);
+    };
     });
   };
 
@@ -52,7 +56,7 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
 
 var actionModalController = function ($scope, $modalInstance, tableActionContent, selectedAction) {
 	$scope.items = tableActionContent;
-  	$scope.header = selectedAction.name;
+  	$scope.header = selectedAction;
     $scope.selectedItem = "Select an item"
   	$scope.selected;
 
@@ -61,8 +65,12 @@ var actionModalController = function ($scope, $modalInstance, tableActionContent
       $scope.selectedItem = $scope.selected.name;
   	}
 
-  	$scope.ok = function (selectedItem) {
-    	$modalInstance.close(selectedItem);
+  	$scope.ok = function (input, selected) {
+      var returnValues = {
+        "mode": input,
+        "item": selected
+      };
+    	$modalInstance.close(returnValues);
   	};
 
   	$scope.cancel = function () {
@@ -71,7 +79,7 @@ var actionModalController = function ($scope, $modalInstance, tableActionContent
 };
 
 var lowPriceController = function($scope, $modalInstance, selectedItem, selectedAction){
-  $scope.header = selectedAction.name;
+  $scope.header = selectedAction;
   $scope.Hej = selectedItem.name;
 
   $scope.close = function () {
