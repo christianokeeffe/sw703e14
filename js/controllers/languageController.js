@@ -1,19 +1,25 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('languageController', ['$scope', '$translate', '$window','$cookies', function($scope, $translate, $window, $cookies){
-	$scope.lang = $cookies.lang;
+	if($cookies.lang !== undefined)
+	{
+		$scope.lang = $cookies.lang;
+	}
+	else
+	{
+		$scope.lang = "en";
+	}
+	$translate.use($scope.lang);
 	var first = true;
-	$scope.$watch('lang', function() {
+	$scope.isDa = $scope.lang === "da";
+	$scope.isEn = $scope.lang == "en";
+
+	$scope.setLang = function(langtoset)
+	{
+		$scope.lang = langtoset;
 		$translate.use($scope.lang);
 		$cookies.lang = $scope.lang;
-		if(first)
-		{
-			first = false;
-		}
-		else
-		{
-			$window.location.href = "http://localhost/sw703e14";
-			$window.location.reload();
-		}
-	});
+		$window.location.href = "http://localhost/sw703e14";
+		$window.location.reload();
+	}
 }]);

@@ -28,7 +28,6 @@
     {{'HEADLINE' | translate}}
 	<div ng-include="'./views/scoreArea.html'">
 	</div>
-  <div ng-include="'./views/languageDD.html'"></div>
 	<div class="container-fluid">
 		<div class ="row">
 			<div class="col-md-3">
@@ -42,5 +41,28 @@
 		</div>
 	</div>
 	<div ng-include="'./views/taskModal.html'"></div>
+  <div id="footer" class="col-md-12" style="padding-left: 20px; padding-right: 20px;" ng-cloak>
+        <hr>
+        <div class="col-md-8 col-md-offset-2">
+            <p style="text-align: center">
+                <small>
+                  {{'cop' | translate}}
+                </small>
+            </p>
+
+        </div>
+        <div id="footer_language" class="col-md-2" ng-controller="languageController">
+            <a style="float: right" >
+            <button type="submit" class="btn btn-sm " ng-class="{'btn-info': isEn, 'btn-default': !isEn}" ng-click="setLang('en')">
+                <img style="margin-bottom: 0.18em;" src="./views/pics/uk.png"> English
+            </button>
+            </a>
+            <a style="float: right; margin-right: 5px;">
+            <button type="submit" class="btn btn-sm " ng-class="{'btn-info': isDa, 'btn-default': !isDa}" ng-click="setLang('da')">
+                <img style="margin-bottom: 0.18em;" src="./views/pics/dk.png"> Dansk
+            </button>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
