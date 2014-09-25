@@ -1,6 +1,23 @@
 (function(){
 	
   var app = angular.module('smartgridgame', ['pascalprecht.translate','ui.bootstrap','ngResource', 'ngRoute','ngCookies','ngDropdowns']);
+  app.config(function($httpProvider) {
+  $httpProvider.interceptors.push(function($q) {
+    var realEncodeURIComponent = window.encodeURIComponent;
+    return {
+      'request': function(config) {
+         window.encodeURIComponent = function(input) {
+           return realEncodeURIComponent(input).split("%2F").join("/"); 
+         }; 
+         return config || $q.when(config);
+      },
+      'response': function(config) {
+         window.encodeURIComponent = realEncodeURIComponent;
+         return config || $q.when(config);
+      }
+    };
+  });
+});
   app.config(['$translateProvider', function($translateProvider) {
   	// add translation table
   	$translateProvider.useStaticFilesLoader({
@@ -16,4 +33,5 @@
       $translate.use('da');
     }
   }]);
+  
 })();

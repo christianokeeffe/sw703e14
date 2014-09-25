@@ -4,19 +4,30 @@ var myApp = angular.module('smartgridgame');
 	//$scope.tableActionContent = appliancesFactory.getAppliances("", function (response) {
 								//alert("HEJ");
 							//};
-  var inputParams ={
-  };
-
   $scope.appliances = {};
+  //formatRequest.get({});  
 
-  appliancesFactory.getAppliances(formatRequest.format(inputParams),
+$scope.getAppliances = function()
+{
+   var geturl = formatRequest.get({});
+  if(geturl === undefined)
+  {
+    setTimeout(function(){
+          return $scope.getAppliances();
+       }, 10);
+  }
+  else
+  { 
+    appliancesFactory.getAppliances(geturl,
     function (response) {
         $scope.appliances = response.data;
     },
-    function (response) {
+    function () {
         //alert(JSON.stringify(response));
         document.write(JSON.stringify(response));
     });
+  }
+}  
 
 	$scope.selected;
 
