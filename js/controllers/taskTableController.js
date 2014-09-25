@@ -26,10 +26,10 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
     modalInstance.result.then(function (returnValue) {
       $scope.selected = returnValue.item;
       if (returnValue.mode == 'now') {
-      alert("NOW!");
+        alert("NOW!");
       } else {
-      $scope.openLowPrice(returnValue.item, $scope.selectedAction);
-    };
+        $scope.openLowPrice(returnValue.item, $scope.selectedAction);
+      };
     });
   };
 
@@ -56,31 +56,35 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
 
 var actionModalController = function ($scope, $modalInstance, tableActionContent, selectedAction) {
 	$scope.items = tableActionContent;
-  	$scope.header = selectedAction;
-    $scope.selectedItem = "Select an item"
-  	$scope.selected;
+  $scope.header = selectedAction;
+  $scope.selectedItem = "Select an item"
+  $scope.selected;
 
-  	$scope.clicked = function(selectedItem){
-  		$scope.selected = selectedItem;
-      $scope.selectedItem = $scope.selected.name;
-  	}
+  $scope.clicked = function(selectedItem){
+  	$scope.selected = selectedItem;
+    $scope.selectedItem = $scope.selected.name;
+  }
 
-  	$scope.ok = function (input, selected) {
+  $scope.ok = function (input, selected) {
+    if (selected === undefined) {
+      alert("Please select a task!");
+    } else {
       var returnValues = {
         "mode": input,
         "item": selected
       };
-    	$modalInstance.close(returnValues);
-  	};
+      $modalInstance.close(returnValues);
+    }
+  };
 
-  	$scope.cancel = function () {
-    	$modalInstance.dismiss('cancel');
-  	};
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
 };
 
 var lowPriceController = function($scope, $modalInstance, selectedItem, selectedAction){
   $scope.header = selectedAction;
-  $scope.Hej = selectedItem.name;
+  $scope.task = selectedItem.name;
 
   $scope.close = function () {
     $modalInstance.dismiss("Closed");

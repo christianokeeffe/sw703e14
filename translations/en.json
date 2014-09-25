@@ -16,6 +16,11 @@
   },
   "taskmodal":
   {
-    "delay":"Set activation time"
+    "delay":"Set activation time",
+    "noSelection":"Please select a task:"
+  },
+  "lowPriceModal":
+  {
+    "FB":"Finish before:"
   }
 }

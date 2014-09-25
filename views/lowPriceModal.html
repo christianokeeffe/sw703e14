@@ -6,19 +6,17 @@
 			<h3 class="modal-title">{{header}}</h3>
 		</div>
 		<div class="modal-body">
-			{{Hej}}
-            //Her
-        <div ng-controller="dateTimePickerController">
-            <div style="display:inline-block; min-height:290px;">
-                <datepicker ng-model="date" ng-change="changed()" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
-            </div>
-            <timepicker ng-model="time" ng-change="changed()" hour-step="hstep" minute-step="mstep" second-step="sstep" show-meridian="ismeridian"></timepicker>
-            <pre class="alert alert-info">Finish before: {{dateAndTime | date:'EEEE dd/MM/yy, H:mm' }}</pre>
-        </div>
-       // Her     
+			{{task}}
+        	<div ng-controller="dateTimePickerController">
+            	<div style="display:inline-block; min-height:290px;">
+                	<datepicker ng-model="date" ng-change="changed()" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+            	</div>
+            	<timepicker ng-model="time" ng-change="changed()" hour-step="hstep" minute-step="mstep" second-step="sstep" show-meridian="ismeridian"></timepicker>
+            	<pre class="alert alert-info">{{'lowPriceModal.FB' | translate}} {{dateAndTime | date:'EEEE dd/MM/yy, H:mm' }}</pre>
+        	</div>     
 		</div>
 		<div class="modal-footer">
-        <p>{{dateAndTime}}</p>
+        	<p>{{task}}</p>
 		</div>
 	</script>
 </div>
