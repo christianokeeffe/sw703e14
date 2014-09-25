@@ -28,5 +28,19 @@
   "taskmodal":
   {
     "delay":"Set activation time"
+  },
+  "TrueTaskTable":
+  {
+    "dailyTasks":"Daily tasks",
+    "optimalTasks": "Optimal tasks",
+    "doneq": "Tasks Done?",
+    "done": "Task Done",
+    "notDone": "Task not done"
+  },
+  "billTable":
+  {
+    "item" : "Item",
+    "expense" : "Expense",
+    "totalBill" : "Total Bill"
   }
 }

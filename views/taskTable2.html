@@ -4,13 +4,14 @@
 	<thead>
 		<tr>
 			<th> {{'TrueTaskTable.dailyTasks' | translate}} </th>
-			<th> {{'TrueTaskTable.done' | translate}} </th>
+			<th> {{'TrueTaskTable.doneq' | translate}} </th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="item in content.dailyTasks"> 
 			<td> {{item.task}} </td>
-			<td> {{item.done}} </td>
+			<td ng-if="item.done"> {{'TrueTaskTable.done' | translate}}</td>
+			<td ng-if="!item.done"> {{'TrueTaskTable.notDone' | translate}}</td>
 		</tr>
 	</tbody>
 </table>
@@ -19,13 +20,14 @@
 	<thead>
 		<tr>
 			<th> {{'TrueTaskTable.optimalTasks' | translate}} </th>
-			<th> {{'TrueTaskTable.done' | translate}} </th>
+			<th> {{'TrueTaskTable.doneq' | translate}} </th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="item in content.optimalTasks"> 
 			<td> {{item.task}} </td>
-			<td> {{item.done}} </td>
+			<td ng-if="item.done"> {{'TrueTaskTable.done' | translate}}</td>
+			<td ng-if="!item.done"> {{'TrueTaskTable.notDone' | translate}}</td>
 		</tr>
 	</tbody>
 </table>

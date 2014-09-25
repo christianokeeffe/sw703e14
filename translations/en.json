@@ -33,11 +33,14 @@
   {
     "dailyTasks":"Daily tasks",
     "optimalTasks": "Optimal tasks",
-    "done": "Task Done"
+    "doneq": "Tasks Done?",
+    "done": "Task Done",
+    "notDone": "Task not done"
   },
   "billTable":
   {
-    "item": "Item"
-    "expense": "Expense"
+    "item" : "Item",
+    "expense" : "Expense",
+    "totalBill" : "Total Bill"
   }
 }
