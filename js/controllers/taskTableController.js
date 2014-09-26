@@ -57,8 +57,10 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
 var actionModalController = function ($scope, $modalInstance, tableActionContent, selectedAction) {
 	$scope.items = tableActionContent;
   $scope.header = selectedAction;
-  $scope.selectedItem = "Select an item"
+  $scope.selectedItem = "Select an item";
+  $scope.buttonStyle = "margin-bottom: -15px";
   $scope.selected;
+  $scope.isCollapsed = true;
 
   $scope.clicked = function(selectedItem){
   	$scope.selected = selectedItem;
@@ -67,7 +69,8 @@ var actionModalController = function ($scope, $modalInstance, tableActionContent
 
   $scope.ok = function (input, selected) {
     if (selected === undefined) {
-      alert("Please select a task!");
+      $scope.buttonStyle = "margin-bottom: 15px";
+      $scope.isCollapsed = false;
     } else {
       var returnValues = {
         "mode": input,
@@ -90,4 +93,3 @@ var lowPriceController = function($scope, $modalInstance, selectedItem, selected
     $modalInstance.dismiss("Closed");
   };
 };
-

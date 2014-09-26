@@ -1,4 +1,6 @@
-var dateTimePickerController = function ($scope) {
+var myApp = angular.module('smartgridgame');
+
+myApp.controller('dateTimePickerController', ['$scope', function($scope){
   $scope.today = function() {
     $scope.date = new Date();
   };
@@ -32,4 +34,4 @@ var dateTimePickerController = function ($scope) {
   $scope.clear = function() {
     $scope.time = null;
   };
-};
+}]);
