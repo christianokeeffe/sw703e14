@@ -16,4 +16,11 @@ myApp.controller('timeController', ['$scope', function ($scope){
     $scope.$on('timer-stopped', function (event, data){
         console.log('Timer Stopped - data = ', data);
     });
+
+    $scope.$on('module-communication', function (event, data){
+        console.log('item name' + $scope.item.name + ', input: ' + data.username)
+        if($scope.item.name == data.username){
+            $scope.startTimer();
+        }
+    });
 }]);

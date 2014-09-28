@@ -9,6 +9,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in tableActionContent">
+			<div>
 				<td>
 					{{item.name}}
 				</td>
@@ -16,17 +17,13 @@
 					<button type="button" class="btn btn-primary" ng-click="open(item.name)">
 						{{'PRESS' | translate}}
 					</button>
-					<span>
-						<button type="button" class="btn btn-primary" ng-click="item.countDown()">
-						{{"Test"}}
-					</button>
-					</span>
 				</td>
 				<td>
 					<div ng-controller="timeController">
-						<timer> </timer>
+						<timer autostart="false" countdown="item.time" interval="1000">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds </timer>
 					</div>
 				</td>
+				</div>
 			</tr>
 		</tbody>
 	</table>

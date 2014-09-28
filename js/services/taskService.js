@@ -4,7 +4,7 @@ myApp.service('TaskService', function (){
 	var tasks = [
 		new task('Washer','2'),
 		new task('Owen','5'),
-		new task('car','10')
+		new task('car','6000')
 	];
 
 	this.add = function (task){
@@ -35,22 +35,4 @@ myApp.service('TaskService', function (){
 var task = function (tname, ttime){
   this.name = tname;
   this.time = ttime;
-  this.timeToCountDown = this.time;
-
-  this.countDown = function (){
-  	console.log(tname+ ' ' + ttime);
-    temp = this.time;
-
-    var interval = setInterval(function () {
-      if (temp == 0){
-        console.log("FINNISHED" + ' ' + tname);
-        clearInterval(interval);
-      } else {
-        temp--;
-        this.timeToCountDown = temp;
-        console.log(tname+ ' ' + temp);
-      }
-    }, 1000);
-  };
-
 };

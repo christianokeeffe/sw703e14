@@ -26,7 +26,7 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
     modalInstance.result.then(function (returnValue) {
       $scope.selected = returnValue.item;
       if (returnValue.mode == 'now') {
-        alert("NOW!");
+        $scope.$broadcast('module-communication', {username: returnValue.item.name});
       } else {
         $scope.openLowPrice(returnValue.item, $scope.selectedAction);
       };
