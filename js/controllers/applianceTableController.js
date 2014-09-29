@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('taskTableController', ['$scope','$modal','TaskService', function($scope, $modal, TaskService){
+myApp.controller('applianceTableController', ['$scope','$modal','TaskService', function($scope, $modal, TaskService){
 
 	$scope.tableActionContent = TaskService.list();
 
@@ -10,7 +10,7 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
 	$scope.open = function (selectedAction) {
     $scope.selectedAction = selectedAction;
     var modalInstance = $modal.open({
-      templateUrl: 'myModalContent.html',
+      templateUrl: 'actionModal.html',
       controller: 'actionModalController',
       size: 'sm',
       resolve: {
