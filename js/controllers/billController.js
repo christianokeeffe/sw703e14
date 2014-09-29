@@ -15,7 +15,7 @@ myApp.controller('billController', ['$scope', function($scope){
     ]
   }
   $scope.totalBill = function(){
-    var HighestPrice = 0;
+    var total = 0;
     for (var i = 0 ; i <= $scope.content.billList.length-1; i++) {
       total = total + $scope.content.data[i].expense;
     }
