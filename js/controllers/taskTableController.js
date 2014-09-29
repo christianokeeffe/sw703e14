@@ -48,8 +48,8 @@ myApp.controller('taskTableController', ['$scope','$modal','TaskService', functi
       }
     });
 
-    modalInstance.result.then(function (selectedAction){
-      $scope.selectedAction = selectedAction;
+    modalInstance.result.then(function (beforeTime){
+      alert(beforeTime);
     });
   };
 }]);
