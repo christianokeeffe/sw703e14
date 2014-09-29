@@ -7,8 +7,8 @@
   {
   	"score":"Score",
   	"points":"points",
-  	"dishes":"Dishes",
-  	"laundry":"Laundry",
+  	"dishes":"Clean Dishes",
+  	"laundry":"Clean Clothes",
   	"hygiene":"Hygiene"
   },
   "textToPriceTable":

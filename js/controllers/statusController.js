@@ -2,9 +2,51 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('statusController', ['$scope', function($scope){
 	$scope.dishes = 100;
+	$scope.lastEpochUpdate = $scope.dateEpoch;
 	$scope.hygiene = 100;
-	$scope.laundry = 30;
-	$scope.score = 23000;
+	$scope.laundry = 100;
+	$scope.score = 0;
+
+	function hourToPercentDrop(fullPercentDropInDays,numbOfHours)
+	{
+		return (numbOfHours/(fullPercentDropInDays*24))*100;
+	}
+
+	$scope.$watch('dateEpoch', function() {
+		var hourChange = ($scope.dateEpoch - $scope.lastEpochUpdate)/3600;
+		$scope.lastEpochUpdate = $scope.dateEpoch;
+		$dishChange = hourToPercentDrop(4,hourChange);
+		$laundryChange = hourToPercentDrop(21,hourChange);
+		$hygieneChange = hourToPercentDrop(14,hourChange);
+		$scope.score += Math.round(hourChange*$scope.happiness);
+
+		if($scope.dishes - $dishChange < 0)
+		{
+			$scope.dishes = 0;
+		}
+		else
+		{
+			$scope.dishes -= $dishChange;
+		}
+
+		if($scope.laundry - $laundryChange < 0)
+		{
+			$scope.laundry = 0;
+		}
+		else
+		{
+			$scope.laundry -= $laundryChange;
+		}
+
+		if($scope.hygiene - $hygieneChange < 0)
+		{
+			$scope.hygiene = 0;
+		}
+		else
+		{
+			$scope.hygiene -= $hygieneChange;
+		}
+	});
 
 	$scope.getStatusType = function(value)
 	{
