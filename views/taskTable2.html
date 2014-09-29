@@ -10,8 +10,8 @@
 	<tbody>
 		<tr ng-repeat="item in content.dailyTasks"> 
 			<td> {{item.task}} </td>
-			<td ng-if="item.done"> {{'TrueTaskTable.done' | translate}}</td>
-			<td ng-if="!item.done"> {{'TrueTaskTable.notDone' | translate}}</td>
+			<td ng-if="item.done"> <img src="./views/pics/okSign.png" style="width:30px;height:25px"> </td>
+			<td ng-if="!item.done"></td>
 		</tr>
 	</tbody>
 </table>
@@ -26,8 +26,8 @@
 	<tbody>
 		<tr ng-repeat="item in content.optimalTasks"> 
 			<td> {{item.task}} </td>
-			<td ng-if="item.done"> {{'TrueTaskTable.done' | translate}}</td>
-			<td ng-if="!item.done"> {{'TrueTaskTable.notDone' | translate}}</td>
+			<td ng-if="item.done"> <img src="./views/pics/okSign.png" style="width:30px;height:25px"></td>
+			<td ng-if="!item.done"> </td>
 		</tr>
 	</tbody>
 </table>
