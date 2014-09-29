@@ -20,7 +20,7 @@ myApp.service('TaskService', function (){
 	}
 });
 
-var task = function (tname, ttime, dtime){
+var task = function (tname, rtime, dtime){
   this.name = tname;
   this.runTime = rtime;
   this.deadlineTime = dtime;

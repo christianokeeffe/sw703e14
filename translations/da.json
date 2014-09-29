@@ -1,7 +1,6 @@
  {
-  "cop":"Copyright © 2014 SW703E14",
   "HEADLINE":"What an awesome module!",
-  "PRESS":"Press",
+  "PRESS":"TEST",
   "ACTIVATE":"Activate",
   "scorearea":
   {
@@ -28,13 +27,6 @@
   },
   "taskmodal":
   {
-    "delay":"Set activation time",
-    "noSelection":"Please select a task:"
-  },
-  "lowPriceModal":
-  {
-    "FB":"Finish before:",
-    "setTime":"Set time",
     "delay":"Set activation time"
   },
   "TrueTaskTable":

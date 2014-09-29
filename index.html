@@ -5,15 +5,20 @@
 	 <link rel="stylesheet" type="text/css" href="styles/face.css" />
    <script src="js/vendor/jquery.min.js"></script>
    <script src="js/vendor/bootstrap.min.js"></script>
+   <script type="text/javascript" src="js/vendor/hmac-sha256.js"></script>
     <script type="text/javascript" src="js/vendor/angular.min.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-route.min.js"></script>
     <script type="text/javascript" src="js/vendor/angular-translate.min.js"></script>
     <script type="text/javascript" src="js/vendor/angular-translate-loader-static-files.min.js"></script>
-    <script type="text/javascript" src="js/vendor/angular-resource.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-resource.min.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-dropdowns.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-cookies.min.js"></script>
     <script type="text/javascript" src="js/vendor/ui-bootstrap-0.11.0.min.js"></script>
     <script type="text/javascript" src="js/vendor/ui-bootstrap-tpls-0.11.0.min.js"></script>
     <script type="text/javascript" src="js/vendor/timer.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers/applianceTableController.js"></script>
+    <script type="text/javascript" src="js/controllers/languageController.js"></script>
     <script type="text/javascript" src="js/controllers/priceTableController.js"></script>
     <script type="text/javascript" src="js/controllers/statusController.js"></script>
     <script type="text/javascript" src="js/controllers/dateTimeController.js"></script>
@@ -24,6 +29,8 @@
     <script type="text/javascript" src="js/controllers/timeController.js"></script>
     <script type="text/javascript" src="js/controllers/actionModalController.js"></script>
     <script type="text/javascript" src="js/controllers/lowPriceController.js"></script>
+    <script type="text/javascript" src="js/controllers/taskTableController2.js"></script>
+    <script type="text/javascript" src="js/controllers/billController.js"></script>
   </head>
   <body>
     {{'HEADLINE' | translate}}
@@ -36,11 +43,36 @@
 			</div>
 			<div class="col-md-1"></div>
 			<div class="col-md-3">
-				<div ng-include="'./views/priceTable.html'"></div>
-			</div>
+			 <div ng-include="'./views/priceTable.html'"></div>
+                <div ng-include="'./views/taskTable2.html'"></div>
+                <div ng-include="'./views/billTable.html'"></div>
+			 </div>
 		</div>
 	</div>
 	<div ng-include="'./views/actionModal.html'"></div>
   <div ng-include="'./views/lowPriceModal.html'"></div>
+
+  <div id="footer" class="col-md-12" style="padding-left: 20px; padding-right: 20px;" ng-cloak>
+        <hr>
+        <div class="col-md-8 col-md-offset-2">
+            <p style="text-align: center">
+                <small>
+                  {{'cop' | translate}}
+                </small>
+            </p>
+        </div>
+        <div id="footer_language" class="col-md-2" ng-controller="languageController">
+            <a style="float: right" >
+            <button type="submit" class="btn btn-sm " ng-class="{'btn-info': isEn, 'btn-default': !isEn}" ng-click="setLang('en')">
+                <img style="margin-bottom: 0.18em;" src="./views/pics/uk.png"> English
+            </button>
+            </a>
+            <a style="float: right; margin-right: 5px;">
+            <button type="submit" class="btn btn-sm " ng-class="{'btn-info': isDa, 'btn-default': !isDa}" ng-click="setLang('da')">
+                <img style="margin-bottom: 0.18em;" src="./views/pics/dk.png"> Dansk
+            </button>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
