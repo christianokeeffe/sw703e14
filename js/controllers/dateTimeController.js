@@ -14,6 +14,7 @@ myApp.controller('dateTimePickerController', ['$scope', 'lowPriceService', funct
   $scope.time = new Date();
   $scope.hstep = 1;
   $scope.mstep = 1;
+  $scope.dstep = 1;
   $scope.ismeridian = false;
   $scope.dateAndTime = new Date();
 
