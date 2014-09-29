@@ -60,17 +60,18 @@ var actionModalController = function ($scope, $modalInstance, tableActionContent
   $scope.selectedItem = "Select an item";
   $scope.buttonStyle = "margin-bottom: -15px";
   $scope.selected;
-  $scope.isCollapsed = true;
+  $scope.isCollapsed = false;
 
   $scope.clicked = function(selectedItem){
   	$scope.selected = selectedItem;
+    $scope.isCollapsed = false;
     $scope.selectedItem = $scope.selected.name;
   }
 
   $scope.ok = function (input, selected) {
     if (selected === undefined) {
       $scope.buttonStyle = "margin-bottom: 15px";
-      $scope.isCollapsed = false;
+      $scope.isCollapsed = true;
     } else {
       var returnValues = {
         "mode": input,
