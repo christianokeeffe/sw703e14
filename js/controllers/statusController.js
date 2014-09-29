@@ -2,7 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('statusController', ['$scope', function($scope){
 	$scope.dishes = 100;
-	$scope.lastEpochUpdate = 1409572800;
+	$scope.lastEpochUpdate = $scope.dateEpoch;
 	$scope.hygiene = 100;
 	$scope.laundry = 100;
 	$scope.score = 0;
@@ -18,6 +18,7 @@ myApp.controller('statusController', ['$scope', function($scope){
 		$dishChange = hourToPercentDrop(4,hourChange);
 		$laundryChange = hourToPercentDrop(21,hourChange);
 		$hygieneChange = hourToPercentDrop(14,hourChange);
+		$scope.score += Math.round(hourChange*$scope.happiness);
 
 		if($scope.dishes - $dishChange < 0)
 		{
