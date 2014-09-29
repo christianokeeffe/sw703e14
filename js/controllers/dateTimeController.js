@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('dateTimePickerController', ['$scope', 'lowPriceService' function($scope, lowPriceService){
+myApp.controller('dateTimePickerController', ['$scope', 'lowPriceService', function($scope, lowPriceService){
   $scope.today = function() {
     $scope.date = new Date();
   };
@@ -18,7 +18,7 @@ myApp.controller('dateTimePickerController', ['$scope', 'lowPriceService' functi
   $scope.dateAndTime = new Date();
 
   $scope.opdateDateTime = function(date, time){
-    lowPriceService.setTimer = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0);
+    lowPriceService.setTimer(new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0));
   };
 
   $scope.open = function($event) {

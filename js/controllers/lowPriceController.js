@@ -1,13 +1,14 @@
-var lowPriceController = function($scope, $modalInstance, 'lowPriceService', selectedItem, selectedAction){
+var lowPriceController = function($scope, $modalInstance, lowPriceService, selectedItem, selectedAction){
   $scope.header = selectedAction;
   $scope.task = selectedItem.name;
+  $scope.beforeTime = new Date();
 
   $scope.close = function () {
     $modalInstance.dismiss("Closed");
   };
 
   $scope.setTimer = function () {
-  	var beforeTime = this.get();
-  	modalInstance.close(beforeTime);
+  	$scope.beforeTime = lowPriceService.get();
+  	$modalInstance.close($scope.beforeTime);
   };
 };
