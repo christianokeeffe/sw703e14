@@ -10,7 +10,7 @@ myApp.controller('billController', ['$scope', function($scope){
        "expense": 56
       },
       {"item": "task 3",
-       "expense": 200
+       "expense": -200
       }
     ]
   }
