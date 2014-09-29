@@ -7,18 +7,22 @@ myApp.controller('billController', ['$scope', function($scope){
        "expense": 55
       },
       {"item": "task 2",
-       "expense":   56
+       "expense": 56
       },
-      {"item": "task 3"
+      {"item": "task 3",
        "expense": 200
       }
     ]
   }
+  
   $scope.totalBill = function(){
     var total = 0;
+
     for (var i = 0 ; i <= $scope.content.billList.length-1; i++) {
-      total = total + $scope.content.data[i].expense;
+      total = total + $scope.content.billList[i].expense;
     }
-    return total;
+
+    return total.toString();
   };
+
   }]);
