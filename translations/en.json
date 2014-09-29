@@ -21,6 +21,7 @@
   },
   "lowPriceModal":
   {
-    "FB":"Finish before:"
+    "FB":"Finish before:",
+    "setTime":"Set time"
   }
 }
