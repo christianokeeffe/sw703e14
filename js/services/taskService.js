@@ -2,9 +2,9 @@ var myApp = angular.module('smartgridgame');
 
 myApp.service('TaskService', function (){
 	var tasks = [
-		new task('Washer','2'),
-		new task('Owen','5'),
-		new task('car','6000')
+		new task('Washer','2','5'),
+		new task('Owen','5','5'),
+		new task('car','6000','5')
 	];
 
 	this.get = function (id){
@@ -20,7 +20,8 @@ myApp.service('TaskService', function (){
 	}
 });
 
-var task = function (tname, ttime){
+var task = function (tname, ttime, dtime){
   this.name = tname;
-  this.time = ttime;
+  this.runTime = rtime;
+  this.deadlineTime = dtime;
 };
