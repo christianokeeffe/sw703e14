@@ -1,10 +1,11 @@
 <div ng-controller="statusController" face class="col-md-2">
 <canvas id="face" width="150" bezier="0" height="150" ></canvas><br/>
 <h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
+
 <label for="dishes">{{'scorearea.dishes' | translate}}</label>
-<progressbar animate="false" value="dishes" type="{{getStatusType(dishes)}}" max="100" id="dishes"><b>{{dishes}}%</b></progressbar>
+<progressbar animate="false" value="dishes" type="{{getStatusType(dishes)}}" max="100" id="dishes"><b>{{dishes| number:0}}%</b></progressbar>
 <label for="laundry">{{'scorearea.laundry' | translate}}</label>
-<progressbar animate="false" value="laundry" type="{{getStatusType(laundry)}}" max="100" id="laundry"><b>{{laundry}}%</b></progressbar>
+<progressbar animate="false" value="laundry" type="{{getStatusType(laundry)}}" max="100" id="laundry"><b>{{laundry | number:0}}%</b></progressbar>
 <label for="hygiene">{{'scorearea.hygiene' | translate}}</label>
-<progressbar animate="false" value="hygiene" type="{{getStatusType(hygiene)}}" max="100" id="hygiene"><b>{{hygiene}}%</b></progressbar>
+<progressbar animate="false" value="hygiene" type="{{getStatusType(hygiene)}}" max="100" id="hygiene"><b>{{hygiene| number:0}}%</b></progressbar>
 </div>
