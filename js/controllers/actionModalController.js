@@ -1,21 +1,23 @@
-var actionModalController = function ($scope, $modalInstance, tableActionContent, selectedAction) {
-	$scope.items = tableActionContent;
-  $scope.header = selectedAction;
-  $scope.selectedItem = "Select an item";
+var myApp = angular.module('smartgridgame');
+
+myApp.controller('applianceTableController', ['$scope','$modalInstance','TaskService','lowPriceService' , function($scope, $modalInstance, TaskService, lowPriceService){
+  $scope.items = lowPriceService.getTableContent();
+  $scope.header = lowPriceService.getTask();
+  $scope.selectedItem = "selectItem"
   $scope.buttonStyle = "margin-bottom: -15px";
   $scope.selected;
-  $scope.isCollapsed = false;
+  $scope.noTaskChosen = false;
 
-  $scope.clicked = function(selectedItem){
-  	$scope.selected = selectedItem;
-    $scope.isCollapsed = false;
+  $scope.clicked = function(selectedItem) {
+    $scope.selected = selectedItem;
+    $scope.noTaskChosen = false;
     $scope.selectedItem = $scope.selected.name;
-  }
+  };
 
   $scope.ok = function (input, selected) {
     if (selected === undefined) {
       $scope.buttonStyle = "margin-bottom: 15px";
-      $scope.isCollapsed = true;
+      $scope.noTaskChosen = true;
     } else {
       var returnValues = {
         "mode": input,
@@ -28,4 +30,4 @@ var actionModalController = function ($scope, $modalInstance, tableActionContent
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
-};
+}]);

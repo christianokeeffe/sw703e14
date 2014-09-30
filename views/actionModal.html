@@ -1,6 +1,4 @@
-<div>
-    <script type="text/ng-template" id="actionModal.html">
-        <div class="modal-header">
+        <div class="modal-header" >
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <h3 class="modal-title">{{header}}</h3>
         </div>
@@ -21,8 +19,6 @@
             <button class="btn" ng-click="ok('now', selected)" style={{buttonStyle}}>{{'ACTIVATE' | translate}}</button>
             <button class="btn" ng-click="ok('later', selected)" style={{buttonStyle}}>{{'taskmodal.delay' | translate}}</button>
             <div>
-                <alert type="danger" ng-show="isCollapsed">{{"PLEASE SELECT A TASK METTE"}}</alert>
+                <alert type="danger" ng-show="noTaskChosen">{{"PLEASE SELECT A TASK METTE"}}</alert>
             </div>
         </div>
-    </script>
-</div>
