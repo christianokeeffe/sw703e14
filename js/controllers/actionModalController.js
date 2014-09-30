@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('applianceTableController', ['$scope','$modalInstance','TaskService','lowPriceService' , function($scope, $modalInstance, TaskService, lowPriceService){
+myApp.controller('actionModalController', ['$scope','$modalInstance','TaskService','lowPriceService' , function($scope, $modalInstance, TaskService, lowPriceService){
   $scope.items = lowPriceService.getTableContent();
   $scope.header = lowPriceService.getTask();
   $scope.selectedItem = "selectItem"
