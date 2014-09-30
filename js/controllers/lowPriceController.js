@@ -1,9 +1,9 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('lowPriceController', ['$scope', '$modalInstance', 'lowPriceService', function($scope, $modalInstance, lowPriceService) {
+myApp.controller('lowPriceController', ['$scope', '$modalInstance', 'controllerService', function($scope, $modalInstance, controllerService) {
   alert($parent.test);
-  $scope.header = lowPriceService.getApplience();
-  $scope.task = lowPriceService.getTask().name;
+  $scope.header = controllerService.getApplience();
+  $scope.task = controllerService.getTask().name;
   $scope.beforeTime = new Date();
 
   $scope.close = function () {
@@ -11,7 +11,7 @@ myApp.controller('lowPriceController', ['$scope', '$modalInstance', 'lowPriceSer
   };
 
   $scope.setTimer = function () {
-    $scope.beforeTime = lowPriceService.get();
+    $scope.beforeTime = controllerService.get();
     $modalInstance.close($scope.beforeTime);
   };
 }]);

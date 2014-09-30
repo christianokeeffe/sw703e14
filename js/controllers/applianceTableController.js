@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('applianceTableController', ['$scope','$modal','TaskService','appliancesFactory','formatRequest','lowPriceService', function($scope, $modal, TaskService, appliancesFactory, formatRequest, lowPriceService){
+myApp.controller('applianceTableController', ['$scope','$modal','TaskService','appliancesFactory','formatRequest','controllerService', function($scope, $modal, TaskService, appliancesFactory, formatRequest, controllerService){
 
 	$scope.selected;
   $scope.selectedAction;
@@ -32,8 +32,8 @@ myApp.controller('applianceTableController', ['$scope','$modal','TaskService','a
 
 	$scope.open = function (selectedAction) {
     $scope.selectedAction = selectedAction;
-    lowPriceService.setApplience(selectedAction);
-    lowPriceService.setTableContent($scope.tableActionContent);
+    controllerService.setApplience(selectedAction);
+    controllerService.setTableContent($scope.tableActionContent);
     var modalInstance = $modal.open({
       templateUrl: '/sw703e14/views/actionModal.html',
       controller: 'actionModalController',
@@ -45,8 +45,8 @@ myApp.controller('applianceTableController', ['$scope','$modal','TaskService','a
       if (returnValue.mode == 'now') {
         $scope.$broadcast('module-communication', {username: returnValue.item.name});
       } else {
-        lowPriceService.setApplience($scope.selectedAction);
-        lowPriceService.setTask(returnValue.item);
+        controllerService.setApplience($scope.selectedAction);
+        controllerService.setTask(returnValue.item);
         $scope.openLowPrice();
       };
     });
