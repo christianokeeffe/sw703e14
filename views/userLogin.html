@@ -1,5 +1,7 @@
-<form action="LOGIN.asp">
-First name: <input type="text" name="User" ><br>
-Last name: <input type="text" name="Password" ><br>
-<input type="submit" value="Submit">
-</form>
+<div ng-controller="userLoginController">
+  <form novalidate class="simple-form">
+    User name: <input type="text" ng-model="user.userName" /><br />
+    Password: <input type="password" ng-model="user.password" /><br />
+    <button ng-click="Login(userName, password)">login</button>
+  </form>
+</div>
