@@ -38,6 +38,19 @@
     "done": "Task Done",
     "notDone": "Task not done"
   },
+  "regUser":
+  {
+    "username":"Username",
+    "email":"Email address",
+    "pass":"Password",
+    "submit":"Register User",
+    "errors":{
+      "usernamereq":"Username Required.",
+      "emailreq":"The email is required",
+      "emailerror":"The email address is invalid",
+      "passwordreq":"The password is required"
+    }
+  },
   "billTable":
   {
     "item" : "Bill",
