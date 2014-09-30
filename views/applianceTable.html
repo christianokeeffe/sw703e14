@@ -8,7 +8,7 @@
 			<tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="item in tableActionContent">
+			<tr ng-repeat="item in appliances">
 			<div>
 				<td>
 					{{item.name}}
@@ -19,9 +19,9 @@
 					</button>
 				</td>
 				<td>
-					<div ng-controller="timeController">
+					<!--<div ng-controller="timeController">
 						<timer autostart="false" countdown="item.runTime" interval="1000">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds </timer>
-					</div>
+					</div>-->
 				</td>
 				</div>
 			</tr>

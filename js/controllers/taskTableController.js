@@ -5,29 +5,7 @@ var myApp = angular.module('smartgridgame');
 								//alert("HEJ");
 							//};
   $scope.appliances = {};
-  //formatRequest.get({});  
-
-$scope.getAppliances = function()
-{
-   var geturl = formatRequest.get({});
-  if(geturl === undefined)
-  {
-    setTimeout(function(){
-          return $scope.getAppliances();
-       }, 10);
-  }
-  else
-  { 
-    appliancesFactory.getAppliances(geturl,
-    function (response) {
-        $scope.appliances = response.data;
-    },
-    function () {
-        //alert(JSON.stringify(response));
-        document.write(JSON.stringify(response));
-    });
-  }
-}  
+  //formatRequest.get({});    
 
 	$scope.selected;
 
