@@ -35,7 +35,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','TaskService','a
     lowPriceService.setApplience(selectedAction);
     lowPriceService.setTableContent($scope.tableActionContent);
     var modalInstance = $modal.open({
-      templateUrl: '../views/actionModal.html',
+      templateUrl: '/sw703e14/views/actionModal.html',
       controller: 'actionModalController',
       size: 'sm'
     });
@@ -54,7 +54,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','TaskService','a
 
   $scope.openLowPrice = function() {
     var modalInstance = $modal.open({
-      templateUrl: '../views/lowPriceModal.html',
+      templateUrl: '/sw703e14/views/lowPriceModal.html',
       controller: 'lowPriceController',
       size: ""
     });
