@@ -5,15 +5,18 @@
 			<th> {{ 'billTable.expense' | translate}} </th>
 		</tr>
 		<tr>
+			
 			<th> {{'billTable.totalBill' | translate}} </th>
-			<th> {{ totalBill() | currency}} </th>
+			
+			<th ng-if="totalBill() <= 0"><font color="red"> {{ totalBill() | currencyWithMinus}} </th>
+			<th ng-if="totalBill() > 0"><font color="green"> {{ totalBill() | currencyWithMinus}} </th>
 		</tr>
 
 	</thead>
 	<tbody>
 		<tr ng-repeat="t in content.billList"> 
 			<td> {{t.item}} </td>
-			<td> {{t.expense | currency}} </td>
+			<td> {{t.expense | currencyWithMinus}} </td>
 		</tr>
 	</tbody>
 </table>

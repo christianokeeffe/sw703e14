@@ -47,7 +47,7 @@
   },
   "billTable":
   {
-    "item" : "Item",
+    "item" : "Bill",
     "expense" : "Expense",
     "totalBill" : "Total Bill"
   }
