@@ -1,5 +1,5 @@
 <div class="col-md-8" ng-controller="userRegisterController">
-<form role="form" name="reguserform" ng-submit="regUser()" novalidate>
+<form role="form" name="reguserform" novalidate>
   <div class="form-group">
     <label for="firstname">{{'regUser.firstname' | translate}}</label>
     <input type="text" class="form-control" name="firstname" id="firstname" ng-model="user.firstname" required placeholder="{{'regUser.firstname' | translate}}">
@@ -16,6 +16,7 @@
     <input type="email" class="form-control" name="email" id="email" ng-model="user.email" required placeholder="{{'regUser.email' | translate}}">
 <p class="help-block" ng-show="reguserform.email.$error.required">{{'regUser.errors.emailreq' | translate}}</p>
       <p class="help-block" ng-show="reguserform.email.$dirty && reguserform.email.$error.email">{{'regUser.errors.emailerror' | translate}}</p>
+      <p class="help-block" ng-if="invalidEmail">{{'regUser.errors.emailduberror' | translate}}</p>
   </div>
 
   <div class="form-group">
@@ -30,6 +31,6 @@
     <p class="help-block" ng-if="reguserform.password.$error.required">{{'regUser.errors.passwordreq' | translate}}</p>
   </div>
 
-  <button type="submit" class="btn btn-default">{{'regUser.submit' | translate}}</button>
+  <button type="submit" ng-disabled="reguserform.$invalid" ng-click="regUser()" class="btn btn-default">{{'regUser.submit' | translate}}</button>
 </form>
 </div>
