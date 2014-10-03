@@ -2,10 +2,6 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope','$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
-	$scope.selected;
-  $scope.selectedAction;
-  $scope.test = "test";
-
   $scope.getAppliances = function()
   {
     var geturl = formatRequest.get({});
@@ -22,7 +18,6 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
         $scope.appliances = response.data;
       },
       function () {
-        //alert(JSON.stringify(response));
         document.write(JSON.stringify(response));
       });
     }
@@ -41,11 +36,9 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
       geturl.id = id;
       tasksFactory.getTasks(geturl,
       function (response) {
-        $scope.tableActionContent = response.data;
-        controllerService.setTableContent($scope.tableActionContent)
+        controllerService.setTableContent(response.data);
       },
       function () {
-        //alert(JSON.stringify(response));
         document.write(JSON.stringify(response));
       });
     }
@@ -56,8 +49,6 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
 
 	$scope.open = function (selectedAction) {
     controllerService.setAppliance(selectedAction);
-    controllerService.setTableContent($scope.tableActionContent);
-    alert(JSON.stringify($scope.tableActionContent[0].name));
     var modalInstance = $modal.open({
       templateUrl: '/sw703e14/views/actionModal.html',
       controller: 'actionModalController',
