@@ -4,7 +4,7 @@ myApp.controller('lowPriceController', ['$scope', '$modalInstance', 'controllerS
   alert($parent.test);
   $scope.header = controllerService.getApplience();
   $scope.task = controllerService.getTask().name;
-  $scope.beforeTime = new Date();
+  $scope.beforeTime = $scope.$parent.curDate();
 
   $scope.close = function () {
     $modalInstance.dismiss("Closed");
