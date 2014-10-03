@@ -52,6 +52,7 @@
       "lastnamereq":"Lastname is required.",
       "emailreq":"The email is required",
       "emailerror":"The email address is invalid",
+      "emailduberror":"This email address has allready been used",
       "passwordreq":"The password is required"
     }
   },
