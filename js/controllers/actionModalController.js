@@ -21,7 +21,7 @@ myApp.controller('actionModalController', ['$scope','$modalInstance','controller
     else
     {
       geturl.id = id;
-      tasksFactory.gettasks(geturl,
+      tasksFactory.getTasks(geturl,
       function (response) {
         return $scope.test = response.data;
       },
@@ -32,7 +32,7 @@ myApp.controller('actionModalController', ['$scope','$modalInstance','controller
     }
   };
 
-  $scope.getApplianceTask(1);
+  $scope.getApplianceTask(2);
   alert($scope.test);
 
   $scope.clicked = function(selectedItem) {
