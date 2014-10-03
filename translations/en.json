@@ -38,6 +38,24 @@
     "done": "Task Done",
     "notDone": "Task not done"
   },
+  "regUser":
+  {
+    "username":"Username",
+    "lastname":"Lastname",
+    "firstname":"Firstname",
+    "email":"Email address",
+    "pass":"Password",
+    "submit":"Register User",
+    "errors":{
+      "usernamereq":"Username is required.",
+      "firstnamereq":"Firstname is required.",
+      "lastnamereq":"Lastname is required.",
+      "emailreq":"The email is required",
+      "emailerror":"The email address is invalid",
+      "emailduberror":"This email address has allready been used",
+      "passwordreq":"The password is required"
+    }
+  },
   "billTable":
   {
     "item" : "Bill",
