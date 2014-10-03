@@ -29,6 +29,8 @@ myApp.controller('applianceTableController', ['$scope','$modal','TaskService','a
   };
 
   $scope.getAppliances();
+  
+  alert(TaskService.getApplianceTask(1));
 
 	$scope.open = function (selectedAction) {
     $scope.selectedAction = selectedAction;
