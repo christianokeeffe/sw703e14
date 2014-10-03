@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('applianceTableController', ['$scope','$modal','appliancesFactory','formatRequest','controllerService', function($scope, $modal, appliancesFactory, formatRequest, controllerService){
+myApp.controller('applianceTableController', ['$scope','$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
 	$scope.selected;
   $scope.selectedAction;
@@ -28,12 +28,35 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
     }
   };
 
+  $scope.getApplianceTask = function (id){
+    var geturl = formatRequest.get({});
+    if(geturl === undefined)
+    {
+      setTimeout(function(){
+        return $scope.getApplianceTask(id);
+      }, 10);
+    }
+    else
+    {
+      geturl.id = id;
+      tasksFactory.getTasks(geturl,
+      function (response) {
+        $scope.tableActionContent = response.data;
+      },
+      function () {
+        //alert(JSON.stringify(response));
+        document.write(JSON.stringify(response));
+      });
+    }
+  };
+
   $scope.getAppliances();
+  $scope.getApplianceTask(2);
 
 	$scope.open = function (selectedAction) {
-    $scope.selectedAction = selectedAction;
-    controllerService.setApplience(selectedAction);
+    controllerService.setAppliance(selectedAction);
     controllerService.setTableContent($scope.tableActionContent);
+    alert(JSON.stringify($scope.tableActionContent[0].name));
     var modalInstance = $modal.open({
       templateUrl: '/sw703e14/views/actionModal.html',
       controller: 'actionModalController',
@@ -45,7 +68,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
       if (returnValue.mode == 'now') {
         $scope.$broadcast('module-communication', {username: returnValue.item.name});
       } else {
-        controllerService.setApplience($scope.selectedAction);
+        controllerService.setAppliance($scope.selectedAction);
         controllerService.setTask(returnValue.item);
         $scope.openLowPrice();
       };

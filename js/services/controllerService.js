@@ -2,16 +2,16 @@ var myApp = angular.module('smartgridgame');
 
 myApp.service('controllerService', function () {
 	var beforeTime = new Date();
-	var Applience;
+	var Appliance;
 	var Task;
 	var TableContent;
 
-	this.setApplience = function(applience) {
-		Applience = applience;
+	this.setAppliance = function(appliance) {
+		Appliance = appliance;
 	};
 
-	this.getApplience = function() {
-		return Applience;
+	this.getAppliance = function() {
+		return Appliance;
 	};
 
 	this.setTask = function(task) {

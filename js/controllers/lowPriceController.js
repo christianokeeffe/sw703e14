@@ -2,7 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('lowPriceController', ['$scope', '$modalInstance', 'controllerService', function($scope, $modalInstance, controllerService) {
   alert($parent.test);
-  $scope.header = controllerService.getApplience();
+  $scope.header = controllerService.getAppliance();
   $scope.task = controllerService.getTask().name;
   $scope.beforeTime = $scope.$parent.curDate();
 
