@@ -60,7 +60,6 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
       if (returnValue.mode == 'now') {
         $scope.$broadcast('module-communication', {username: returnValue.item.name});
       } else {
-        controllerService.setAppliance($scope.selectedAction);
         controllerService.setTask(returnValue.item);
         $scope.openLowPrice();
       };
