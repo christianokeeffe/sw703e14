@@ -42,6 +42,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
       tasksFactory.getTasks(geturl,
       function (response) {
         $scope.tableActionContent = response.data;
+        controllerService.setTableContent($scope.tableActionContent)
       },
       function () {
         //alert(JSON.stringify(response));
