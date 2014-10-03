@@ -1,6 +1,7 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope','$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
+  $scope.test = "hej";
 
   $scope.getAppliances = function()
   {
