@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.service('lowPriceService', function () {
+myApp.service('controllerService', function () {
 	var beforeTime = new Date();
 	var Applience;
 	var Task;
