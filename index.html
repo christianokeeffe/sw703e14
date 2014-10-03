@@ -28,26 +28,9 @@
     <script type="text/javascript" src="js/controllers/taskTableController2.js"></script>
     <script type="text/javascript" src="js/controllers/billController.js"></script>
   </head>
-  <body ng-controller="mainController">
-    {{curDate() | date:'HH:mm, EEEE d MMMM yyyy'}}
-	<div ng-include="'./views/scoreArea.html'">
-	</div>
-	<div class="container-fluid">
-		<div class ="row">
-			<div class="col-md-3">
-				<div ng-include="'./views/taskTable.html'"></div>
-			</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-3">
-				<div ng-include="'./views/priceTable.html'"></div>
-                <div ng-include="'./views/taskTable2.html'"></div>
-                <div ng-include="'./views/billTable.html'"></div>
-			</div>
-		</div>
-	</div>
-	<div ng-include="'./views/taskModal.html'"></div>
-    <div ng-include="'./views/regUser.html'"></div>
-  <div id="footer" class="col-md-12" style="padding-left: 20px; padding-right: 20px;" ng-cloak>
+  <body>
+    <div ng-view></div>
+    <div id="footer" class="col-md-12" style="padding-left: 20px; padding-right: 20px;" ng-cloak>
         <hr>
         <div class="col-md-8 col-md-offset-2">
             <p style="text-align: center">
