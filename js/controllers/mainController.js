@@ -1,7 +1,7 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval', function($scope,$interval){
-	$scope.gameSecOnRealSec = 82000;
+	$scope.gameSecOnRealSec = 1800;
 	$scope.dateEpoch = 1409565600;
 
 	$scope.curDate = function(){
