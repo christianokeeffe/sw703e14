@@ -10,7 +10,16 @@ myApp.controller('mainController', ['$scope', '$rootScope','$interval', function
 		return d;
 	}
 
-	$interval(function(){
+	$rootScope.startGameTime = function() {
+		interval = $interval(function(){
 		$scope.dateEpoch += $scope.gameSecOnRealSec;
 		},1000);
+	}
+
+	$rootScope.startGameTime();
+
+	$rootScope.stopGameTime = function() {
+		$interval.cancel(interval);
+	}
+	
 } ]);

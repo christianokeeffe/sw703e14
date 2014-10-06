@@ -1,7 +1,7 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.service('controllerService', function () {
-	var beforeTime = new Date();
+	var beforeTime;
 	var Appliance;
 	var Task;
 	var TableContent;
@@ -34,7 +34,7 @@ myApp.service('controllerService', function () {
 		beforeTime = date;
 	};
 
-	this.get = function() {
+	this.getTimer = function() {
 		return beforeTime;
 	};
 });

@@ -50,5 +50,9 @@
     "item" : "Bill",
     "expense" : "Expense",
     "totalBill" : "Total Bill"
+  },
+  "actionModalController":
+  {
+    "selectItem":"Select a task"
   }
 }

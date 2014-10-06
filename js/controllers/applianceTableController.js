@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('applianceTableController', ['$scope','$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
+myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
   $scope.getAppliances = function()
   {
@@ -48,6 +48,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
   $scope.getApplianceTask(2);
 
 	$scope.open = function (selectedAction) {
+    $rootScope.stopGameTime();
     controllerService.setAppliance(selectedAction);
     var modalInstance = $modal.open({
       templateUrl: '/sw703e14/views/actionModal.html',
@@ -57,6 +58,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
 
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
+        $rootScope.startGameTime();
         $scope.$broadcast('module-communication', {username: returnValue.item.name});
       } else {
         $scope.openLowPrice();
@@ -73,6 +75,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
 
     modalInstance.result.then(function (beforeTime){
       alert(beforeTime);
+      $rootScope.startGameTime();
     });
   };
 }]);

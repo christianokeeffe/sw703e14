@@ -10,11 +10,14 @@
         	<div style="display:inline-block; min-height:290px;">
             <datepicker ng-model="date" ng-change="changed()" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
         	</div>
-        	<timepicker ng-model="time" ng-change="changed()" day-step="dstep" hour-step="hstep" minute-step="mstep" second-step="sstep" show-meridian="ismeridian"></timepicker>
+        	<timepicker ng-model="time" ng-change="changed()" hour-step="hstep" minute-step="mstep" second-step="sstep" show-meridian="ismeridian"></timepicker>
         	<pre class="alert alert-info">{{'lowPriceModal.FB' | translate}} {{dateAndTime | date:'EEEE dd/MM/yy, H:mm' }}</pre>
     	</div>     
 	</div>
 	<div class="modal-footer">
         <button class="btn" ng-click="setTimer()">{{'lowPriceModal.setTime' | translate}}</button>
-	</div>
+        <div>
+        	<alert type="danger" ng-show="alertShown">{{"Invalid start time: The date and time is in the past!"}}</alert>
+    	</div>
+    </div>
 </div>
