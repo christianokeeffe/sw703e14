@@ -3,7 +3,7 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('actionModalController', ['$scope','$modalInstance','controllerService','formatRequest', 'tasksFactory', function($scope, $modalInstance, controllerService, formatRequest, tasksFactory){
   $scope.tasks = controllerService.getTableContent();
   $scope.header = controllerService.getAppliance();
-  $scope.selectedItem = "selectItem"
+  $scope.selectedItem = "Select a task"
   $scope.buttonStyle = "margin-bottom: -15px";
   $scope.selected;
   $scope.alertShown = false;
