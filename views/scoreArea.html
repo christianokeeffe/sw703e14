@@ -1,7 +1,7 @@
 <div ng-controller="statusController" face class="col-md-2">
 <canvas id="face" width="150" bezier="0" height="150" ></canvas><br/>
 <h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
-
+<h4>{{'scorearea.balance' | translate}}: <small>{{balance | currency}}</small></h4>
 <label for="dishes">{{'scorearea.dishes' | translate}}</label>
 <progressbar animate="false" value="dishes" type="{{getStatusType(dishes)}}" max="100" id="dishes"><b>{{dishes| number:0}}%</b></progressbar>
 <label for="laundry">{{'scorearea.laundry' | translate}}</label>

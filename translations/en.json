@@ -10,7 +10,8 @@
   	"points":"points",
   	"dishes":"Clean Dishes",
   	"laundry":"Clean Clothes",
-  	"hygiene":"Hygiene"
+  	"hygiene":"Hygiene",
+    "balance":"Balance"
   },
   "textToPriceTable":
   {
