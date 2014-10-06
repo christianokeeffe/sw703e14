@@ -1,10 +1,13 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('userLoginController', ['$scope','userFactory','formatRequest' function($scope, userFactory, formatRequest){
+myApp.controller('userLoginController', ['$scope','usersFactory', 'authenticationSvc','formatRequest' function($scope, userFactory, formatRequest){
+  $scope.users = {};
+  $scope.page = "";
 
-  $scope.findUser = function()
-{
-   var geturl = formatRequest.get({});
+  $scope.Login = function(inputUser, inputPassword){
+    var geturl = {};
+    geturl.endurl = "/"+inputUser+"/"+inputPassword;
+  geturl = formatRequest.get({});
   if(geturl === undefined)
   {
     setTimeout(function(){
@@ -13,21 +16,25 @@ myApp.controller('userLoginController', ['$scope','userFactory','formatRequest' 
   }
   else
   { 
-    userFactory.findUser(geturl,
+
+    usersFactory.findUser(geturl,
     function (response) {
-        if(response.data != null) {
-          //login
-        }
-        else {
-          // error
-        }
-    },
-    function () {
-        //alert(JSON.stringify(response));
-        document.write(JSON.stringify(response));
+      $scope.users = response.data;
     });
+    if(response.data != null) {
+      //login
+      // taget fra stackoverflow
+      var sessionTimeout = 1; //hours
+      var loginDuration = new Date();
+      loginDuration.setTime(loginDuration.getTime()+(sessionTimeout*60*60*1000));
+      document.cookie = "CrewCentreSession=Valid; "+loginDuration.toGMTString()+"; path=/";
+      //  slut
+      self.location.href = page;
+
+    }
+    else {
+      // error
+    }
   }
-} 
-  $scope.Login = function(inputUser, inputPassword){
   };
   }]);
