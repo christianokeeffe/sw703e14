@@ -84,9 +84,10 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
     };
     this.get = function(input) {
     	if (thisvar.checkSession()) {
-	    	input.endurl = "/" + $translate.use() + "/" + sessionid;
+	    	input.endurl = input.endurl + "/" + $translate.use() + "/" + sessionid;
 	        return input;
         }
+        return input;
     };
 }]);
 

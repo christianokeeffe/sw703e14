@@ -1,26 +1,40 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('userLoginController', ['$scope', function($scope){
-  $scope.content = {
-    "users": [
-      {"user": "Ivan",
-       "password": "password"
-      },
-      {"user": "Bo",
-       "password": "password"
-      },
-      {"user": "Rasmus",
-       "password": "password"
-      }
-    ]
-  }
-  
-  $scope.Login = function(inputUser, inputPassword){
+myApp.controller('userLoginController', ['$scope','usersFactory', 'authenticationSvc','formatRequest' function($scope, userFactory, formatRequest){
+  $scope.users = {};
+  $scope.page = "";
 
-    for (var i = 0 ; i <= $scope.content.users.length-1; i++) {
-      if (angular.equals(inputUser, $scope.content.users[i].user) && angular.equals(inputPassword, $scope.content.users[i].password)) {
-        //do somethink
-      };
+  $scope.Login = function(inputUser, inputPassword){
+    var geturl = {};
+    geturl.endurl = "/"+inputUser+"/"+inputPassword;
+  geturl = formatRequest.get({});
+  if(geturl === undefined)
+  {
+    setTimeout(function(){
+          return $scope.findUser();
+       }, 10);
+  }
+  else
+  { 
+
+    usersFactory.findUser(geturl,
+    function (response) {
+      $scope.users = response.data;
+    });
+    if(response.data != null) {
+      //login
+      // taget fra stackoverflow
+      var sessionTimeout = 1; //hours
+      var loginDuration = new Date();
+      loginDuration.setTime(loginDuration.getTime()+(sessionTimeout*60*60*1000));
+      document.cookie = "CrewCentreSession=Valid; "+loginDuration.toGMTString()+"; path=/";
+      //  slut
+      self.location.href = page;
+
     }
+    else {
+      // error
+    }
+  }
   };
   }]);
