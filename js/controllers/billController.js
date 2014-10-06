@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('billController', ['$scope', function($scope){
+myApp.controller('billController', ['$scope','$rootScope', function($scope,$rootScope){
   $scope.content = {
     "billList": [
       {"item": "item 1",
@@ -15,14 +15,14 @@ myApp.controller('billController', ['$scope', function($scope){
     ]
   }
   
-  $scope.totalBill = function(){
+  $rootScope.totalBill = function(){
     var total = 0;
 
     for (var i = 0 ; i <= $scope.content.billList.length-1; i++) {
       total = total + $scope.content.billList[i].expense;
     }
 
-    return total.toString();
+    return total;
   };
 
   }]);
