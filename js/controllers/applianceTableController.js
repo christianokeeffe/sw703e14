@@ -45,7 +45,17 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   };
 
   $scope.getAppliances();
-  $scope.getApplianceTask(2);
+  $scope.getApplianceTask(4);
+
+  $scope.openActionModal = function (selectedAction) {
+    if (controllerService.getTableContent() === undefined) { 
+      setTimeout(function(){
+        return $scope.openActionModal(selectedAction);
+      }, 10);
+    } else {
+      $scope.open(selectedAction);
+    }
+  }
 
 	$scope.open = function (selectedAction) {
     $rootScope.stopGameTime();
