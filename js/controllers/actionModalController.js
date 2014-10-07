@@ -26,6 +26,7 @@ myApp.controller('actionModalController', ['$scope', '$modalInstance','controlle
   };
 
   $scope.cancel = function () {
+    controllerService.setTableContent([]);
     $modalInstance.dismiss('cancel');
   };
 }]);

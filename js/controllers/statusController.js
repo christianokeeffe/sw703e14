@@ -12,6 +12,20 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		return (numbOfHours/(fullPercentDropInDays*24))*100;
 	}
 
+	$scope.$on('status-communication', function (event, data){
+		switch(data.category){
+			case "dishes":
+				$scope.dishes += data.value;
+				berak;
+			case "hygiene":
+				$scope.hygiene += data.value;
+				break;
+			case "laundry":
+				$scope.laundry += data.value;
+				break;
+		}	
+    });
+
 	$scope.$watch('dateEpoch', function() {
 		var hourChange = ($scope.dateEpoch - $scope.lastEpochUpdate)/3600;
 		$scope.lastEpochUpdate = $scope.dateEpoch;

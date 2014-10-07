@@ -37,7 +37,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       geturl.id = id;
       tasksFactory.getTasks(geturl,
       function (response) {
+        controllerService.setAllowed(false);
         controllerService.setTableContent(response.data);
+        controllerService.setAllowed(true);
       },
       function () {
         document.write(JSON.stringify(response));
@@ -48,14 +50,22 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   $scope.getAppliances();
 
   $scope.openActionModal = function (selectedAction) {
+    $rootScope.TOcounter = 0;
     $scope.getApplianceTask(selectedAction.id);
     console.log(JSON.stringify(selectedAction));
-    if (controllerService.getTableContent() === undefined) { 
-      setTimeout(function(){
-        return $scope.openActionModal(selectedAction);
-      }, 10);
-    } else {
+    console.log(JSON.stringify(controllerService.getTableContent()));
+    if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
+      $scope.TOcounter = 0; 
       $scope.open(selectedAction.name);
+    } else if($scope.TOcounter < 10){
+      setTimeout(function(){
+        $scope.TOcounter++;
+        console.log($scope.TOcounter);
+        return $scope.openActionModal(selectedAction);
+      }, 50);
+    } else {
+      alert("selected appliance have no taks");
+      $scope.TOcounter = 0;
     }
   }
 

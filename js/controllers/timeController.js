@@ -75,7 +75,7 @@ myApp.filter('time', ['$filter', function($filter)
     };
 }]);
 
-myApp.controller('timeController', ['$scope','$interval', function ($scope,$interval){
+myApp.controller('timeController', ['$scope', '$rootScope','$interval', function ($scope, $rootScope, $interval){
 	$scope.timerRunning = false;
     $scope.difference = 0;
 
@@ -87,6 +87,15 @@ myApp.controller('timeController', ['$scope','$interval', function ($scope,$inte
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
+                console.log($scope.item.id);
+                if($scope.item.id == 3 || $scope.item.id == 4){
+                    $rootScope.$broadcast('status-communication', {category: "laundry", value: 20});
+                } else if ($scope.item.id == 6){
+                    $rootScope.$broadcast('status-communication', {category: "dishes", value: 20});
+                } else if ($scope.item.id == 7){
+                    $rootScope.$broadcast('status-communication', {category: "hygiene", value: 20});
+                }
+
                 clearInterval(tid);
             }
         },1000);
@@ -96,7 +105,7 @@ myApp.controller('timeController', ['$scope','$interval', function ($scope,$inte
         console.log('item name: ' + $scope.item.name + ', input: ' + data.username + ', time: ' + data.runTime);
         if($scope.item.name == data.username){
             runTime = new Date(0);
-            runTime.setUTCSeconds($scope.dateEpoch + data.runTime);
+            runTime.setUTCSeconds($scope.dateEpoch + 150000);
             $scope.startTimer(runTime);
         }
     });
