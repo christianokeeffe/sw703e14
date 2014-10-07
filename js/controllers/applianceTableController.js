@@ -15,6 +15,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     { 
       appliancesFactory.getAppliances(geturl,
       function (response) {
+        console.log(JSON.stringify(response.data));
         $scope.appliances = response.data;
       },
       function () {
@@ -45,15 +46,16 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   };
 
   $scope.getAppliances();
-  $scope.getApplianceTask(4);
 
   $scope.openActionModal = function (selectedAction) {
+    $scope.getApplianceTask(selectedAction.id);
+    console.log(JSON.stringify(selectedAction));
     if (controllerService.getTableContent() === undefined) { 
       setTimeout(function(){
         return $scope.openActionModal(selectedAction);
       }, 10);
     } else {
-      $scope.open(selectedAction);
+      $scope.open(selectedAction.name);
     }
   }
 

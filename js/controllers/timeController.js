@@ -83,7 +83,7 @@ myApp.controller('timeController', ['$scope','$interval', function ($scope,$inte
         $scope.timerRunning = true;
         var tid = setInterval(function(){
             $scope.difference = runTime.getTime() - $scope.curDate().getTime();
-            console.log($scope.difference + " " + tid);
+            console.log($scope.difference + " " + tid + "-"+ runTime.getTime() +"-"+ $scope.curDate().getTime());
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
@@ -95,8 +95,8 @@ myApp.controller('timeController', ['$scope','$interval', function ($scope,$inte
     $scope.$on('module-communication', function (event, data){
         console.log('item name: ' + $scope.item.name + ', input: ' + data.username + ', time: ' + data.runTime);
         if($scope.item.name == data.username){
-            var runTime = new Date(0);
-            runTime.setUTCSeconds($scope.dateEpoch + 600000);
+            runTime = new Date(0);
+            runTime.setUTCSeconds($scope.dateEpoch + data.runTime);
             $scope.startTimer(runTime);
         }
     });
