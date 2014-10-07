@@ -7,7 +7,8 @@ var api_resource_appliances = api_url + "/appliances";
 var api_resource_tasks = api_url + "/task";
     	
 services.factory("appliancesFactory", function($resource) {
-    return $resource(api_resource_appliances + ":endurl", {}, {
+    return $resource(api_resource_appliances + "/:userID:endurl", {}, {
+
         //getAppliancesPOST : { method: 'POST', isArray: false, params: {'publicKey': '@publicKey', 'request':'@request', 'requestHash':'@requestHash'}},
         getAppliances : { method: 'GET', isArray: false}
     });
