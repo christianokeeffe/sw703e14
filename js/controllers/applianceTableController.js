@@ -13,7 +13,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     }
     else
     { 
-      geturl.userID = $scope.userID;
       appliancesFactory.getAppliances(geturl,
       function (response) {
         console.log(JSON.stringify(response.data));
