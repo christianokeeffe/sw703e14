@@ -1,7 +1,7 @@
 <div ng-controller="userLoginController">
-  <form align="center" novalidate class="simple-form">
-    User name: <input type="text" ng-model="user.userName" /><br />
-    Password: <input type="password" ng-model="user.password" /><br />
-    <button ng-click="Login()">login</button>
+  <form novalidate class="col-md-8">
+    {{'regUser.username' | translate}} : <input class="form-control" type="text" ng-model="user.userName" /><br />
+    {{'regUser.pass' | translate}} : <input class="form-control" type="password" ng-model="user.password" /><br />
+    <button class="btn btn-default" ng-click="Login()">{{'Login.ButtonText' | translate}}</button>
   </form>
 </div>

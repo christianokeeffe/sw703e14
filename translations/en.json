@@ -74,5 +74,9 @@
   "actionModalController":
   {
     "selectItem":"Select a task"
+  },
+  "Login":
+  {
+    "ButtonText":"Log in"
   }
 }
