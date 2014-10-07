@@ -19,9 +19,9 @@
 					</button>
 				</td>
 				<td>
-					<!--<div ng-controller="timeController">
-						<timer autostart="false" countdown="item.runTime" interval="1000">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds </timer>
-					</div>-->
+					<div ng-controller="timeController">
+						{{difference | time}} 
+					</div>
 				</td>
 				</div>
 			</tr>

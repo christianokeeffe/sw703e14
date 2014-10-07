@@ -57,7 +57,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
 
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
-        $scope.$broadcast('module-communication', {username: returnValue.item.name});
+        $scope.$broadcast('module-communication', {username: controllerService.getTask().name, runTime: controllerService.getTask().executionTime});
       } else {
         $scope.openLowPrice();
       };

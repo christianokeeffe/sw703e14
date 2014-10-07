@@ -8,8 +8,8 @@ myApp.controller('actionModalController', ['$scope','$modalInstance','controller
   $scope.selected;
   $scope.alertShown = false;
 
-  $scope.clicked = function(selectedItem) {
-    $scope.selected = selectedItem;
+  $scope.clicked = function(selectedTask) {
+    $scope.selected = selectedTask;
     $scope.alertShown = false;
     $scope.selectedItem = $scope.selected.name;
   };
