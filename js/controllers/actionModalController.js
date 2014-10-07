@@ -1,9 +1,11 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('actionModalController', ['$scope','$modalInstance','controllerService','formatRequest', 'tasksFactory', function($scope, $modalInstance, controllerService, formatRequest, tasksFactory){
+myApp.controller('actionModalController', ['$scope', '$modalInstance','controllerService','formatRequest', 'tasksFactory', '$translate', function($scope, $modalInstance, controllerService, formatRequest, tasksFactory, $translate){
   $scope.tasks = controllerService.getTableContent();
   $scope.header = controllerService.getAppliance();
-  $scope.selectedItem = "selectItem"
+  $translate('actionModalController.selectItem').then(function (translations){
+  $scope.selectedItem = translations;});
+
   $scope.buttonStyle = "margin-bottom: -15px";
   $scope.selected;
   $scope.alertShown = false;

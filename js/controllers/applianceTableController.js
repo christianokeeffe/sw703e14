@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('applianceTableController', ['$scope','$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
+myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
   $scope.getAppliances = function()
   {
@@ -45,9 +45,20 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
   };
 
   $scope.getAppliances();
-  $scope.getApplianceTask(2);
+  $scope.getApplianceTask(4);
+
+  $scope.openActionModal = function (selectedAction) {
+    if (controllerService.getTableContent() === undefined) { 
+      setTimeout(function(){
+        return $scope.openActionModal(selectedAction);
+      }, 10);
+    } else {
+      $scope.open(selectedAction);
+    }
+  }
 
 	$scope.open = function (selectedAction) {
+    $rootScope.stopGameTime();
     controllerService.setAppliance(selectedAction);
     var modalInstance = $modal.open({
       templateUrl: '/sw703e14/views/actionModal.html',
@@ -57,6 +68,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
 
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
+        $rootScope.startGameTime();
         $scope.$broadcast('module-communication', {username: controllerService.getTask().name, runTime: controllerService.getTask().executionTime});
       } else {
         $scope.openLowPrice();
@@ -73,6 +85,7 @@ myApp.controller('applianceTableController', ['$scope','$modal','appliancesFacto
 
     modalInstance.result.then(function (beforeTime){
       alert(beforeTime);
+      $rootScope.startGameTime();
     });
   };
 }]);

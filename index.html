@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html ng-app="smartgridgame">
   <head>
-   <link rel="stylesheet" type="text/css" href="styles/vendor/bootstrap.min.css" />
-	 <link rel="stylesheet" type="text/css" href="styles/face.css" />
-   <script src="js/vendor/jquery.min.js"></script>
-   <script src="js/vendor/bootstrap.min.js"></script>
-   <script type="text/javascript" src="js/vendor/hmac-sha256.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/face.css" />
+    <script src="js/vendor/jquery.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/vendor/hmac-sha256.js"></script>
     <script type="text/javascript" src="js/vendor/angular.min.js"></script>
     <script type="text/javascript" src="js/vendor/angular-route.min.js"></script>
     <script type="text/javascript" src="js/vendor/angular-translate.min.js"></script>
@@ -18,7 +18,9 @@
     <script type="text/javascript" src="js/vendor/timer.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers/applianceTableController.js"></script>
+    <script src="js/vendor/angular-locale_da-dk.js"></script>
     <script type="text/javascript" src="js/controllers/mainController.js"></script>
+    <script type="text/javascript" src="js/controllers/userRegisterController.js"></script>
     <script type="text/javascript" src="js/controllers/languageController.js"></script>
     <script type="text/javascript" src="js/controllers/priceTableController.js"></script>
     <script type="text/javascript" src="js/controllers/statusController.js"></script>
@@ -29,31 +31,28 @@
     <script type="text/javascript" src="js/controllers/timeController.js"></script>
     <script type="text/javascript" src="js/controllers/actionModalController.js"></script>
     <script type="text/javascript" src="js/controllers/lowPriceController.js"></script>
+    <script type="text/javascript" src="js/services/userService.js"></script>
+    <script type="text/javascript" src="js/services/gamedataService.js"></script>
     <script type="text/javascript" src="js/controllers/taskTableController2.js"></script>
     <script type="text/javascript" src="js/controllers/billController.js"></script>
     <script src="js/filters/currencyWithMinus.js"></script>
   </head>
-  <body ng-controller="mainController">
-    {{curDate() | date:'HH:mm, EEEE d MMMM yyyy'}}
-	<div ng-include="'./views/scoreArea.html'">
-	</div>
-	<div class="container-fluid">
-		<div class ="row">
-			<div class="col-md-3">
-				<div ng-include="'./views/applianceTable.html'"></div>
-			</div>
-			<div class="col-md-1"></div>
-			<div class="col-md-3">
-			 <div ng-include="'./views/priceTable.html'"></div>
-                <div ng-include="'./views/taskTable2.html'"></div>
-                <div ng-include="'./views/billTable.html'"></div>
-			 </div>
-		</div>
-	</div>
-<!-- 	<div ng-include="'./views/actionModal.html'"></div>
-  <div ng-include="'./views/lowPriceModal.html'"></div> -->
-
-  <div id="footer" class="col-md-12" style="padding-left: 20px; padding-right: 20px;" ng-cloak>
+  <body style=" padding-top: 70px;">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">{{'navbar-headline' | translate}}</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+    <div ng-view></div>
+    <div id="footer" class="col-md-12" style="padding-left: 20px; padding-right: 20px;" ng-cloak>
         <hr>
         <div class="col-md-8 col-md-offset-2">
             <p style="text-align: center">

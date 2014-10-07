@@ -1,0 +1,18 @@
+<div ng-controller="mainController">
+{{curDate() | date:'HH:mm, EEEE d MMMM yyyy'}}
+	<div ng-include="'./views/scoreArea.html'">
+	</div>
+	<div class="container-fluid">
+		<div class ="row">
+			<div class="col-md-3">
+				<div ng-include="'./views/applianceTable.html'"></div>
+			</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-3">
+				<div ng-include="'./views/priceTable.html'"></div>
+                <div ng-include="'./views/taskTable2.html'"></div>
+                <div ng-include="'./views/billTable.html'"></div>
+			</div>
+		</div>
+	</div>
+    </div>

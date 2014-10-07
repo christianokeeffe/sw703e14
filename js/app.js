@@ -1,6 +1,20 @@
 (function(){
 	
   var app = angular.module('smartgridgame', ['pascalprecht.translate','ui.bootstrap','ngResource', 'ngRoute','ngCookies','ngDropdowns','timer']);
+  app.config(['$locationProvider','$routeProvider',
+  function($locationProvider,$routeProvider) {
+    $routeProvider.
+      when('/', {
+        templateUrl: './views/mainView.html'
+      }).
+      when('/reg-user', {
+        templateUrl: './views/regUser.html'
+      }).
+      otherwise({
+        redirectTo: '/'
+      });
+  }]);
+
   app.config(function($httpProvider) {
   $httpProvider.interceptors.push(function($q) {
     var realEncodeURIComponent = window.encodeURIComponent;

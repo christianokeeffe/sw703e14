@@ -3,8 +3,8 @@
 /* Services */
 var services = angular.module('smartgridgame');
 
-var api_url = "http://localhost/sw703e14-backend";
-//var api_url = "http://api.smartgrid.okeeffe.dk";
+//var api_url = "http://localhost/sw703e14-backend";
+var api_url = "http://api.smartgrid.okeeffe.dk";
 
 
 var publicHash = 'a2105103cd48b1a8601486fc52d8bb43a1156a49b2f36f1d28ed177d0203ba99';
@@ -67,7 +67,20 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
 		    };
 	        return headersVar;
         }
-		
+    };
+    this.put = function(input) {
+    	if (thisvar.checkSession()) {
+	    	input.language = $translate.use();
+			var stringInput = JSON.stringify(input);
+	    	var hash = String(CryptoJS.HmacSHA256(stringInput, privateHash));
+	    	var headersVar = {
+		    'publicKey': publicHash,
+		    'request': stringInput,
+		    'requestHash':hash,
+		    'session':sessionid
+		    };
+	        return headersVar;
+        }
     };
     this.get = function(input) {
     	if (thisvar.checkSession()) {

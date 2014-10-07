@@ -3,13 +3,15 @@
   "HEADLINE":"What an awesome module!",
   "PRESS":"Press",
   "ACTIVATE":"Activate",
+  "navbar-headline":"Smart Grid",
   "scorearea":
   {
   	"score":"Score",
   	"points":"points",
   	"dishes":"Clean Dishes",
   	"laundry":"Clean Clothes",
-  	"hygiene":"Hygiene"
+  	"hygiene":"Hygiene",
+    "balance":"Balance"
   },
   "textToPriceTable":
   {
@@ -45,10 +47,32 @@
     "done": "Task Done",
     "notDone": "Task not done"
   },
+  "regUser":
+  {
+    "username":"Username",
+    "lastname":"Lastname",
+    "firstname":"Firstname",
+    "email":"Email address",
+    "pass":"Password",
+    "submit":"Register User",
+    "errors":{
+      "usernamereq":"Username is required.",
+      "firstnamereq":"Firstname is required.",
+      "lastnamereq":"Lastname is required.",
+      "emailreq":"The email is required",
+      "emailerror":"The email address is invalid",
+      "emailduberror":"This email address has allready been used",
+      "passwordreq":"The password is required"
+    }
+  },
   "billTable":
   {
     "item" : "Bill",
     "expense" : "Expense",
     "totalBill" : "Total Bill"
+  },
+  "actionModalController":
+  {
+    "selectItem":"Select a task"
   }
 }

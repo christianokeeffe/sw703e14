@@ -1,0 +1,36 @@
+<div class="col-md-8" ng-controller="userRegisterController">
+<form role="form" name="reguserform" novalidate>
+  <div class="form-group">
+    <label for="firstname">{{'regUser.firstname' | translate}}</label>
+    <input type="text" class="form-control" name="firstname" id="firstname" ng-model="user.firstname" required placeholder="{{'regUser.firstname' | translate}}">
+    <p class="help-block" ng-if="reguserform.firstname.$error.required">{{'regUser.errors.firstnamereq' | translate}}</p>
+  </div>
+  <div class="form-group">
+    <label for="lastname">{{'regUser.lastname' | translate}}</label>
+    <input type="text" class="form-control" id="lastname" name="lastname" required ng-model="user.lastname" placeholder="{{'regUser.lastname' | translate}}">
+    <p class="help-block" ng-if="reguserform.lastname.$error.required">{{'regUser.errors.lastnamereq' | translate}}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="email">{{'regUser.email' | translate}}</label>
+    <input type="email" class="form-control" name="email" id="email" ng-model="user.email" required placeholder="{{'regUser.email' | translate}}">
+<p class="help-block" ng-show="reguserform.email.$error.required">{{'regUser.errors.emailreq' | translate}}</p>
+      <p class="help-block" ng-show="reguserform.email.$dirty && reguserform.email.$error.email">{{'regUser.errors.emailerror' | translate}}</p>
+      <p class="help-block" ng-if="invalidEmail">{{'regUser.errors.emailduberror' | translate}}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="username">{{'regUser.username' | translate}}</label>
+    <input type="text" class="form-control" id="username" name="username" required ng-model="user.username" placeholder="{{'regUser.username' | translate}}">
+    <p class="help-block" ng-if="reguserform.username.$error.required">{{'regUser.errors.usernamereq' | translate}}</p>
+  </div>
+    
+  <div class="form-group">
+    <label for="password">{{'regUser.pass' | translate}}</label>
+    <input type="password" class="form-control" id="password" name="password" required ng-model="user.password" placeholder="{{'regUser.pass' | translate}}">
+    <p class="help-block" ng-if="reguserform.password.$error.required">{{'regUser.errors.passwordreq' | translate}}</p>
+  </div>
+
+  <button type="submit" ng-disabled="reguserform.$invalid" ng-click="regUser()" class="btn btn-default">{{'regUser.submit' | translate}}</button>
+</form>
+</div>
