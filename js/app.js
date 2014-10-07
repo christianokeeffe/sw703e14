@@ -10,6 +10,9 @@
       when('/reg-user', {
         templateUrl: './views/regUser.html'
       }).
+      when('/login', {
+        templateUrl: './views/userLogin.html'
+      }).
       otherwise({
         redirectTo: '/'
       });

@@ -1,7 +1,6 @@
  {
   "HEADLINE":"What an awesome module!",
   "PRESS":"TEST",
-  "ACTIVATE":"Activate",
   "scorearea":
   {
   	"score":"Score",
@@ -25,10 +24,6 @@
   {
     "items":"Items"
   },
-  "taskmodal":
-  {
-    "delay":"Set activation time"
-  },
   "TrueTaskTable":
   {
     "dailyTasks":"Daily tasks",
@@ -42,5 +37,12 @@
     "item" : "Item",
     "expense" : "Expense",
     "totalBill" : "Total Bill"
+  },
+  "actionModal":
+  {
+    "selectItem":"Vælg en opgave",
+    "ACTIVATE":"Start nu",
+    "delay":"Laveste pris",
+    "noSelection":"Vælg venligst en opgave"
   }
 }
