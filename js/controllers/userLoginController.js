@@ -6,6 +6,7 @@ myApp.controller('userLoginController', ['$scope','usersFactory', 'authenticatio
 
   $scope.Login = function(inputUser, inputPassword){
     var geturl = {};
+    var tokens = [];
     geturl.endurl = "/"+inputUser+"/"+inputPassword;
   geturl = formatRequest.get({});
   if(geturl === undefined)
@@ -23,17 +24,17 @@ myApp.controller('userLoginController', ['$scope','usersFactory', 'authenticatio
     });
     if(response.data != null) {
       //login
-      // taget fra stackoverflow
-      var sessionTimeout = 1; //hours
-      var loginDuration = new Date();
-      loginDuration.setTime(loginDuration.getTime()+(sessionTimeout*60*60*1000));
-      document.cookie = "CrewCentreSession=Valid; "+loginDuration.toGMTString()+"; path=/";
-      //  slut
-      self.location.href = page;
-
+      var expires = new Date();
+      expires.setDate((new Date()).getDate() + 5);
+      var token = jwt.encode({
+          userName: inputUser,
+          expires: expires
+      }, app.get('jwtTokenSecret'));
+        tokens.push(token);
+        response.send(200, { access_token: token, userName: inputUser });
     }
     else {
-      // error
+      response.send(401, "Invalid credentials");
     }
   }
   };
