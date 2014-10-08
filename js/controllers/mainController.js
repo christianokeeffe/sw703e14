@@ -5,7 +5,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
 	$scope.balance = 0;
-	$scope.userID = 0;
+	$scope.userID = 1;
 
     if($rootScope.currentUser === undefined)
     {
