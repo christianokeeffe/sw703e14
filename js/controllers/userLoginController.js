@@ -18,8 +18,16 @@ $scope.user = {};
       geturl.pass = $scope.user.password;
       usersLoginFactory.findUser(geturl,
       function (response) {
-        $rootScope.currentUser = response.data;
-        $location.path("/");
+        switch(response.status_code)
+        {
+          case '200':
+            $rootScope.currentUser = response.data;
+          $location.path("/");
+            break;
+        case '409':
+          $scope.invalidEmail = true;
+          break;
+        }
       },
       function () {
         document.write(JSON.stringify(response));
