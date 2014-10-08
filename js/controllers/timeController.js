@@ -13,7 +13,6 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
 
         $scope.$watch('dateEpoch', function(){
             $scope.difference = runTime.getTime() - $scope.curDate().getTime();
-            
             if($scope.difference <= 0 && $scope.timerRunning)
             {
                 $scope.timerRunning = false;
@@ -57,7 +56,7 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         console.log('item name: ' + $scope.item.name + ', input: ' + data.username + ', time: ' + data.runTime);
         if($scope.item.name == data.username){
             runTime = new Date(0);
-            runTime.setUTCSeconds($scope.dateEpoch + 150000);
+            runTime.setUTCSeconds($scope.curDate.getTime() + 150000);
             $scope.startTimer(runTime);
         }
     });
