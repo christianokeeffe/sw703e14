@@ -52,8 +52,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   $scope.openActionModal = function (selectedAction) {
     $rootScope.TOcounter = 0;
     $scope.getApplianceTask(selectedAction.id);
-    console.log(JSON.stringify(selectedAction));
-    console.log(JSON.stringify(controllerService.getTableContent()));
+
     if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
       $scope.TOcounter = 0; 
       $scope.open(selectedAction.name);
@@ -62,9 +61,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
         $scope.TOcounter++;
         console.log($scope.TOcounter);
         return $scope.openActionModal(selectedAction);
-      }, 50);
+      }, 100);
     } else {
-      alert("selected appliance have no taks");
+      alert("selected appliance have no tasks");
       $scope.TOcounter = 0;
     }
   }
