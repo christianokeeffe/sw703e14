@@ -74,5 +74,9 @@
     "ACTIVATE":"Activate",
     "delay":"Set activation time",
     "noSelection":"Please select a task"
+  },
+  "Login":
+  {
+    "ButtonText":"Log in"
   }
 }
