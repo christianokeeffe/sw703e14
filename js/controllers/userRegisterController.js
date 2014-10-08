@@ -17,7 +17,6 @@ myApp.controller('userRegisterController', ['$scope','$interval','usersFactory',
 	  { 
 	    usersFactory.registerUser(params,
 	    function (response) {
-	    	alert(JSON.stringify(response));
 	    	switch(response.status_code)
 	    	{
 	    		case '200':
