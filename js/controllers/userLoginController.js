@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('userLoginController', ['$scope','usersLoginFactory','formatRequest','$rootScope','$location', function($scope, usersLoginFactory,formatRequest,$rootScope,$location){
+myApp.controller('userLoginController', ['$scope','usersLoginFactory','formatRequest','$rootScope','$location','$sessionStorage', function($scope, usersLoginFactory,formatRequest,$rootScope,$location,$sessionStorage){
 $scope.user = {};
   $scope.Login = function(){
     var geturl = {};
@@ -21,7 +21,7 @@ $scope.user = {};
         switch(response.status_code)
         {
           case '200':
-            $rootScope.currentUser = response.data;
+            $sessionStorage.currentUser = response.data;
           $location.path("/");
             break;
         case '409':
