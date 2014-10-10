@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location){
+myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage){
 	$scope.gameSecOnRealSec = 50000;
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
@@ -42,12 +42,13 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		return $rootScope.currentUser !== undefined;
 	}
 
-    if($rootScope.currentUser === undefined)
+    if($sessionStorage.currentUser === undefined)
     {
     	$location.path("/login");
 	}
 	else
 	{
+		$rootScope.currentUser = $sessionStorage.currentUser;
 		$rootScope.startGameTime();
 	}
 
