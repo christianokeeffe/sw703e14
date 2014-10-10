@@ -73,7 +73,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     $rootScope.stopGameTime();
     controllerService.setAppliance(selectedAction);
     var modalInstance = $modal.open({
-      templateUrl: '/sw703e14/views/actionModal.html',
+      templateUrl: 'views/actionModal.html',
       controller: 'actionModalController',
       size: 'sm'
     });
@@ -90,7 +90,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
   $scope.openLowPrice = function() {
     var modalInstance = $modal.open({
-      templateUrl: '/sw703e14/views/lowPriceModal.html',
+      templateUrl: 'views/lowPriceModal.html',
       controller: 'lowPriceController',
       size: ""
     });
