@@ -5,16 +5,56 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
 	$scope.balance = 0;
-	$scope.userID = 1;
+
+
+	$rootScope.startGameTime = function() {
+		interval = $interval(function(){
+		$scope.dateEpoch += $scope.gameSecOnRealSec;
+		if($scope.dateEpoch - timeSinceLastWeek >= 604800)
+		{
+			timeSinceLastWeek = timeSinceLastWeek + 604800;
+			$scope.balance += 500;
+			$scope.balance += $rootScope.totalBill();
+			$scope.saveData();
+		}
+		},1000);
+	}
+
+
+	$rootScope.stopGameTime = function() {
+		$interval.cancel(interval);
+	}
+
+	$scope.getUserID = function ()
+	{
+		if($scope.validUser())
+		{
+			return $rootScope.currentUser.id;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+
+	$scope.validUser = function ()
+	{
+		return $rootScope.currentUser !== undefined;
+	}
 
     if($rootScope.currentUser === undefined)
     {
     	$location.path("/login");
 	}
+	else
+	{
+		$rootScope.startGameTime();
+	}
+
 	$scope.saveData = function()
 	{
 		var gamedata = {};
-		gamedata.userID = $scope.userID;
+		gamedata.userID = $scope.getUserID();
 		gamedata.score = $rootScope.score;
 		gamedata.savings = $scope.balance;
 		gamedata.date = $scope.dateEpoch;
@@ -43,23 +83,5 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		return d;
 	}
 
-	$rootScope.startGameTime = function() {
-		interval = $interval(function(){
-		$scope.dateEpoch += $scope.gameSecOnRealSec;
-		if($scope.dateEpoch - timeSinceLastWeek >= 604800)
-		{
-			timeSinceLastWeek = timeSinceLastWeek + 604800;
-			$scope.balance += 500;
-			$scope.balance += $rootScope.totalBill();
-			$scope.saveData();
-		}
-		},1000);
-	}
-
-	$rootScope.startGameTime();
-
-	$rootScope.stopGameTime = function() {
-		$interval.cancel(interval);
-	}
 	
 } ]);
