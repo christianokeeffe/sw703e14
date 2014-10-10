@@ -27,7 +27,9 @@
     "items":"Appliances",
     "activate":"Start task",
     "time":"Timer",
-    "PRESS":"Activate"
+    "PRESS":"Activate",
+    "name": "Task",
+    "deadline":"Deadline"
   },
   "lowPriceModal":
   {

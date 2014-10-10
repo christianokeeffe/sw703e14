@@ -2,6 +2,27 @@
 	<table class ="table table-condensed table-bordered">
 		<thead>
 			<tr>
+				<th>{{'applianceTable.name' | translate}}</th>
+				<th>{{'applianceTable.deadline' | translate}}</th>
+			<tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="schedule in datesToSchedule">
+			<div>
+				<td>
+					{{schedule.applianceName}}
+				</td>
+				<td>
+					{{schedule.deadline}}
+				</td>
+				</div>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class ="table table-condensed table-bordered">
+		<thead>
+			<tr>
 				<th>{{'applianceTable.items' | translate}}</th>
 				<th>{{'applianceTable.activate' | translate}}</th>
 				<th>{{'applianceTable.time' | translate}}</th>
