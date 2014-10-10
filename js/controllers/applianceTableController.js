@@ -85,7 +85,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        $scope.$broadcast('module-communication', {applianceName: controllerService.getAppliance(), runTime: controllerService.getTask().executionTime});
+        $scope.$broadcast('module-communication', {applianceName: controllerService.getAppliance().name, runTime: controllerService.getTask().executionTime});
       } else {
         $scope.openLowPrice();
       };

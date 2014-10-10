@@ -49,15 +49,15 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 				}
 				break;
 			case "laundry":
-				/*if($scope.laundry + data.value > 100)
+				if($scope.laundry + data.value > 100)
 				{
 					$scope.laundry = 100;
 				}
 				else
 				{
 					$scope.laundry += data.value;
-				}*/
-				checkStatusLimit($scope.laundry,data.value);
+				}
+				//checkStatusLimit($scope.laundry,data.value);
 				break;
 		}	
     });

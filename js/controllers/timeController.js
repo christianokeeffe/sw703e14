@@ -12,7 +12,7 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         $scope.timerRunning = true;
 
         var unSuscribeWatch = $scope.$watch('dateEpoch', function(){
-            $scope.difference = runTime.getTime() - $scope.curDate().getTime();
+            $scope.difference = runTime - $scope.curDate().getTime();
             console.log($scope.difference);
             if($scope.difference <= 0)
             {
@@ -32,10 +32,8 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
     };
 
     $scope.$on('module-communication', function (event, data){
-        console.log('item name: ' + $scope.item.name + ', input: ' + data.applianceName + ', time: ' + data.runTime);
         if($scope.item.name == data.applianceName){
-            runTime = new Date(0);
-            runTime.setUTCSeconds(($scope.curDate().getTime()/1000) + 150000);
+            var runTime = $scope.curDate().getTime()/1000 + data.runtime;
             $scope.startTimer(runTime);
         }
     });
