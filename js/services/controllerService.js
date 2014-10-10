@@ -26,6 +26,8 @@ myApp.service('controllerService', function () {
 
 	this.setTableContent = function(tableContent) {
 		TableContent = tableContent;
+		console.log("service " + JSON.stringify(tableContent));
+		TableContentAllowed = true;
 	}
 
 	this.isAllowed = function(){

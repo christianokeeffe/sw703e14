@@ -2,6 +2,12 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
+  var datesToSchedule = [];
+
+  var schedular = $scope.$watch('dataEpoch', function(){
+        
+  });
+
   $scope.getAppliances = function()
   {
     var geturl = formatRequest.get({});
@@ -38,9 +44,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       geturl.id = id;
       tasksFactory.getTasks(geturl,
       function (response) {
-        controllerService.setAllowed(false);
         controllerService.setTableContent(response.data);
-        controllerService.setAllowed(true);
       },
       function () {
         document.write(JSON.stringify(response));
@@ -50,18 +54,24 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
   $scope.getAppliances();
 
-  $scope.openActionModal = function (selectedAction) {
-    $rootScope.TOcounter = 0;
+  $scope.preOpen = function (selectedAction){
+    controllerService.setAllowed(false);
     $scope.getApplianceTask(selectedAction.id);
+    openActionModal(selectedAction);
+  }
+
+  openActionModal = function (selectedAction) {
+    $rootScope.TOcounter = 0;
 
     if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
+      console.log("modal: " + JSON.stringify(controllerService.getTableContent()));
       $scope.TOcounter = 0; 
       $scope.open(selectedAction);
     } else if($scope.TOcounter < 10){
       setTimeout(function(){
         $scope.TOcounter++;
         console.log($scope.TOcounter);
-        return $scope.openActionModal(selectedAction);
+        return openActionModal(selectedAction);
       }, 100);
     } else {
       alert("selected appliance have no tasks");
@@ -81,7 +91,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        $scope.$broadcast('module-communication', {applianceName: controllerService.getAppliance(), runTime: controllerService.getTask().executionTime});
+        $scope.$broadcast('module-communication', {applianceName: controllerService.getAppliance().name, runTime: controllerService.getTask().executionTime});
       } else {
         $scope.openLowPrice();
       };

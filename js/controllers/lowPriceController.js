@@ -6,6 +6,7 @@ myApp.controller('lowPriceController', ['$scope', '$rootScope', '$modalInstance'
   $scope.alertShown = false;
 
   $scope.close = function () {
+    $scope.startGameTime();
     $modalInstance.dismiss("Closed");
   };
 

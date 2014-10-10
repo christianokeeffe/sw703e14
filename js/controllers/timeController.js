@@ -12,13 +12,13 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         $scope.timerRunning = true;
 
         var unSuscribeWatch = $scope.$watch('dateEpoch', function(){
-            $scope.difference = runTime.getTime() - $scope.curDate().getTime();
+            $scope.difference = runTime - $scope.curDate().getTime() / 1000;
             console.log($scope.difference);
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
-                console.log($scope.item.id);
-                if($scope.item.id == 3 || $scope.item.id == 4){
+                console.log($scope.item.type);
+                if($scope.item.type == 3 || $scope.item.id == 4){
                     statusBroadcast("laundry",20);
                 } else if ($scope.item.id == 6){
                     statusBroadcast("dishes",20);
@@ -32,10 +32,8 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
     };
 
     $scope.$on('module-communication', function (event, data){
-        console.log('item name: ' + $scope.item.name + ', input: ' + data.applianceName + ', time: ' + data.runTime);
         if($scope.item.name == data.applianceName){
-            runTime = new Date(0);
-            runTime.setUTCSeconds(($scope.curDate().getTime()/1000) + 150000);
+            var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.runTime);
             $scope.startTimer(runTime);
         }
     });
