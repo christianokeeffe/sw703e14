@@ -56,7 +56,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
       $scope.TOcounter = 0; 
-      $scope.open(selectedAction.name);
+      $scope.open(selectedAction);
     } else if($scope.TOcounter < 10){
       setTimeout(function(){
         $scope.TOcounter++;
