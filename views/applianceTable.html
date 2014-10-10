@@ -2,9 +2,9 @@
 	<table class ="table table-condensed table-bordered">
 		<thead>
 			<tr>
-				<th>{{'tasktable.items' | translate}}</th>
-				<th>{{'ACTIVATE' | translate}}</th>
-				<th>{{'tasktable.time | translate'}}</th>
+				<th>{{'applianceTable.items' | translate}}</th>
+				<th>{{'applianceTable.activate' | translate}}</th>
+				<th>{{'applianceTable.time' | translate}}</th>
 			<tr>
 		</thead>
 		<tbody>
@@ -14,14 +14,14 @@
 					{{item.name}}
 				</td>
 				<td>
-					<button type="button" class="btn btn-primary" ng-click="openActionModal(item.name)">
-						{{'PRESS' | translate}}
+					<button type="button" class="btn btn-primary" ng-click="openActionModal(item)">
+						{{'applianceTable.PRESS' | translate}}
 					</button>
 				</td>
 				<td>
-					<!--<div ng-controller="timeController">
-						<timer autostart="false" countdown="item.runTime" interval="1000">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds </timer>
-					</div>-->
+					<div ng-controller="timeController">
+						{{difference | time}} 
+					</div>
 				</td>
 				</div>
 			</tr>

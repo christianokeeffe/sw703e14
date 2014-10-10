@@ -16,6 +16,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       geturl.userID = $scope.getUserID();
       appliancesFactory.getAppliances(geturl,
       function (response) {
+        console.log(JSON.stringify(response.data));
         $scope.appliances = response.data;
       },
       function () {
@@ -37,7 +38,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       geturl.id = id;
       tasksFactory.getTasks(geturl,
       function (response) {
+        controllerService.setAllowed(false);
         controllerService.setTableContent(response.data);
+        controllerService.setAllowed(true);
       },
       function () {
         document.write(JSON.stringify(response));
@@ -46,15 +49,23 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   };
 
   $scope.getAppliances();
-  $scope.getApplianceTask(4);
 
   $scope.openActionModal = function (selectedAction) {
-    if (controllerService.getTableContent() === undefined) { 
-      setTimeout(function(){
-        return $scope.openActionModal(selectedAction);
-      }, 10);
-    } else {
+    $rootScope.TOcounter = 0;
+    $scope.getApplianceTask(selectedAction.id);
+
+    if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
+      $scope.TOcounter = 0; 
       $scope.open(selectedAction);
+    } else if($scope.TOcounter < 10){
+      setTimeout(function(){
+        $scope.TOcounter++;
+        console.log($scope.TOcounter);
+        return $scope.openActionModal(selectedAction);
+      }, 100);
+    } else {
+      alert("selected appliance have no tasks");
+      $scope.TOcounter = 0;
     }
   }
 
@@ -70,7 +81,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        $scope.$broadcast('module-communication', {username: returnValue.item.name});
+        $scope.$broadcast('module-communication', {applianceName: controllerService.getAppliance(), runTime: controllerService.getTask().executionTime});
       } else {
         $scope.openLowPrice();
       };

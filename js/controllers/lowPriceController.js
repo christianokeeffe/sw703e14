@@ -1,7 +1,7 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('lowPriceController', ['$scope', '$rootScope', '$modalInstance', 'controllerService', function($scope, $rootScope ,$modalInstance, controllerService) {
-  $scope.header = controllerService.getAppliance();
+  $scope.header = controllerService.getAppliance().name;
   $scope.task = controllerService.getTask().name;
   $scope.alertShown = false;
 
@@ -16,6 +16,5 @@ myApp.controller('lowPriceController', ['$scope', '$rootScope', '$modalInstance'
     } else {
     	$modalInstance.close($scope.beforeTime); 	
     }
-
   };
 }]);

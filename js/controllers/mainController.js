@@ -75,7 +75,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	        document.write(JSON.stringify(response));
 	    });
 	  }
-	};  
+	};
 
 	$rootScope.curDate = function(){
 		var d = new Date(0); // The 0 there is the key, which sets the date to the epoch

@@ -4,7 +4,9 @@ myApp.service('controllerService', function () {
 	var beforeTime;
 	var Appliance;
 	var Task;
-	var TableContent;
+	var TableContent = [];
+
+	var TableContentAllowed = false;
 
 	this.setAppliance = function(appliance) {
 		Appliance = appliance;
@@ -24,6 +26,14 @@ myApp.service('controllerService', function () {
 
 	this.setTableContent = function(tableContent) {
 		TableContent = tableContent;
+	}
+
+	this.isAllowed = function(){
+		return TableContentAllowed;
+	}
+
+	this.setAllowed = function(value){
+		TableContentAllowed = value;
 	}
 
 	this.getTableContent = function() {

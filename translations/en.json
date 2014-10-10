@@ -1,8 +1,6 @@
  {
   "cop":"Copyright © 2014 SW703E14",
   "HEADLINE":"What an awesome module!",
-  "PRESS":"Press",
-  "ACTIVATE":"Activate",
   "navbar-headline":"Smart Grid",
   "scorearea":
   {
@@ -24,20 +22,19 @@
   	"coal":"Coal",
   	"bio":"BIO"
   },
-  "tasktable":
+  "applianceTable":
   {
-    "items":"Items"
-  },
-  "taskmodal":
-  {
-    "delay":"Set activation time",
-    "noSelection":"Please select a task:"
+    "items":"Appliances",
+    "activate":"Start task",
+    "time":"Timer",
+    "PRESS":"Activate"
   },
   "lowPriceModal":
   {
     "FB":"Finish before:",
     "setTime":"Set time",
-    "delay":"Set activation time"
+    "delay":"Set activation time",
+    "alert":"Invalid start time: The date and/or time is in the past!"
   },
   "TrueTaskTable":
   {
@@ -71,9 +68,12 @@
     "expense" : "Expense",
     "totalBill" : "Total Bill"
   },
-  "actionModalController":
+  "actionModal":
   {
-    "selectItem":"Select a task"
+    "selectItem":"Select a task",
+    "ACTIVATE":"Activate",
+    "delay":"Set activation time",
+    "noSelection":"Please select a task"
   },
   "Login":
   {
