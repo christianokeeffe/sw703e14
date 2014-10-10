@@ -9,7 +9,7 @@ myApp.filter('time', ['$filter', function($filter)
             return "";
         }
 
-        var offset = input/1000;
+        var offset = input;
         var result = "";
 
         var days = Math.floor(offset/86400);

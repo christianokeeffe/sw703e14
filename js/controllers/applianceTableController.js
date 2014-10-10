@@ -2,6 +2,12 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
+  var datesToSchedule = [];
+
+  var schedular = $scope.$watch('dataEpoch', function(){
+        
+  });
+
   $scope.getAppliances = function()
   {
     var geturl = formatRequest.get({});

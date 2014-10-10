@@ -26,6 +26,7 @@ myApp.controller('actionModalController', ['$scope', '$modalInstance','controlle
   };
 
   $scope.cancel = function () {
+    $scope.startGameTime();
     $modalInstance.dismiss('cancel');
   };
 }]);
