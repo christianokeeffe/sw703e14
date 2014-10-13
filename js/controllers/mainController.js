@@ -55,12 +55,16 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 
 	$scope.saveData = function()
 	{
+        var request = {};
 		var gamedata = {};
 		gamedata.userID = $scope.getUserID();
 		gamedata.score = $rootScope.score;
 		gamedata.savings = $scope.balance;
 		gamedata.date = $scope.dateEpoch;
-	  var params = formatRequest.put(gamedata);
+
+        request.game = gamedata;
+
+	  var params = formatRequest.put(request);
 	  if(params === undefined)
 	  {
 	    setTimeout(function(){
