@@ -13,7 +13,7 @@
 					{{schedule.applianceName}}
 				</td>
 				<td>
-					{{schedule.deadline}}
+					{{SecondsToDate(schedule.deadline) | date:'HH:mm, EEEE d MMMM yyyy'}}
 				</td>
 				</div>
 			</tr>
