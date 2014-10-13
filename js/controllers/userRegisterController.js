@@ -22,6 +22,7 @@ myApp.controller('userRegisterController', ['$scope','$interval','usersFactory',
 	    		case '200':
 	    			$scope.regUser = response.data;
 	    			$scope.invalidEmail = false;
+	    			$location.path("/");
     				break;
 				case '409':
 					$scope.invalidEmail = true;
