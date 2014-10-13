@@ -8,22 +8,20 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         $rootScope.$broadcast('status-communication', {category: cat, value: val});
     };
 
-	$scope.startTimer = function (runTime){
+	$scope.startTimer = function (runTime, value){
         $scope.timerRunning = true;
 
         var unSuscribeWatch = $scope.$watch('dateEpoch', function(){
             $scope.difference = runTime - $scope.curDate().getTime() / 1000;
-            console.log($scope.difference);
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
-                console.log($scope.item.type);
                 if($scope.item.type == 3 || $scope.item.id == 4){
-                    statusBroadcast("laundry",20);
+                    statusBroadcast("laundry",value);
                 } else if ($scope.item.id == 6){
-                    statusBroadcast("dishes",20);
+                    statusBroadcast("dishes",value);
                 } else if ($scope.item.id == 7){
-                    statusBroadcast("hygiene",20);
+                    statusBroadcast("hygiene",value);
                 }
 
                 unSuscribeWatch();
@@ -34,7 +32,7 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
     $scope.$on('module-communication', function (event, data){
         if($scope.item.name == data.applianceName){
             var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.runTime);
-            $scope.startTimer(runTime);
+            $scope.startTimer(runTime, data.updatevalue);
         }
     });
 }]);

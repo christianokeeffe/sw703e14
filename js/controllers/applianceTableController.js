@@ -4,9 +4,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
   $scope.datesToSchedule = [];
 
-  function boardCastActivation(name, run)
+  function boardCastActivation(name, run, val)
   {
-    $scope.$broadcast('module-communication', {applianceName: name, runTime: run});
+    $scope.$broadcast('module-communication', {applianceName: name, runTime: run, updateValue: val});
   }
 
   $scope.SecondsToDate = function(input){
@@ -16,7 +16,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   }
 
   var schedular = $scope.$watch('dateEpoch', function(){
-    console.log($scope.datesToSchedule.length);
     for(index = 0; index < $scope.datesToSchedule.length; index++)
     {
       var tempSchedule = $scope.datesToSchedule[index];
@@ -24,7 +23,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
       {
         $scope.datesToSchedule.splice(index, 1);
-        boardCastActivation(tempSchedule.applianceName, tempSchedule.runTime);
+        boardCastActivation(tempSchedule.applianceName, tempSchedule.runTime, tempSchedule.updateValue);
       }
     }
   });
@@ -85,13 +84,11 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     $rootScope.TOcounter = 0;
 
     if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
-      console.log("modal: " + JSON.stringify(controllerService.getTableContent()));
       $scope.TOcounter = 0; 
       $scope.open(selectedAction);
     } else if($scope.TOcounter < 10){
       setTimeout(function(){
         $scope.TOcounter++;
-        console.log($scope.TOcounter);
         return openActionModal(selectedAction);
       }, 100);
     } else {
@@ -112,7 +109,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        boardCastActivation(controllerService.getAppliance().name, controllerService.getTask().executionTime);
+        boardCastActivation(controllerService.getAppliance().name, controllerService.getTask().executionTime, controllerService.getTask().updateValue);
       } else {
         $scope.openLowPrice();
       };
