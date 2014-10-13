@@ -2,10 +2,25 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
-  var datesToSchedule = [];
+  $scope.datesToSchedule = [];
 
-  var schedular = $scope.$watch('dataEpoch', function(){
-        
+  function boardCastActivation(name, run)
+  {
+    $scope.$broadcast('module-communication', {applianceName: name, runTime: run});
+  }
+
+  var schedular = $scope.$watch('dateEpoch', function(){
+    console.log($scope.datesToSchedule.length);
+    for(index = 0; index < $scope.datesToSchedule.length; index++)
+    {
+      var tempSchedule = $scope.datesToSchedule[index];
+
+      if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
+      {
+        $scope.datesToSchedule.splice(index, 1);
+        boardCastActivation(tempSchedule.applianceName, tempSchedule.runTime);
+      }
+    }
   });
 
   $scope.getAppliances = function()
@@ -91,7 +106,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        $scope.$broadcast('module-communication', {applianceName: controllerService.getAppliance().name, runTime: controllerService.getTask().executionTime});
+        boardCastActivation(controllerService.getAppliance().name, controllerService.getTask().executionTime);
       } else {
         $scope.openLowPrice();
       };
@@ -105,9 +120,10 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       size: ""
     });
 
-    modalInstance.result.then(function (beforeTime){
-      alert(beforeTime);
+    modalInstance.result.then(function (schedule){
       $rootScope.startGameTime();
+      console.log(JSON.stringify(schedule));
+      $scope.datesToSchedule.push(schedule);
     });
   };
 }]);
