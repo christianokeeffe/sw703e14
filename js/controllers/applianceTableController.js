@@ -9,6 +9,12 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     $scope.$broadcast('module-communication', {applianceName: name, runTime: run});
   }
 
+  $scope.SecondsToDate = function(input){
+    var result = new Date(0);
+    result.setUTCSeconds(input);
+    return result;
+  }
+
   var schedular = $scope.$watch('dateEpoch', function(){
     console.log($scope.datesToSchedule.length);
     for(index = 0; index < $scope.datesToSchedule.length; index++)
@@ -122,7 +128,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (schedule){
       $rootScope.startGameTime();
-      console.log(JSON.stringify(schedule));
       $scope.datesToSchedule.push(schedule);
     });
   };
