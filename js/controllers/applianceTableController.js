@@ -42,7 +42,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       geturl.userID = $scope.getUserID();
       appliancesFactory.getAppliances(geturl,
       function (response) {
-        console.log(JSON.stringify(response.data));
         $scope.appliances = response.data;
       },
       function () {
