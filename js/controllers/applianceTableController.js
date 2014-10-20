@@ -23,7 +23,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
       if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
       {
-        $scope.timersToSchedule.push({applianceType: tempSchedule.appliance.type, task: tempSchedule.task, timerStarted: false, timerEnded: false});
+        $scope.timersToSchedule.push({applianceType: tempSchedule.appliance.type, task: tempSchedule.task, timerStarted: false});
         $scope.datesToSchedule.splice(index, 1);
       }
     }
@@ -119,7 +119,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        $scope.timersToSchedule.push({applianceType: controllerService.getAppliance().type, task: controllerService.getTask(), timerStarted: false, timerEnded: false})
+        $scope.timersToSchedule.push({applianceType: controllerService.getAppliance().type, task: controllerService.getTask(), timerStarted: false})
       } else {
         $scope.openLowPrice();
       };
