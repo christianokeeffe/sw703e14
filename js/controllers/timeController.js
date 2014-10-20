@@ -8,31 +8,44 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         $rootScope.$broadcast('status-communication', {category: cat, value: val});
     };
 
-        $scope.startTimer = function (runTime, type, value){
+    var checkIndexOfTask = function(name){
+        for (i = 0; i < $scope.timersToSchedule.length; i++)
+        {
+            if ($scope.timersToSchedule[i].task.name == name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    };
+
+    $scope.startTimer = function (runTime, type, task){
         $scope.timerRunning = true;
 
         var unSuscribeWatch = $scope.$watch('dateEpoch', function(){
             $scope.difference = runTime - $scope.curDate().getTime() / 1000;
+
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
-                if(type == 3 || type == 4){
-                    statusBroadcast("laundry", value);
+                if(type == 3 || type == 4){                    
+                    statusBroadcast("laundry", task.updateValue);
                 } else if (type == 6){
-                    statusBroadcast("dishes", value);
+                    statusBroadcast("dishes", task.updateValue);
                 } else if (type == 7){
-                    statusBroadcast("hygiene", value);
+                    statusBroadcast("hygiene", task.updateValue);
                 }
 
+                $scope.timersToSchedule.splice(checkIndexOfTask(task.name),1);
                 unSuscribeWatch();
             }
         });
     };
 
     $scope.$on('module-communication', function (event, data){
-        if($scope.timerSchedule.taskName == data.taskName){
-            var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.runTime);
-            $scope.startTimer(runTime, data.appliance.type, data.updatevalue);
+        if($scope.timerSchedule.task.name == data.task.name){
+            var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.task.executionTime);
+            $scope.startTimer(runTime, data.type, data.task);
         }
     });
 }]);

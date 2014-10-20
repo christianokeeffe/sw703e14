@@ -19,6 +19,9 @@
 			</tr>
 			<tr ng-repeat="timerSchedule in timersToSchedule">
 				<td>
+					{{timerSchedule.task.name}}
+				</td>
+				<td>
 					<div ng-controller="timeController">
 						{{difference | time}} 
 					</div>

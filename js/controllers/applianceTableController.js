@@ -5,9 +5,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   $rootScope.datesToSchedule = [];
   $rootScope.timersToSchedule = [];
 
-  function boardCastActivation(name, run, inputType, val)
+  function boardCastActivation(task, inputType)
   {
-    $scope.$broadcast('module-communication', {taskName: name, runTime: run, type: inputType, updateValue: val});
+    $scope.$broadcast('module-communication', {task: task, type: inputType});
   }
 
   $scope.SecondsToDate = function(input){
@@ -23,9 +23,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
       if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
       {
-        $scope.timersToSchedule.push($scope.datesToSchedule[index]);
+        $scope.timersToSchedule.push({applianceType: tempSchedule.appliance.type, task: tempSchedule.task, timerStarted: false, timerEnded: false});
         $scope.datesToSchedule.splice(index, 1);
-        boardCastActivation(tempSchedule.applianceName, tempSchedule.runTime, tempSchedule.updateValue);
       }
     }
     for(i = 0; i < $scope.timersToSchedule.length; i++) 
@@ -34,8 +33,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
       if(tempTimer.timerStarted == false)
       {
-        boardCastActivation(tempTimer.taskName, tempTimer.executionTime);
-        tempTimer.timerStarted == true;
+        boardCastActivation(tempTimer.task, tempTimer.applianceType);
+        $scope.timersToSchedule[i].timerStarted = true;
       }
     }
   });
@@ -120,7 +119,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        $scope.timersToSchedule.push({appliance: controllerService.getAppliance(), taskName: controllerService.getTask().name, executionTime: controllerService.getTask().executionTime, timerStarted: false, timerEnded: false})
+        $scope.timersToSchedule.push({applianceType: controllerService.getAppliance().type, task: controllerService.getTask(), timerStarted: false, timerEnded: false})
       } else {
         $scope.openLowPrice();
       };
