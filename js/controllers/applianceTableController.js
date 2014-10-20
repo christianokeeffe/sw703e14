@@ -5,9 +5,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   $rootScope.datesToSchedule = [];
   $rootScope.timersToSchedule = [];
 
-  function boardCastActivation(name, run, inputType)
+  function boardCastActivation(name, run, inputType, val)
   {
-    $scope.$broadcast('module-communication', {taskName: name, runTime: run, type: inputType});
+    $scope.$broadcast('module-communication', {taskName: name, runTime: run, type: inputType, updateValue: val});
   }
 
   $scope.SecondsToDate = function(input){
@@ -17,7 +17,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   }
 
   var schedular = $scope.$watch('dateEpoch', function(){
-    console.log($scope.datesToSchedule.length);
     for(index = 0; index < $scope.datesToSchedule.length; index++)
     {
       var tempSchedule = $scope.datesToSchedule[index];
@@ -26,6 +25,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       {
         $scope.timersToSchedule.push($scope.datesToSchedule[index]);
         $scope.datesToSchedule.splice(index, 1);
+        boardCastActivation(tempSchedule.applianceName, tempSchedule.runTime, tempSchedule.updateValue);
       }
     }
     for(i = 0; i < $scope.timersToSchedule.length; i++) 
@@ -51,10 +51,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     }
     else
     { 
-      geturl.userID = $scope.userID;
+      geturl.userID = $scope.getUserID();
       appliancesFactory.getAppliances(geturl,
       function (response) {
-        console.log(JSON.stringify(response.data));
         $scope.appliances = response.data;
       },
       function () {
@@ -96,13 +95,11 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     $rootScope.TOcounter = 0;
 
     if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
-      console.log("modal: " + JSON.stringify(controllerService.getTableContent()));
       $scope.TOcounter = 0; 
       $scope.open(selectedAction);
     } else if($scope.TOcounter < 10){
       setTimeout(function(){
         $scope.TOcounter++;
-        console.log($scope.TOcounter);
         return openActionModal(selectedAction);
       }, 100);
     } else {
@@ -115,7 +112,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     $rootScope.stopGameTime();
     controllerService.setAppliance(selectedAction);
     var modalInstance = $modal.open({
-      templateUrl: '/sw703e14/views/actionModal.html',
+      templateUrl: 'views/actionModal.html',
       controller: 'actionModalController',
       size: 'sm'
     });
@@ -132,7 +129,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
   $scope.openLowPrice = function() {
     var modalInstance = $modal.open({
-      templateUrl: '/sw703e14/views/lowPriceModal.html',
+      templateUrl: 'views/lowPriceModal.html',
       controller: 'lowPriceController',
       size: ""
     });

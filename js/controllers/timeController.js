@@ -8,12 +8,11 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         $rootScope.$broadcast('status-communication', {category: cat, value: val});
     };
 
-	$scope.startTimer = function (runTime, type){
+        $scope.startTimer = function (runTime, type){
         $scope.timerRunning = true;
 
         var unSuscribeWatch = $scope.$watch('dateEpoch', function(){
             $scope.difference = runTime - $scope.curDate().getTime() / 1000;
-            console.log($scope.difference);
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
@@ -34,7 +33,7 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
     $scope.$on('module-communication', function (event, data){
         if($scope.timerSchedule.taskName == data.taskName){
             var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.runTime);
-            $scope.startTimer(runTime, data.appliance.type);
+            $scope.startTimer(runTime, data.appliance.type, data.updatevalue);
         }
     });
 }]);

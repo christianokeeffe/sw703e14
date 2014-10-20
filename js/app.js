@@ -1,6 +1,6 @@
 (function(){
 	
-  var app = angular.module('smartgridgame', ['pascalprecht.translate','ui.bootstrap','ngResource', 'ngRoute','ngCookies','ngDropdowns','timer']);
+  var app = angular.module('smartgridgame', ['pascalprecht.translate','ui.bootstrap','ngResource', 'ngStorage', 'ngRoute','ngCookies','ngDropdowns','timer']);
   app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
     $routeProvider.
