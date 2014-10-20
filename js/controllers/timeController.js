@@ -29,11 +29,11 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
             {
                 $scope.timerRunning = false;
                 if(type == 3 || type == 4){                    
-                    statusBroadcast("laundry", task.updateValue);
+                    statusBroadcast("laundry", parseInt(task.updateValue));
                 } else if (type == 6){
-                    statusBroadcast("dishes", task.updateValue);
+                    statusBroadcast("dishes", parseInt(task.updateValue));
                 } else if (type == 7){
-                    statusBroadcast("hygiene", task.updateValue);
+                    statusBroadcast("hygiene", parseInt(task.updateValue));
                 }
 
                 $scope.timersToSchedule.splice(checkIndexOfTask(task.name),1);
