@@ -7,6 +7,40 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	var timeSinceLastWeek = 1409565600;
 	$scope.balance = 0;
 
+	$scope.loadData = function()
+	{
+		var geturl = formatRequest.get({});
+
+	    if(geturl === undefined)
+	    {
+	      setTimeout(function(){
+	          return $scope.loadData();
+	         }, 10);
+	    }
+	    else
+	    {
+	    	geturl.userID = $scope.getUserID();
+	    	console.log("User ID: " + geturl.userID);
+	    	gamedataFactory.loadGameData(geturl,
+	    		function (response) {
+					switch(response.status_code)
+					        {
+					          case '200':
+					            $scope.score = parseInt(response.data.score);
+					            $scope.balance = parseInt(response.data.savings);
+					            $scope.dateEpoch = parseInt(response.data.date);
+					            timeSinceLastWeek = parseInt(response.data.date);
+					            break;
+					        case '204':
+					          	
+					          break;
+					        }
+	    		},
+	    		function () {
+	    			document.write(JSON.stringify(response));
+	    		});
+	    }
+	}
 
 	$rootScope.startGameTime = function() {
 		interval = $interval(function(){
@@ -50,8 +84,11 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	else
 	{
 		$rootScope.currentUser = $sessionStorage.currentUser;
+		$scope.loadData();
 		$rootScope.startGameTime();
 	}
+
+
 
 	$scope.saveData = function()
 	{
