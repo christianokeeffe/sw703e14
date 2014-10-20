@@ -6,7 +6,6 @@ var services = angular.module('smartgridgame');
 var api_url = "http://localhost/sw703e14-backend";
 //var api_url = "http://api.smartgrid.okeeffe.dk";
 
-
 var publicHash = 'a2105103cd48b1a8601486fc52d8bb43a1156a49b2f36f1d28ed177d0203ba99';
 var privateHash = 'c90adb0a3a6f0865062a639f5ad54f113f559031a658d503903ec48ced13078f';
 var sessionid;
@@ -19,9 +18,21 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
     var isCalled = false;
 	this.checkSession = function()
 	{
+        /*
+        console.log("-----------------------------------------------------------------------------");
+        console.log("Checking session:");
+        console.log("session id: " + sessionid);
+        console.log("session end : " + sessionend);
+        console.log("time now    : " + new Date().getTime());
+        console.log("time + 1 min: " + (new Date().getTime() + 60000));
+        console.log("-----------------------------------------------------------------------------");
+        */
+
 		if((sessionid === undefined || new Date().getTime() + 60000 >= sessionend) && !isCalled)
 		{
-			isCalled = true;
+            sessionid = undefined;
+            sessionend = undefined;
+            isCalled = true;
 			var input = {};
 			input.language = $translate.use();
 			var stringInput = JSON.stringify(input);
@@ -31,16 +42,23 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
 		    'request': stringInput,
 		    'requestHash':hash
 		    };
+
+            //console.log("Getting new session");
+
 		    authFactory.getSession(headersVar,
 		    function (response) {
+                //console.log("Got session: ");
 		        sessionid = response.data.session;
+                //console.log(sessionid);
+                //console.log("expires:")
 		        sessionend = new Date(response.data.expire).getTime();
+                //console.log(sessionend);
 		    	isCalled = false;
-		        return true;
 		    },
 		    function (response) {
 		        //alert(JSON.stringify(response));
 		        isCalled = false;
+
 		        document.write(JSON.stringify(response));
 		    });
 		    return false;
