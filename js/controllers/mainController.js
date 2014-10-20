@@ -1,11 +1,13 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage){
+myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage,priceService){
 
 	$scope.gameSecOnRealSec = 3600;
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
 	$scope.balance = 0;
+
+	priceService.getCheapestStarttime(1409565600+1409565600,5);
 
 
 	$rootScope.startGameTime = function() {
