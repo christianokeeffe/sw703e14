@@ -17,16 +17,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   }
 
   var schedular = $scope.$watch('dateEpoch', function(){
-    for(index = 0; index < $scope.datesToSchedule.length; index++)
-    {
-      var tempSchedule = $scope.datesToSchedule[index];
 
-      if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
-      {
-        $scope.timersToSchedule.push({applianceType: tempSchedule.appliance.type, task: tempSchedule.task, timerStarted: false});
-        $scope.datesToSchedule.splice(index, 1);
-      }
-    }
     for(i = 0; i < $scope.timersToSchedule.length; i++) 
     {
       var tempTimer = $scope.timersToSchedule[i];
@@ -35,6 +26,17 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       {
         boardCastActivation(tempTimer.task, tempTimer.applianceType);
         $scope.timersToSchedule[i].timerStarted = true;
+      }
+    }
+
+    for(index = 0; index < $scope.datesToSchedule.length; index++)
+    {
+      var tempSchedule = $scope.datesToSchedule[index];
+
+      if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
+      {
+        $scope.timersToSchedule.push({applianceType: tempSchedule.appliance.type, task: tempSchedule.task, timerStarted: false});
+        $scope.datesToSchedule.splice(index, 1);
       }
     }
   });
