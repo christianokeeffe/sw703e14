@@ -68,7 +68,8 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		$dishChange = hourToPercentDrop(4,hourChange);
 		$laundryChange = hourToPercentDrop(21,hourChange);
 		$hygieneChange = hourToPercentDrop(14,hourChange);
-		$rootScope.score += Math.round(hourChange*$scope.happiness);
+        $scope.happiness = ($scope.dishes+$scope.hygiene+$scope.laundry)/3;
+        $rootScope.score += Math.round(hourChange*$scope.happiness);
 
 		if($scope.dishes - $dishChange < 0)
 		{
@@ -100,7 +101,6 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
 	$scope.getStatusType = function(value)
 	{
-		$scope.happiness = ($scope.dishes+$scope.hygiene+$scope.laundry)/3;
 		if(value < 25)
 		{
 			return 'danger';
@@ -124,6 +124,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 	}
      
      $scope.$watch('happiness', function() {
+
      	if($scope.happiness > 100)
      	{
      		$scope.happiness = 100;
