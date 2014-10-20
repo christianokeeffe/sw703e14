@@ -12,52 +12,40 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		return (numbOfHours/(fullPercentDropInDays*24))*100;
 	}
 
-	function checkStatusLimit(cat, val)
-	{
-		if(cat + val > 100)
-		{
-			cat = 100;
-		}
-		else
-		{
-			cat = cat + val;
-		}
-	}
-
 	$scope.$on('status-communication', function (event, data)
 	{
+		var value = parseInt(data.value);
 		switch(data.category)
 		{
 			case "dishes":
-				if($scope.dishes + data.value > 100)
+				if($scope.dishes + value > 100)
 				{
 					$scope.dishes = 100;
 				}
 				else
 				{
-					$scope.dishes += data.value;
+					$scope.dishes += value;
 				}
 				break;
 			case "hygiene":
-				if($scope.hygiene + data.value > 100)
+				if($scope.hygiene + value > 100)
 				{
 					$scope.hygiene = 100;
 				} 
 				else
 				{
-					$scope.hygiene += data.value;
+					$scope.hygiene += value;
 				}
 				break;
 			case "laundry":
-				if($scope.laundry + data.value > 100)
+				if($scope.laundry + value > 100)
 				{
 					$scope.laundry = 100;
 				}
 				else
 				{
-					$scope.laundry += data.value;
+					$scope.laundry += value;
 				}
-				//checkStatusLimit($scope.laundry,data.value);
 				break;
 		}	
     });

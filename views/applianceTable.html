@@ -10,12 +10,22 @@
 			<tr ng-repeat="schedule in datesToSchedule">
 			<div>
 				<td>
-					{{schedule.applianceName}}
+					{{schedule.task.name}}
 				</td>
 				<td>
 					{{SecondsToDate(schedule.deadline) | date:'HH:mm, EEEE d MMMM yyyy'}}
 				</td>
 				</div>
+			</tr>
+			<tr ng-repeat="timerSchedule in timersToSchedule">
+				<td>
+					{{timerSchedule.task.name}}
+				</td>
+				<td>
+					<div ng-controller="timeController">
+						{{difference | time}} 
+					</div>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -25,7 +35,7 @@
 			<tr>
 				<th>{{'applianceTable.items' | translate}}</th>
 				<th>{{'applianceTable.activate' | translate}}</th>
-				<th>{{'applianceTable.time' | translate}}</th>
+				<th>{{'applianceTable.upgrade' | translate}}</th>
 			<tr>
 		</thead>
 		<tbody>
@@ -36,13 +46,13 @@
 				</td>
 				<td>
 					<button type="button" class="btn btn-primary" ng-click="preOpen(item)">
-						{{'applianceTable.PRESS' | translate}}
+						{{'applianceTable.press' | translate}}
 					</button>
 				</td>
 				<td>
-					<div ng-controller="timeController">
-						{{difference | time}} 
-					</div>
+					<button type="button" class="btn btn-primary">
+						{{'applianceTable.upgradeBtn' | translate}}
+					</button>
 				</td>
 				</div>
 			</tr>

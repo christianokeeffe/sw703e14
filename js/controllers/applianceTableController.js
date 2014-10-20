@@ -2,11 +2,12 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
-  $scope.datesToSchedule = [];
+  $rootScope.datesToSchedule = [];
+  $rootScope.timersToSchedule = [];
 
-  function boardCastActivation(name, run)
+  function boardCastActivation(task, inputType)
   {
-    $scope.$broadcast('module-communication', {applianceName: name, runTime: run});
+    $scope.$broadcast('module-communication', {task: task, type: inputType});
   }
 
   $scope.SecondsToDate = function(input){
@@ -16,15 +17,26 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   }
 
   var schedular = $scope.$watch('dateEpoch', function(){
-    console.log($scope.datesToSchedule.length);
+
+    for(i = 0; i < $scope.timersToSchedule.length; i++) 
+    {
+      var tempTimer = $scope.timersToSchedule[i];
+
+      if(tempTimer.timerStarted == false)
+      {
+        boardCastActivation(tempTimer.task, tempTimer.applianceType);
+        $scope.timersToSchedule[i].timerStarted = true;
+      }
+    }
+
     for(index = 0; index < $scope.datesToSchedule.length; index++)
     {
       var tempSchedule = $scope.datesToSchedule[index];
 
       if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
       {
+        $scope.timersToSchedule.push({applianceType: tempSchedule.appliance.type, task: tempSchedule.task, timerStarted: false});
         $scope.datesToSchedule.splice(index, 1);
-        boardCastActivation(tempSchedule.applianceName, tempSchedule.runTime);
       }
     }
   });
@@ -43,7 +55,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       geturl.userID = $scope.getUserID();
       appliancesFactory.getAppliances(geturl,
       function (response) {
-        console.log(JSON.stringify(response.data));
         $scope.appliances = response.data;
       },
       function () {
@@ -85,13 +96,11 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     $rootScope.TOcounter = 0;
 
     if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
-      console.log("modal: " + JSON.stringify(controllerService.getTableContent()));
       $scope.TOcounter = 0; 
       $scope.open(selectedAction);
     } else if($scope.TOcounter < 10){
       setTimeout(function(){
         $scope.TOcounter++;
-        console.log($scope.TOcounter);
         return openActionModal(selectedAction);
       }, 100);
     } else {
@@ -112,7 +121,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        boardCastActivation(controllerService.getAppliance().name, controllerService.getTask().executionTime);
+        $scope.timersToSchedule.push({applianceType: controllerService.getAppliance().type, task: controllerService.getTask(), timerStarted: false})
       } else {
         $scope.openLowPrice();
       };

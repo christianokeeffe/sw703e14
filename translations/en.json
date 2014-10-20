@@ -27,10 +27,11 @@
   {
     "items":"Appliances",
     "activate":"Start task",
-    "time":"Timer",
-    "PRESS":"Activate",
-    "name": "Task",
-    "deadline":"Deadline"
+    "upgrade":"Upgrade appliances",
+    "upgradeBtn":"Upgrade",
+    "press":"Activate",
+    "name": "Tasks",
+    "deadline":"Start the task at latest on/Time left"
   },
   "lowPriceModal":
   {
@@ -56,13 +57,13 @@
     "pass":"Password",
     "submit":"Register User",
     "errors":{
-      "usernamereq":"Username is required.",
-      "firstnamereq":"Firstname is required.",
-      "lastnamereq":"Lastname is required.",
-      "emailreq":"The email is required",
+      "usernamereq":"A username is required.",
+      "firstnamereq":"A firstname is required.",
+      "lastnamereq":"A lastname is required.",
+      "emailreq":"An email address is required",
       "emailerror":"The email address is invalid",
-      "emailduberror":"This email address has allready been used",
-      "passwordreq":"The password is required"
+      "emailduberror":"The email address has allready been used",
+      "passwordreq":"A password is required"
     }
   },
   "billTable":
