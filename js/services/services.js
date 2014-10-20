@@ -4,8 +4,8 @@
 var services = angular.module('smartgridgame');
 
 
-//var api_url = "http://localhost/backend";
-var api_url = "http://api.smartgrid.okeeffe.dk";
+var api_url = "http://localhost/sw703e14-backend";
+//var api_url = "http://api.smartgrid.okeeffe.dk";
 
 
 var publicHash = 'a2105103cd48b1a8601486fc52d8bb43a1156a49b2f36f1d28ed177d0203ba99';

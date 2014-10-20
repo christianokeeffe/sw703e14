@@ -112,9 +112,10 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	  { 
 	    gamedataFactory.saveGameData(params,
 	    function (response) {
-	    },
+	    //alert(JSON.stringify(response));
+		},
 	    function (response) {
-	        //alert(JSON.stringify(response));
+	        
 	        document.write(JSON.stringify(response));
 	    });
 	  }
