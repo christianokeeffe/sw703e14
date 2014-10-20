@@ -8,7 +8,7 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         $rootScope.$broadcast('status-communication', {category: cat, value: val});
     };
 
-        $scope.startTimer = function (runTime, type){
+        $scope.startTimer = function (runTime, type, value){
         $scope.timerRunning = true;
 
         var unSuscribeWatch = $scope.$watch('dateEpoch', function(){
@@ -16,13 +16,12 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
-                console.log($scope.item.type);
                 if(type == 3 || type == 4){
-                    statusBroadcast("laundry",20);
+                    statusBroadcast("laundry", value);
                 } else if (type == 6){
-                    statusBroadcast("dishes",20);
+                    statusBroadcast("dishes", value);
                 } else if (type == 7){
-                    statusBroadcast("hygiene",20);
+                    statusBroadcast("hygiene", value);
                 }
 
                 unSuscribeWatch();
