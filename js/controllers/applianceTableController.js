@@ -2,11 +2,12 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
 
-  $scope.datesToSchedule = [];
+  $rootScope.datesToSchedule = [];
+  $rootScope.timersToSchedule = [];
 
-  function boardCastActivation(name, run)
+  function boardCastActivation(name, run, inputType)
   {
-    $scope.$broadcast('module-communication', {applianceName: name, runTime: run});
+    $scope.$broadcast('module-communication', {taskName: name, runTime: run, type: inputType});
   }
 
   $scope.SecondsToDate = function(input){
@@ -23,8 +24,18 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
       if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
       {
+        $scope.timersToSchedule.push($scope.datesToSchedule[index]);
         $scope.datesToSchedule.splice(index, 1);
-        boardCastActivation(tempSchedule.applianceName, tempSchedule.runTime);
+      }
+    }
+    for(i = 0; i < $scope.timersToSchedule.length; i++) 
+    {
+      var tempTimer = $scope.timersToSchedule[i];
+
+      if(tempTimer.timerStarted == false)
+      {
+        boardCastActivation(tempTimer.taskName, tempTimer.executionTime);
+        tempTimer.timerStarted == true;
       }
     }
   });
@@ -112,7 +123,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        boardCastActivation(controllerService.getAppliance().name, controllerService.getTask().executionTime);
+        $scope.timersToSchedule.push({appliance: controllerService.getAppliance(), taskName: controllerService.getTask().name, executionTime: controllerService.getTask().executionTime, timerStarted: false, timerEnded: false})
       } else {
         $scope.openLowPrice();
       };

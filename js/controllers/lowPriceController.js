@@ -15,7 +15,7 @@ myApp.controller('lowPriceController', ['$scope', '$rootScope', '$modalInstance'
     if ($scope.beforeTime < $rootScope.curDate()) {
     	$scope.alertShown = true;
     } else {
-    	$modalInstance.close({applianceName: controllerService.getAppliance().name, runTime: controllerService.getTask().executionTime, deadline: $scope.beforeTime.getTime()/1000 - controllerService.getTask().executionTime}); 	
+    	$modalInstance.close({appliance: controllerService.getAppliance(), taskName: controllerService.getTask().name, runTime: controllerService.getTask().executionTime, deadline: $scope.beforeTime.getTime()/1000 - controllerService.getTask().executionTime}); 	
     }
   };
 }]);
