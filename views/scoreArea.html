@@ -3,9 +3,19 @@
 <h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
 <h4>{{'scorearea.balance' | translate}}: <small>{{balance | currency}}</small></h4>
 <label for="dishes">{{'scorearea.dishes' | translate}}</label>
-<progressbar animate="false" value="dishes" type="{{getStatusType(dishes)}}" max="100" id="dishes"><b>{{dishes| number:0}}%</b></progressbar>
+<progress animate="false" max="100" id="dishes">
+<bar value="dishes" type="success"><b>{{dishes | number:0}}%</b></bar>
+<bar value="100-dishes" type="danger"></bar>
+</progress>
 <label for="laundry">{{'scorearea.laundry' | translate}}</label>
-<progressbar animate="false" value="laundry" type="{{getStatusType(laundry)}}" max="100" id="laundry"><b>{{laundry | number:0}}%</b></progressbar>
+<progress animate="false" max="100" id="laundry">
+<bar value="laundry" type="success"><b>{{laundry | number:0}}%</b></bar>
+<bar value="100-laundry" type="danger"></bar>
+</progress>
 <label for="hygiene">{{'scorearea.hygiene' | translate}}</label>
-<progressbar animate="false" value="hygiene" type="{{getStatusType(hygiene)}}" max="100" id="hygiene"><b>{{hygiene| number:0}}%</b></progressbar>
+<progress animate="false" max="100" id="hygiene">
+<bar value="hygiene" type="success"><b>{{hygiene | number:0}}%</b></bar>
+<bar value="100-hygiene" type="danger"></bar>
+</progress>
 </div>
+
