@@ -4,6 +4,8 @@ myApp.service('controllerService', function () {
 
 	var beforeTime;
 	var Appliance;
+	var ApplianceArray;
+
 	//used to contain the selected task in the actionModal
 	var Task;
 	//used to contain the selected appliance's tasks
@@ -19,6 +21,14 @@ myApp.service('controllerService', function () {
 
 	this.getAppliance = function() {
 		return Appliance;
+	};
+
+	this.setApplianceArray = function(applianceArray) {
+		ApplianceArray = applianceArray;
+	}
+
+	this.getApplianceArray = function() {
+		return ApplianceArray
 	};
 
 	this.setTask = function(task) {

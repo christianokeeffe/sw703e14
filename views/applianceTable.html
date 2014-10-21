@@ -2,37 +2,6 @@
 	<table class ="table table-condensed table-bordered">
 		<thead>
 			<tr>
-				<th>{{'applianceTable.name' | translate}}</th>
-				<th>{{'applianceTable.deadline' | translate}}</th>
-			<tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="schedule in datesToSchedule">
-			<div>
-				<td>
-					{{schedule.task.name}}
-				</td>
-				<td>
-					{{SecondsToDate(schedule.deadline) | date:'HH:mm, EEEE d MMMM yyyy'}}
-				</td>
-				</div>
-			</tr>
-			<tr ng-repeat="timerSchedule in timersToSchedule">
-				<td>
-					{{timerSchedule.task.name}}
-				</td>
-				<td>
-					<div ng-controller="timeController">
-						{{difference | time}} 
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<table class ="table table-condensed table-bordered">
-		<thead>
-			<tr>
 				<th>{{'applianceTable.items' | translate}}</th>
 				<th>{{'applianceTable.activate' | translate}}</th>
 				<th>{{'applianceTable.upgrade' | translate}}</th>
