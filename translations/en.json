@@ -29,7 +29,10 @@
     "activate":"Start task",
     "upgrade":"Upgrade appliances",
     "upgradeBtn":"Upgrade",
-    "press":"Activate",
+    "press":"Activate"
+  },
+  "schedularTable":
+  {
     "name": "Tasks",
     "deadline":"Start the task at latest on/Time left"
   },
