@@ -1,6 +1,9 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
+  $scope.hasTasks = function(id) {
+    return controllerService.checkApplianceHasTasks(id);
+  };
 
   $scope.getAppliances = function()
   {
