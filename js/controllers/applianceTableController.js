@@ -90,7 +90,11 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
           alert("The chosen appliance is already in use!")
         };
       } else {
-        $scope.openLowPrice();
+        if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1) {
+          $scope.openLowPrice();
+        } else {
+          alert("The chosen appliance is already in use!");
+        };
       };
     });
   };
@@ -104,12 +108,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (schedule){
       $rootScope.startGameTime();
-      if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1){
-        $scope.datesToSchedule.push(schedule);
-        $scope.completeScheduleList.push(schedule);
-      } else {
-        alert("The chosen appliance is already in use!");
-      };
+      $scope.datesToSchedule.push(schedule);
+      $scope.completeScheduleList.push(schedule);
     });
   };
 }]);
