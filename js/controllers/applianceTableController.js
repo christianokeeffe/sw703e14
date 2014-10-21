@@ -82,7 +82,13 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        $scope.timersToSchedule.push({applianceType: controllerService.getAppliance().type, task: controllerService.getTask(), timerStarted: false})
+        if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1)
+        {
+          $scope.timersToSchedule.push({appliance: controllerService.getAppliance(), task: controllerService.getTask(), timerStarted: false})
+          $scope.completeScheduleList.push({appliance: controllerService.getAppliance(), task: controllerService.getTask(), timerStarted: false});
+        } else {
+          alert("The chosen appliance is already in use!")
+        };
       } else {
         $scope.openLowPrice();
       };
@@ -98,7 +104,12 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (schedule){
       $rootScope.startGameTime();
-      $scope.datesToSchedule.push(schedule);
+      if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1){
+        $scope.datesToSchedule.push(schedule);
+        $scope.completeScheduleList.push(schedule);
+      } else {
+        alert("The chosen appliance is already in use!");
+      };
     });
   };
 }]);

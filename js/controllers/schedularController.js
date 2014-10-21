@@ -4,22 +4,34 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
 
   $rootScope.datesToSchedule = [];
   $rootScope.timersToSchedule = [];
+  $rootScope.completeScheduleList = [];
 
-  function boardCastActivation(task, inputType)
+  function boardCastActivation(task, appliance)
   {
-    $scope.$broadcast('module-communication', {task: task, type: inputType});
+    $scope.$broadcast('module-communication', {task: task, appliance: appliance});
   }
 
-  $scope.SecondsToDate = function(input){
+  $scope.secondsToDate = function(input){
     var result = new Date(0);
     result.setUTCSeconds(input);
     return result;
   }
 
-  var checkIndexOfTask = function(name){
+  $rootScope.checkIndexOnTimerList = function(name){
     for (i = 0; i < $scope.timersToSchedule.length; i++)
     {
-        if ($scope.timersToSchedule[i].task.name == name)
+        if ($scope.timersToSchedule[i].appliance.name == name)
+        {
+            return i;
+        }
+    }
+    return -1;
+  };
+
+  $rootScope.checkIndexOnCompleteList = function(name){
+  	for (i = 0; i < $scope.completeScheduleList.length; i++)
+    {
+        if ($scope.completeScheduleList[i].appliance.name == name)
         {
             return i;
         }
@@ -35,7 +47,7 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
 
       if(tempTimer.timerStarted == false)
       {
-        boardCastActivation(tempTimer.task, tempTimer.applianceType);
+        boardCastActivation(tempTimer.task, tempTimer.appliance);
         $scope.timersToSchedule[i].timerStarted = true;
       }
     }
@@ -46,13 +58,7 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
 
       if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
       {
-      	if(checkIndexOfTask(tempTimer.task.name) == -1)
-        {
-        	alert("no task running");
-        	$scope.timersToSchedule.push({applianceType: tempSchedule.appliance.type, task: tempSchedule.task, timerStarted: false});
-        } else {
-        	alert("task already running");
-        }
+        $scope.timersToSchedule.push({appliance: tempSchedule.appliance, task: tempSchedule.task, timerStarted: false});
         $scope.datesToSchedule.splice(index, 1);
       }
     }
