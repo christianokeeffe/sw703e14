@@ -20,7 +20,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	    else
 	    {
 	    	geturl.userID = $scope.getUserID();
-	    	console.log("User ID: " + geturl.userID);
 	    	gamedataFactory.loadGameData(geturl,
 	    		function (response) {
 					switch(response.status_code)
