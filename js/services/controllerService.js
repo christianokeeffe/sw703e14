@@ -1,16 +1,22 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.service('controllerService', function () {
+
 	var beforeTime;
 	var Appliance;
 	var ApplianceArray;
-	var Task;
-	var TableContent = [];
 
-	var TableContentAllowed = false;
+	//used to contain the selected task in the actionModal
+	var Task;
+	//used to contain the selected appliance's tasks
+	var Tasks;
+	//used to store all tasks
+	var StoredTasks = [];
 
 	this.setAppliance = function(appliance) {
 		Appliance = appliance;
+
+		this.SelectTasksByApplianceID(appliance.id);
 	};
 
 	this.getAppliance = function() {
@@ -30,24 +36,38 @@ myApp.service('controllerService', function () {
 	};
 
 	this.getTask = function() {
-		return Task
+		return Task;
 	};
 
-	this.setTableContent = function(tableContent) {
-		TableContent = tableContent;
-		TableContentAllowed = true;
-	}
+	this.getTasks = function() {
+		return Tasks;
+	};
 
-	this.isAllowed = function(){
-		return TableContentAllowed;
-	}
+	this.StoreAllTasks = function(tasks) {
+		StoredTasks = tasks;
+	};
 
-	this.setAllowed = function(value){
-		TableContentAllowed = value;
-	}
+	this.SelectTasksByApplianceID = function(id) {
+		var tempTaskContainer = [];
 
-	this.getTableContent = function() {
-		return TableContent;
+		if(this.checkApplianceHasTasks(id)){
+			for(i = 0; i < StoredTasks.length; i++){
+				if(StoredTasks[i].refAppliance == id){
+					tempTaskContainer.push(StoredTasks[i]);
+				}
+			}
+		}
+
+		Tasks = tempTaskContainer;
+	};
+
+	this.checkApplianceHasTasks = function(id){
+		for(i = 0; i < StoredTasks.length; i++){
+			if(StoredTasks[i].refAppliance == id){
+				return true;
+			}
+		}
+		return false;
 	};
 
 	this.setTimer = function(date) {
