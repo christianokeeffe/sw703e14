@@ -3,6 +3,7 @@ var myApp = angular.module('smartgridgame');
 myApp.service('controllerService', function () {
 	var beforeTime;
 	var Appliance;
+	var ApplianceArray;
 	var Task;
 	var TableContent = [];
 
@@ -14,6 +15,14 @@ myApp.service('controllerService', function () {
 
 	this.getAppliance = function() {
 		return Appliance;
+	};
+
+	this.setApplianceArray = function(applianceArray) {
+		ApplianceArray = applianceArray;
+	}
+
+	this.getApplianceArray = function() {
+		return ApplianceArray
 	};
 
 	this.setTask = function(task) {
