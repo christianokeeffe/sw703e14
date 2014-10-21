@@ -17,6 +17,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       appliancesFactory.getAppliances(geturl,
       function (response) {
         $scope.appliances = response.data;
+        controllerService.setApplianceArray($scope.appliances);
       },
       function () {
         document.write(JSON.stringify(response));
@@ -109,7 +110,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (schedule){
       $rootScope.startGameTime();
       $scope.datesToSchedule.push(schedule);
-      $scope.completeScheduleList.push(schedule);
+       $scope.completeScheduleList.push(schedule);
     });
   };
 }]);
