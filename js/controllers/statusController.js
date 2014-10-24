@@ -59,27 +59,27 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
         $scope.happiness = ($scope.dishes+$scope.hygiene+$scope.laundry)/3;
         $rootScope.score += Math.round(hourChange*$scope.happiness);
 
-		if($scope.dishes - $dishChange < 0)
+		if($scope.dishes - $dishChange <= 0)
 		{
-			$scope.dishes = 0;
+			$scope.dishes = 0.1;
 		}
 		else
 		{
 			$scope.dishes -= $dishChange;
 		}
 
-		if($scope.laundry - $laundryChange < 0)
+		if($scope.laundry - $laundryChange <= 0)
 		{
-			$scope.laundry = 0;
+			$scope.laundry = 0.1;
 		}
 		else
 		{
 			$scope.laundry -= $laundryChange;
 		}
 
-		if($scope.hygiene - $hygieneChange < 0)
+		if($scope.hygiene - $hygieneChange <= 0)
 		{
-			$scope.hygiene = 0;
+			$scope.hygiene = 0.1;
 		}
 		else
 		{
