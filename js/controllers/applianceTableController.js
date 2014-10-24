@@ -1,33 +1,9 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
-
-  $scope.datesToSchedule = [];
-
-  function boardCastActivation(name, run)
-  {
-    $scope.$broadcast('module-communication', {applianceName: name, runTime: run});
-  }
-
-  $scope.SecondsToDate = function(input){
-    var result = new Date(0);
-    result.setUTCSeconds(input);
-    return result;
-  }
-
-  var schedular = $scope.$watch('dateEpoch', function(){
-    console.log($scope.datesToSchedule.length);
-    for(index = 0; index < $scope.datesToSchedule.length; index++)
-    {
-      var tempSchedule = $scope.datesToSchedule[index];
-
-      if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
-      {
-        $scope.datesToSchedule.splice(index, 1);
-        boardCastActivation(tempSchedule.applianceName, tempSchedule.runTime);
-      }
-    }
-  });
+  $scope.hasTasks = function(id) {
+    return controllerService.checkApplianceHasTasks(id);
+  };
 
   $scope.getAppliances = function()
   {
@@ -43,8 +19,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       geturl.userID = $scope.getUserID();
       appliancesFactory.getAppliances(geturl,
       function (response) {
-        console.log(JSON.stringify(response.data));
         $scope.appliances = response.data;
+        controllerService.setApplianceArray($scope.appliances);
       },
       function () {
         document.write(JSON.stringify(response));
@@ -52,20 +28,19 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     }
   };
 
-  $scope.getApplianceTask = function (id){
+  $scope.getTasks = function (){
     var geturl = formatRequest.get({});
     if(geturl === undefined)
     {
       setTimeout(function(){
-        return $scope.getApplianceTask(id);
+        return $scope.getTasks();
       }, 10);
     }
     else
     {
-      geturl.id = id;
       tasksFactory.getTasks(geturl,
       function (response) {
-        controllerService.setTableContent(response.data);
+        controllerService.StoreAllTasks(response.data);
       },
       function () {
         document.write(JSON.stringify(response));
@@ -74,33 +49,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
   };
 
   $scope.getAppliances();
+  $scope.getTasks();
 
-  $scope.preOpen = function (selectedAction){
-    controllerService.setAllowed(false);
-    $scope.getApplianceTask(selectedAction.id);
-    openActionModal(selectedAction);
-  }
-
-  openActionModal = function (selectedAction) {
-    $rootScope.TOcounter = 0;
-
-    if (controllerService.isAllowed() && (controllerService.getTableContent().length > 0)) {
-      console.log("modal: " + JSON.stringify(controllerService.getTableContent()));
-      $scope.TOcounter = 0; 
-      $scope.open(selectedAction);
-    } else if($scope.TOcounter < 10){
-      setTimeout(function(){
-        $scope.TOcounter++;
-        console.log($scope.TOcounter);
-        return openActionModal(selectedAction);
-      }, 100);
-    } else {
-      alert("selected appliance have no tasks");
-      $scope.TOcounter = 0;
-    }
-  }
-
-	$scope.open = function (selectedAction) {
+	$scope.openActionModal = function (selectedAction) {
     $rootScope.stopGameTime();
     controllerService.setAppliance(selectedAction);
     var modalInstance = $modal.open({
@@ -112,9 +63,19 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
         $rootScope.startGameTime();
-        boardCastActivation(controllerService.getAppliance().name, controllerService.getTask().executionTime);
+        if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1)
+        {
+          $scope.timersToSchedule.push({appliance: controllerService.getAppliance(), task: controllerService.getTask(), timerStarted: false})
+          $scope.completeScheduleList.push({appliance: controllerService.getAppliance(), task: controllerService.getTask(), timerStarted: false});
+        } else {
+          alert("The chosen appliance is already in use!")
+        };
       } else {
-        $scope.openLowPrice();
+        if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1) {
+          $scope.openLowPrice();
+        } else {
+          alert("The chosen appliance is already in use!");
+        };
       };
     });
   };
@@ -129,6 +90,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (schedule){
       $rootScope.startGameTime();
       $scope.datesToSchedule.push(schedule);
+       $scope.completeScheduleList.push(schedule);
     });
   };
 }]);

@@ -1,0 +1,32 @@
+<div ng-controller="schedularController">
+	<table class ="table table-condensed table-bordered">
+		<thead>
+			<tr>
+				<th>{{'schedularTable.name' | translate}}</th>
+				<th>{{'schedularTable.deadline' | translate}}</th>
+			<tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="schedule in datesToSchedule">
+			<div>
+				<td>
+					{{schedule.task.name}}
+				</td>
+				<td>
+					{{secondsToDate(schedule.deadline) | date:'HH:mm, EEEE d MMMM yyyy'}}
+				</td>
+				</div>
+			</tr>
+			<tr ng-repeat="timerSchedule in timersToSchedule">
+				<td>
+					{{timerSchedule.task.name}}
+				</td>
+				<td>
+					<div ng-controller="timeController">
+						{{difference | time}} 
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

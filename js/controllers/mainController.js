@@ -7,24 +7,40 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	var timeSinceLastWeek = 1409565600;
 	$scope.balance = 0;
 
-	$scope.test = function()
+	$scope.loadData = function()
 	{
-		var bestday = priceService.getCheapestStarttime($scope.dateEpoch,1409565600+(3600*50),3600);
-		if(bestday === undefined)
-		{
-			console.log("new try");
-			setTimeout(function(){
-      			return $scope.test();
-      		}, 1000);
-		}
-		else
-		{
-			console.log("ES " + bestday);
-		}
-		
-	};
-	
-	$scope.test();
+		var geturl = formatRequest.get({});
+
+	    if(geturl === undefined)
+	    {
+	      setTimeout(function(){
+	          return $scope.loadData();
+	         }, 10);
+	    }
+	    else
+	    {
+	    	geturl.userID = $scope.getUserID();
+	    	gamedataFactory.loadGameData(geturl,
+	    		function (response) {
+					switch(response.status_code)
+					        {
+					          case '200':
+					            $scope.score = parseInt(response.data.score);
+					            $scope.balance = parseInt(response.data.savings);
+					            $scope.dateEpoch = parseInt(response.data.date);
+					            timeSinceLastWeek = parseInt(response.data.date);
+					            break;
+					        case '204':
+					          	
+					          break;
+					        }
+	    		},
+	    		function () {
+	    			document.write(JSON.stringify(response));
+	    		});
+	    }
+	}
+
 
 	$rootScope.startGameTime = function() {
 		interval = $interval(function(){
@@ -68,8 +84,11 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	else
 	{
 		$rootScope.currentUser = $sessionStorage.currentUser;
+		$scope.loadData();
 		$rootScope.startGameTime();
 	}
+
+
 
 	$scope.saveData = function()
 	{
@@ -93,9 +112,10 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	  { 
 	    gamedataFactory.saveGameData(params,
 	    function (response) {
-	    },
+	    //alert(JSON.stringify(response));
+		},
 	    function (response) {
-	        //alert(JSON.stringify(response));
+	        
 	        document.write(JSON.stringify(response));
 	    });
 	  }

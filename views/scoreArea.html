@@ -1,21 +1,22 @@
 <div ng-controller="statusController" face class="col-md-2">
-<canvas id="face" width="150" bezier="0" height="150" ></canvas><br/>
-<h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
-<h4>{{'scorearea.balance' | translate}}: <small>{{balance | currency}}</small></h4>
-<label for="dishes">{{'scorearea.dishes' | translate}}</label>
-<progress animate="false" max="100" id="dishes">
-<bar value="dishes" type="success"><b>{{dishes | number:0}}%</b></bar>
-<bar value="100-dishes" type="danger"></bar>
-</progress>
-<label for="laundry">{{'scorearea.laundry' | translate}}</label>
-<progress animate="false" max="100" id="laundry">
-<bar value="laundry" type="success"><b>{{laundry | number:0}}%</b></bar>
-<bar value="100-laundry" type="danger"></bar>
-</progress>
-<label for="hygiene">{{'scorearea.hygiene' | translate}}</label>
-<progress animate="false" max="100" id="hygiene">
-<bar value="hygiene" type="success"><b>{{hygiene | number:0}}%</b></bar>
-<bar value="100-hygiene" type="danger"></bar>
-</progress>
+    <canvas id="face" width="150" bezier="0" height="150" >
+    </canvas>
+    <br/>
+    <h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
+    <h4>{{'scorearea.balance' | translate}}: <small>{{balance | currency}}</small></h4>
+    <label for="dishes">{{'scorearea.dishes' | translate}}</label>
+    <progress animate="false" max="100" id="dishes">
+        <bar value="dishes" type="success"><b>{{dishes | number:0}}%</b></bar>
+        <bar value="100-dishes" type="danger"></bar>
+    </progress>
+    <label for="laundry">{{'scorearea.laundry' | translate}}</label>
+    <progress animate="false" max="100" id="laundry">
+        <bar value="laundry" type="success"><b>{{laundry | number:0}}%</b></bar>
+        <bar value="100-laundry" type="danger"></bar>
+    </progress>
+    <label for="hygiene">{{'scorearea.hygiene' | translate}}</label>
+    <progress animate="false" max="100" id="hygiene">
+        <bar value="hygiene" type="success"><b>{{hygiene | number:0}}%</b></bar>
+        <bar value="100-hygiene" type="danger"></bar>
+    </progress>
 </div>
-

@@ -2,30 +2,9 @@
 	<table class ="table table-condensed table-bordered">
 		<thead>
 			<tr>
-				<th>{{'applianceTable.name' | translate}}</th>
-				<th>{{'applianceTable.deadline' | translate}}</th>
-			<tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="schedule in datesToSchedule">
-			<div>
-				<td>
-					{{schedule.applianceName}}
-				</td>
-				<td>
-					{{SecondsToDate(schedule.deadline) | date:'HH:mm, EEEE d MMMM yyyy'}}
-				</td>
-				</div>
-			</tr>
-		</tbody>
-	</table>
-
-	<table class ="table table-condensed table-bordered">
-		<thead>
-			<tr>
 				<th>{{'applianceTable.items' | translate}}</th>
 				<th>{{'applianceTable.activate' | translate}}</th>
-				<th>{{'applianceTable.time' | translate}}</th>
+				<th>{{'applianceTable.upgrade' | translate}}</th>
 			<tr>
 		</thead>
 		<tbody>
@@ -35,14 +14,14 @@
 					{{item.name}}
 				</td>
 				<td>
-					<button type="button" class="btn btn-primary" ng-click="preOpen(item)">
-						{{'applianceTable.PRESS' | translate}}
+					<button type="button" class="btn btn-primary" ng-show="hasTasks(item.id)" ng-click="openActionModal(item)">
+						{{'applianceTable.press' | translate}}
 					</button>
 				</td>
 				<td>
-					<div ng-controller="timeController">
-						{{difference | time}} 
-					</div>
+					<button type="button" class="btn btn-primary">
+						{{'applianceTable.upgradeBtn' | translate}}
+					</button>
 				</td>
 				</div>
 			</tr>

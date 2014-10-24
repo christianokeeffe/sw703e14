@@ -8,33 +8,34 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         $rootScope.$broadcast('status-communication', {category: cat, value: val});
     };
 
-	$scope.startTimer = function (runTime){
+    $scope.startTimer = function (runTime, appliance, task){
         $scope.timerRunning = true;
 
         var unSuscribeWatch = $scope.$watch('dateEpoch', function(){
             $scope.difference = runTime - $scope.curDate().getTime() / 1000;
-            console.log($scope.difference);
+
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
-                console.log($scope.item.type);
-                if($scope.item.type == 3 || $scope.item.id == 4){
-                    statusBroadcast("laundry",20);
-                } else if ($scope.item.id == 6){
-                    statusBroadcast("dishes",20);
-                } else if ($scope.item.id == 7){
-                    statusBroadcast("hygiene",20);
+                if(appliance.type == 3 || appliance.type == 4){                    
+                    statusBroadcast("laundry", parseInt(task.updateValue));
+                } else if (appliance.type == 6){
+                    statusBroadcast("dishes", parseInt(task.updateValue));
+                } else if (appliance.type == 7){
+                    statusBroadcast("hygiene", parseInt(task.updateValue));
                 }
 
+                $scope.timersToSchedule.splice($scope.checkIndexOnTimerList(appliance.name),1);
+                $scope.completeScheduleList.splice($scope.checkIndexOnCompleteList(appliance.name),1);
                 unSuscribeWatch();
             }
         });
     };
 
     $scope.$on('module-communication', function (event, data){
-        if($scope.item.name == data.applianceName){
-            var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.runTime);
-            $scope.startTimer(runTime);
+        if($scope.timerSchedule.task.name == data.task.name){
+            var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.task.executionTime);
+            $scope.startTimer(runTime, data.appliance, data.task);
         }
     });
 }]);
