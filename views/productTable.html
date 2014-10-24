@@ -1,0 +1,24 @@
+<div ng-controller="productTableController">
+	<table class ="table table-condensed table-bordered">
+		<thead>
+			<tr>
+				<th>{{"Products"}}</th>
+				<th>{{"Info"}}</th>
+			<tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in productArray">
+			<div>
+				<td>
+					{{item.name}}
+				</td>
+				<td>
+					<button type="button" class="btn btn-primary">
+						{{"Press"}}
+					</button>
+				</td>
+				</div>
+			</tr>
+		</tbody>
+	</table>
+</div>
