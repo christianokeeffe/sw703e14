@@ -61,7 +61,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		},1000);
 	}
 
-
 	$rootScope.stopGameTime = function() {
 		$interval.cancel(interval);
 	}
@@ -83,7 +82,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		return $rootScope.currentUser !== undefined;
 	}
 
-    if($sessionStorage.currentUser === undefined)
+    if($sessionStorage.currentUser === undefined || $sessionStorage.currentUser == "undefined")
     {
     	$location.path("/login");
 	}

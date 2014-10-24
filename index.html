@@ -41,12 +41,13 @@
     <script type="text/javascript" src="js/controllers/taskTableController2.js"></script>
     <script type="text/javascript" src="js/controllers/billController.js"></script>
     <script type="text/javascript" src="js/controllers/userLoginController.js"></script>
+    <script type="text/javascript" src="js/controllers/rootController.js"></script>
     <script src="js/filters/currencyWithMinus.js"></script>
     <script type="text/javascript" src="js/filters/timeFilter.js"></script>
     <script type="text/javascript" src="js/controllers/schedularController.js"></script>
     <title>{{'title' | translate}}</title>
   </head>
-  <body style=" padding-top: 70px;">
+  <body style=" padding-top: 70px;" ng-controller="rootController">
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -56,6 +57,8 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>
+        <li ng-if="showLogout()" ng-click="logout()"><a href >Logout</a></li>
+        <li ng-if="!showLogout()"><a href="#/login" >Login</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div>
