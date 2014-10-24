@@ -75,6 +75,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
           $scope.openLowPrice();
         } else {
           alert("The chosen appliance is already in use!");
+          $rootScope.startGameTime();
         };
       };
     });

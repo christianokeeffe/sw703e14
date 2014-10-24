@@ -34,12 +34,12 @@
   "schedularTable":
   {
     "name": "Tasks",
-    "deadline":"Start the task at latest on/Time left"
+    "deadline":"Deadline/Time left"
   },
   "lowPriceModal":
   {
     "FB":"Finish before:",
-    "setTime":"Set time",
+    "setTime":"Set activation time",
     "delay":"Set activation time",
     "alert":"Invalid start time: The date and/or time is in the past!"
   },
