@@ -66,7 +66,7 @@
       "lastnamereq":"A lastname is required.",
       "emailreq":"An email address is required",
       "emailerror":"The email address is invalid",
-      "emailduberror":"The email address has allready been used",
+      "invalidemailorusername":"The email or username is already in use",
       "passwordreq":"A password is required"
     }
   },
@@ -85,7 +85,11 @@
   },
   "Login":
   {
-    "ButtonText":"Log in"
+    "ButtonText":"Log in",
+    "errors":
+    {
+      "invalidlogin":"Invalid login credentials"
+    }
   },
   "dailyTaskTable":
   {

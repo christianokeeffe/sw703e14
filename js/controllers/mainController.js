@@ -2,7 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage,priceService){
 
-	$scope.gameSecOnRealSec = 36000;
+	$scope.gameSecOnRealSec = 3600;
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
 	$scope.balance = 0;
