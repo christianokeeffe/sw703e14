@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory){
+myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory','priceService', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory,priceService){
   $scope.hasTasks = function(id) {
     return controllerService.checkApplianceHasTasks(id);
   };
@@ -81,6 +81,23 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     });
   };
 
+  var addToScheduleList = function(scheduleObject)
+  {
+    var besttime = priceService.getCheapestStarttime($scope.dateEpoch,scheduleObject.deadline,scheduleObject.task.executionTime);
+    if(besttime === undefined)
+    {
+      setTimeout(function(){
+            return addToScheduleList(scheduleObject);
+          }, 10);
+    }
+    else
+    {
+      scheduleObject.starttime = besttime;
+      $scope.datesToSchedule.push(scheduleObject);
+       $scope.completeScheduleList.push(scheduleObject);
+    }
+  }
+
   $scope.openLowPrice = function() {
     var modalInstance = $modal.open({
       templateUrl: 'views/lowPriceModal.html',
@@ -90,8 +107,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (schedule){
       $rootScope.startGameTime();
-      $scope.datesToSchedule.push(schedule);
-       $scope.completeScheduleList.push(schedule);
+      addToScheduleList(schedule);
     });
   };
 }]);
