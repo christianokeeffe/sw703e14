@@ -29,6 +29,10 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					            $scope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
 					            timeSinceLastWeek = parseInt(response.data.date);
+					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
+					            $rootScope.dishes = parseFloat(response.data.dishes);
+					            $rootScope.hygiene = parseFloat(response.data.hygiene);
+					            $rootScope.laundry = parseFloat(response.data.laundry);
 					            break;
 					        case '204':
 					          	
@@ -98,6 +102,9 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		gamedata.score = $rootScope.score;
 		gamedata.savings = $scope.balance;
 		gamedata.date = $scope.dateEpoch;
+		gamedata.hygiene = $rootScope.hygiene;
+		gamedata.dishes = $rootScope.dishes;
+		gamedata.laundry = $rootScope.laundry;
 
         request.game = gamedata;
 
