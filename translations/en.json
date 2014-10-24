@@ -34,7 +34,7 @@
   "schedularTable":
   {
     "name": "Tasks",
-    "deadline":"Start the task at latest on/Time left"
+    "deadline":"Deadline/Time left"
   },
   "lowPriceModal":
   {
