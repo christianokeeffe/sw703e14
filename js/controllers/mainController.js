@@ -2,7 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage,priceService){
 
-	$scope.gameSecOnRealSec = 3600;
+	$scope.gameSecOnRealSec = 36000;
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
 	$scope.balance = 0;
@@ -25,11 +25,15 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					switch(response.status_code)
 					        {
 					          case '200':
-					            $scope.score = parseInt(response.data.score);
+					            $rootScope.score = parseInt(response.data.score);
 					            $scope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
 					            timeSinceLastWeek = parseInt(response.data.date);
 								$rootScope.startGameTime();
+					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
+					            $rootScope.dishes = parseFloat(response.data.dishes);
+					            $rootScope.hygiene = parseFloat(response.data.hygiene);
+					            $rootScope.laundry = parseFloat(response.data.laundry);
 					            break;
 					        case '204':
 								$rootScope.startGameTime();
@@ -56,7 +60,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		},1000);
 	}
 
-
 	$rootScope.stopGameTime = function() {
 		$interval.cancel(interval);
 	}
@@ -78,7 +81,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		return $rootScope.currentUser !== undefined;
 	}
 
-    if($sessionStorage.currentUser === undefined)
+    if($sessionStorage.currentUser === undefined || $sessionStorage.currentUser == "undefined")
     {
     	$location.path("/login");
 	}
@@ -98,6 +101,9 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		gamedata.score = $rootScope.score;
 		gamedata.savings = $scope.balance;
 		gamedata.date = $scope.dateEpoch;
+		gamedata.hygiene = $rootScope.hygiene;
+		gamedata.dishes = $rootScope.dishes;
+		gamedata.laundry = $rootScope.laundry;
 
         request.game = gamedata;
 
