@@ -9,8 +9,8 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 
 	$scope.test = function()
 	{
-		
-		if(priceService.getCheapestStarttime($scope.dateEpoch,1409565600+(3600*50),3600*3) === undefined)
+		var bestday = priceService.getCheapestStarttime($scope.dateEpoch,1409565600+(3600*50),3600);
+		if(bestday === undefined)
 		{
 			console.log("new try");
 			setTimeout(function(){
@@ -19,7 +19,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		}
 		else
 		{
-			alert("ES");
+			console.log("ES " + bestday);
 		}
 		
 	};

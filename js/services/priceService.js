@@ -47,13 +47,10 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 			for(var i = timenow; i <= endbefore - duration; i=i+3600)
 			{
 				var thisprice = 0;
-				console.log(timevars);
-				console.log(id+(i-timenow)/3600);
-				/*for(var j = 0; j < duration; j+3600)
+				for(var j = 0; j < duration; j = j+3600)
 				{
-					console.log(timevars[id+(i/3600)+(j/3600)]);
 					thisprice += parseFloat(timevars[id+((i-timenow)/3600)+(j/3600)].price);
-				}*/
+				}
 				if(bestprice > thisprice)
 				{
 					bestprice = thisprice;
