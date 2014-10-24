@@ -25,7 +25,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					switch(response.status_code)
 					        {
 					          case '200':
-					          	alert($rootScope.score);
 					            $rootScope.score = parseInt(response.data.score);
 					            $scope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
@@ -34,7 +33,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					            $rootScope.dishes = parseFloat(response.data.dishes);
 					            $rootScope.hygiene = parseFloat(response.data.hygiene);
 					            $rootScope.laundry = parseFloat(response.data.laundry);
-					            alert($rootScope.score);
 					            break;
 					        case '204':
 					          	

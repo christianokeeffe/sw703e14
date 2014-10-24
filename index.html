@@ -55,6 +55,7 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
+        <li ng-if="showLogout()"><a>{{curDate() | date:'HH:mm, EEEE d MMMM yyyy'}}</a></li>
         <li class="active"><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>
         <li ng-if="showLogout()" ng-click="logout()"><a href >Logout</a></li>
