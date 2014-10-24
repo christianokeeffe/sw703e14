@@ -83,8 +83,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
   var addToScheduleList = function(scheduleObject)
   {
-    var besttime = priceService.getCheapestStarttime($scope.dateEpoch,scheduleObject.deadline,scheduleObject.task.executionTime);
-    if(besttime === undefined)
+    var bestTime = priceService.getCheapestStarttime($scope.dateEpoch,scheduleObject.deadline,scheduleObject.task.executionTime);
+    if(bestTime === undefined)
     {
       setTimeout(function(){
             return addToScheduleList(scheduleObject);
@@ -92,7 +92,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     }
     else
     {
-      scheduleObject.starttime = besttime;
+      scheduleObject.starttime = bestTime;
       $scope.datesToSchedule.push(scheduleObject);
        $scope.completeScheduleList.push(scheduleObject);
     }
