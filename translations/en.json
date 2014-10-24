@@ -3,6 +3,7 @@
   "HEADLINE":"What an awesome module!",
   "title":"Smart Grid Game",
   "navbar-headline":"Smart Grid",
+  "navbar-welcome":"Welcome",
   "scorearea":
   {
   	"score":"Score",

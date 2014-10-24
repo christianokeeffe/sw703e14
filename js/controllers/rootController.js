@@ -6,6 +6,10 @@ myApp.controller('rootController', ['$scope','$location','$rootScope','$sessionS
 	{
 		$sessionStorage.currentUser = undefined;
 	}
+  else
+  {
+    $rootScope.sessions = $sessionStorage;
+  }
 
 	$scope.logout = function(){
     	$rootScope.stopGameTime();
