@@ -22,14 +22,29 @@ $scope.newDay = function() {
 	}
 };
 
+var timeBeforeTime = function(startTime, endTime) {
+	if(startTime.getHours() != endTime.getHours()) {
+		return (startTime.getHours() < endTime.getHours());
+	} else if (startTime.getMinutes() != endTime.getMinutes()) {
+		return (startTime.getMinutes() < endTime.getMinutes());
+	} else {
+		return true;
+	}
+}
+
 $scope.inTime = function(startTime, endTime) {
 	var gameTime = $scope.curDate();
-	if ((gameTime.getHours() == startTime.getHours() && gameTime.getMinutes() >= startTime.getMinutes()) || gameTime.getHours() >= startTime.getHours()) {
-		if ((gameTime.getHours() == endTime.getHours() && gameTime.getMinutes() <= endTime.getMinutes()) || gameTime.getHours() <= endTime.getHours()) {
-			return true;
-		} else {
-			return false;
-		}
+	if (timeBeforeTime(startTime, gameTime) && timeBeforeTime(gameTime, endTime)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+$scope.isMissed = function(item) {
+	var gameTime = $scope.curDate();
+	if(!item.done && timeBeforeTime(item.endTime, gameTime)) {
+		return true;
 	} else {
 		return false;
 	}
@@ -52,14 +67,22 @@ var updater = $scope.$watch('dateEpoch', function(){
 		$scope.lastUpdated = getDateWithoutTime();
 		for(i = 0; i < $scope.dailyTasks.length; i++)
 		{
-			$scope.dailyTasks[i].startTime = new Date(0, 0, 0, 7, 0, 0);
 			$scope.dailyTasks[i].endTime = new Date(0, 0, 0, 10, 0, 0);
+			$scope.dailyTasks[i].startTime = new Date(0, 0, 0, 7, 0, 0);
 		}
 	}
+	//Updates every new day
 	if(getDateWithoutTime() > $scope.lastUpdated) {
  		console.log("New day");
  		$scope.newDay();
  	}
+ 	//Checks if a deadline is missed on a daily task
+ 	for (i = 0; i < $scope.dailyTasks.length; i++) {
+ 		if($scope.isMissed($scope.dailyTasks[i])) {
+ 			//$scope.dailyTasks[i].missed = true;
+ 			//Give negative points for missed task
+ 		}
+ 	};
  	$scope.lastUpdated = getDateWithoutTime();
 });
 }]);
