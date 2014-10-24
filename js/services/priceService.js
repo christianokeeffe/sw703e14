@@ -15,7 +15,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		    else
 		    { 
 		      //geturl.fromtime = $scope.dateEpoch;
-		      geturl.fromtime = 0;
+		      geturl.fromtime = fromtime;
 		      geturl.totime = totime;
 		      marketpriceFactory.getMarketPrice(geturl,
 		      function (response) {
@@ -23,6 +23,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		        {
 		          case '200':
 		            timevars = response.data;
+
 		            latesttime = totime;
 		            break;
 		        }
@@ -33,14 +34,37 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		    }
 		};
 
-	this.getCheapestStarttime = function(endbefore, duration) {
+	this.getCheapestStarttime = function(timenow, endbefore, duration) {
 		if(endbefore <= latesttime)
 		{
-			alert("heppa");
+			var beststart = timenow;
+			var bestprice = 999999999999999999999;
+			var id = 0;
+			while(parseInt(timevars[id].time) != timenow)
+			{
+				id++;
+			}
+			for(var i = timenow; i <= endbefore - duration; i=i+3600)
+			{
+				var thisprice = 0;
+				console.log(timevars);
+				console.log(id+(i-timenow)/3600);
+				/*for(var j = 0; j < duration; j+3600)
+				{
+					console.log(timevars[id+(i/3600)+(j/3600)]);
+					thisprice += parseFloat(timevars[id+((i-timenow)/3600)+(j/3600)].price);
+				}*/
+				if(bestprice > thisprice)
+				{
+					bestprice = thisprice;
+					beststart = i;
+				}
+			}
+			return beststart;
 		}
 		else
 		{
-		    getData(0,endbefore);
+		    getData(timenow,endbefore);
 		}
 	};
 }]);

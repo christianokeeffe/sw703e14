@@ -7,8 +7,24 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	var timeSinceLastWeek = 1409565600;
 	$scope.balance = 0;
 
-	priceService.getCheapestStarttime(1409565600+1409565600,5);
-
+	$scope.test = function()
+	{
+		
+		if(priceService.getCheapestStarttime($scope.dateEpoch,1409565600+(3600*50),3600*3) === undefined)
+		{
+			console.log("new try");
+			setTimeout(function(){
+      			return $scope.test();
+      		}, 1000);
+		}
+		else
+		{
+			alert("ES");
+		}
+		
+	};
+	
+	$scope.test();
 
 	$rootScope.startGameTime = function() {
 		interval = $interval(function(){
