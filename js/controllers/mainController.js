@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage){
+myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage,priceService){
 
 	$scope.gameSecOnRealSec = 3600;
 	$scope.dateEpoch = 1409565600;
@@ -20,7 +20,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	    else
 	    {
 	    	geturl.userID = $scope.getUserID();
-	    	console.log("User ID: " + geturl.userID);
 	    	gamedataFactory.loadGameData(geturl,
 	    		function (response) {
 					switch(response.status_code)
@@ -41,6 +40,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	    		});
 	    }
 	}
+
 
 	$rootScope.startGameTime = function() {
 		interval = $interval(function(){

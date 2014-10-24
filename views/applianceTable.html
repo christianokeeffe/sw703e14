@@ -14,7 +14,7 @@
 					{{item.name}}
 				</td>
 				<td>
-					<button type="button" class="btn btn-primary" ng-click="preOpen(item)">
+					<button type="button" class="btn btn-primary" ng-show="hasTasks(item.id)" ng-click="openActionModal(item)">
 						{{'applianceTable.press' | translate}}
 					</button>
 				</td>

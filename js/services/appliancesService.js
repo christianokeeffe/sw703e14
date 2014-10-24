@@ -4,7 +4,6 @@
 var services = angular.module('smartgridgame');
 
 var api_resource_appliances = api_url + "/appliances";
-var api_resource_tasks = api_url + "/task";
     	
 services.factory("appliancesFactory", function($resource) {
     return $resource(api_resource_appliances + "/:userID:endurl", {}, {
