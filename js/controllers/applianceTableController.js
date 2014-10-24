@@ -113,4 +113,18 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
        $scope.completeScheduleList.push(schedule);
     });
   };
+
+    $scope.openUpgradeModal = function(selectedAction) {
+        controllerService.setAppliance(selectedAction);
+        var modalInstance = $modal.open({
+            templateUrl: 'views/upgradeModal.html',
+            controller: 'upgradeModalController',
+            size: ""
+        });
+
+        modalInstance.result.then(function (schedule){
+            $rootScope.startGameTime();
+            $scope.datesToSchedule.push(schedule);
+        });
+    };
 }]);
