@@ -29,10 +29,11 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					            $scope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
 					            timeSinceLastWeek = parseInt(response.data.date);
+								$rootScope.startGameTime();
 					            break;
 					        case '204':
-					          	
-					          break;
+								$rootScope.startGameTime();
+					          	break;
 					        }
 	    		},
 	    		function () {
@@ -85,7 +86,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	{
 		$rootScope.currentUser = $sessionStorage.currentUser;
 		$scope.loadData();
-		$rootScope.startGameTime();
 	}
 
 
