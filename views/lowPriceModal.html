@@ -4,7 +4,9 @@
 		  <span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
 		<h3 class="modal-title">{{header}} - {{task}}</h3>
 	</div>
+
 	<div class="modal-body">
+    {{'actionModal.duration' | translate}}: {{duration}}
     	<div ng-controller="dateTimePickerController">
         	<div style="display:inline-block; min-height:290px;">
                 <datepicker ng-model="date" ng-change="changed()" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
