@@ -4,17 +4,23 @@ myApp.controller('dailyTaskController', ['$scope', '$rootScope', function($scope
 
 var first = true;
 var firstDay = true;
-var startDate = new Date(0, 0, 0, 7, 0, 0);
-var endDate = new Date(0, 0, 0, 10, 0, 0);
+var startDate = parseInt(420);
+var endDate = parseInt(600);
 $scope.dailyTasks = [
-      {"task": "Charge", "startTime": startDate, "endTime": endDate, "done": false, "missed": false},
-      {"task": "Make breakfast", "startTime": startDate, "endTime": endDate, "done": false, "missed": false},
-      {"task": "Make lunch", "startTime": startDate, "endTime": endDate, "done": false, "missed": false}
+      {"task": "Charge", "deadline": "7:00 - 10:00", "startTime": startDate, "endTime": endDate, "done": false, "missed": false},
+      {"task": "Make breakfast", "deadline": "7:00 - 10:00", "startTime": startDate, "endTime": endDate, "done": false, "missed": false},
+      {"task": "Make lunch", "deadline": "7:00 - 10:00", "startTime": startDate, "endTime": endDate, "done": false, "missed": false}
 ]
 
 $scope.getDateWithoutTime = function() {
 	currentDate = $scope.curDate();
 	return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0);
+};
+
+$scope.getGameTimeInMin = function() {
+	var date = $scope.curDate();
+	var time = parseInt(date.getHours()) * 60 + parseInt(date.getMinutes());
+	return time;
 };
 
 $scope.newDay = function() {
@@ -25,19 +31,9 @@ $scope.newDay = function() {
 	}
 };
 
-$scope.timeBeforeTime = function(startTime, endTime) {
-	if(startTime.getHours() != endTime.getHours()) {
-		return (startTime.getHours() < endTime.getHours());
-	} else if (startTime.getMinutes() != endTime.getMinutes()) {
-		return (startTime.getMinutes() < endTime.getMinutes());
-	} else {
-		return true;
-	}
-}
-
 $scope.inTime = function(startTime, endTime) {
-	var gameTime = $scope.curDate();
-	if ($scope.timeBeforeTime(startTime, gameTime) && $scope.timeBeforeTime(gameTime, endTime)) {
+	var gameTime = $scope.getGameTimeInMin();
+	if (startTime < gameTime && gameTime < endTime) {
 		return true;
 	} else {
 		return false;
@@ -45,8 +41,8 @@ $scope.inTime = function(startTime, endTime) {
 };
 
 $scope.isMissed = function(item) {
-	var gameTime = $scope.curDate();
-	if(!item.done && $scope.timeBeforeTime(item.endTime, gameTime)) {
+	var gameTime = $scope.getGameTimeInMin();
+	if(!item.done && item.endTime < gameTime) {
 		return true;
 	} else {
 		return false;
