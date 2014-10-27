@@ -84,7 +84,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		}
 	};
 	this.getPriceNow = function(time, powerUsage) {
-		if(startTime + duration <= latesttime){
+		if(startTime <= latesttime){
 			var price = 0;
 			while(parseInt(timevars[id].time) != startTime)
 			{

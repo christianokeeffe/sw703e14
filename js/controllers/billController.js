@@ -1,8 +1,8 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('billController', ['$scope','$rootScope', 'priceService', function($scope,$rootScope, priceService){
+myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'controllerService', function($scope,$rootScope, priceService, controllerService){
   var timeSincepaid = 1409565600;
-
+  var timeSincelastMonth = 1409565600;
 
   $scope.content = {
     "billList": [
@@ -44,6 +44,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService', funct
     $scope.content.addedbills = {};
   };
 
+
   $rootScope.removeInBillList = function(name){
     var inList = false
     for (var i = 0 ; i <= $scope.content.billList.length-1 && !inList; i++) {
@@ -53,9 +54,11 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService', funct
       }
     }
      if (!inList) {
-      alert("error in finding " + name + " in added bill list");
+      alert("error in finding " + name + " in bill list");
     };
   };
+
+
 
   $rootScope.totalBill = function(){
     var total = 0;
@@ -71,8 +74,13 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService', funct
     if ($scope.dateEpoch - timeSincepaid >= 3600)
     {
       timeSincepaid = timeSincepaid + 3600;
-      // kode her
-    };
+      var Appliances = applianceTableController.getAppliances();
+      for (var i = 0; i < Appliances.length; i++) {
+        $rootScope.addbill(Appliances[i].name, priceService.getPriceNow($scope.dateEpoch,Appliances[i].energyConsumption));
+
+      }
+    }
+
   });
 
 
