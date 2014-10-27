@@ -18,5 +18,12 @@
 			<td> {{t.item}} </td>
 			<td> {{t.expense | currencyWithMinus}} </td>
 		</tr>
+
+		<tr ng-repeat="t in content.addedbills"> 
+			<td> {{t.item}} </td>
+			<td> {{t.expense | currencyWithMinus}} </td>
+		</tr>
 	</tbody>
 </table>
+
+<button ng-click="test()">test</button>
