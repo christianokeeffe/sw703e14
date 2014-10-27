@@ -78,6 +78,7 @@
   },
   "actionModal":
   {
+    "duration":"Duration",
     "selectItem":"Select a task",
     "ACTIVATE":"Activate",
     "delay":"Set activation time",
