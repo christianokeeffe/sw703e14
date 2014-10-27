@@ -23,6 +23,23 @@ myApp.service('controllerService', function () {
 		return Appliance;
 	};
 
+    this.replaceAppliance = function(newAppliance) {
+        var tmpApplianceArray = [];
+
+        ApplianceArray.forEach(function(entry) {
+            if(entry.type == newAppliance.type)
+            {
+                tmpApplianceArray.push(newAppliance);
+            }
+            else
+            {
+                tmpApplianceArray.push(entry);
+            }
+        });
+
+        ApplianceArray = tmpApplianceArray;
+    };
+
 	this.setApplianceArray = function(applianceArray) {
 		ApplianceArray = applianceArray;
 	}

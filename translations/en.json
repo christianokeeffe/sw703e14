@@ -78,11 +78,18 @@
   },
   "actionModal":
   {
+    "duration":"Duration",
     "selectItem":"Select a task",
     "ACTIVATE":"Activate",
     "delay":"Set activation time",
     "noSelection":"Please select a task"
   },
+ "upgradeModal":
+ {
+     "selectItem":"Select an upgrade",
+     "ACTIVATE":"Upgrade",
+     "noSelection":"Please select an upgrade"
+ },
   "Login":
   {
     "ButtonText":"Log in",
