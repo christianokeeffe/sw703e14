@@ -42,7 +42,7 @@
     "FB":"Finish before:",
     "setTime":"Set activation time",
     "delay":"Set activation time",
-    "alert":"Invalid start time: The date and/or time is in the past!"
+    "alert":"Invalid start time: The date and/or time is in the past or the task cannot be completed before the deadline!"
   },
   "TrueTaskTable":
   {

@@ -3,13 +3,16 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('dailyTaskController', ['$scope', '$rootScope', function($scope, $rootScope){
 
 var first = true;
+var firstDay = true;
+var startDate = new Date(0, 0, 0, 7, 0, 0);
+var endDate = new Date(0, 0, 0, 10, 0, 0);
 $scope.dailyTasks = [
-      {"task": "Charge Car", "startTime": Date(), "endTime": Date(), "done": false, "missed": true},
-      {"task": "Make breakfast", "startTime": Date(), "endTime": Date(), "done": true, "missed": false},
-      {"task": "Make lunch", "startTime": Date(), "endTime": Date(), "done": false, "missed": false}
+      {"task": "Charge", "startTime": startDate, "endTime": endDate, "done": false, "missed": false},
+      {"task": "Make breakfast", "startTime": startDate, "endTime": endDate, "done": false, "missed": false},
+      {"task": "Make lunch", "startTime": startDate, "endTime": endDate, "done": false, "missed": false}
 ]
 
-var getDateWithoutTime = function() {
+$scope.getDateWithoutTime = function() {
 	currentDate = $scope.curDate();
 	return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0);
 };
@@ -22,7 +25,7 @@ $scope.newDay = function() {
 	}
 };
 
-var timeBeforeTime = function(startTime, endTime) {
+$scope.timeBeforeTime = function(startTime, endTime) {
 	if(startTime.getHours() != endTime.getHours()) {
 		return (startTime.getHours() < endTime.getHours());
 	} else if (startTime.getMinutes() != endTime.getMinutes()) {
@@ -34,7 +37,7 @@ var timeBeforeTime = function(startTime, endTime) {
 
 $scope.inTime = function(startTime, endTime) {
 	var gameTime = $scope.curDate();
-	if (timeBeforeTime(startTime, gameTime) && timeBeforeTime(gameTime, endTime)) {
+	if ($scope.timeBeforeTime(startTime, gameTime) && $scope.timeBeforeTime(gameTime, endTime)) {
 		return true;
 	} else {
 		return false;
@@ -43,46 +46,41 @@ $scope.inTime = function(startTime, endTime) {
 
 $scope.isMissed = function(item) {
 	var gameTime = $scope.curDate();
-	if(!item.done && timeBeforeTime(item.endTime, gameTime)) {
+	if(!item.done && $scope.timeBeforeTime(item.endTime, gameTime)) {
 		return true;
 	} else {
 		return false;
 	}
 };
 
-$scope.updateStatus = function(input) {
-	for(i = 0; i < $scope.dailyTasks.length; i++) {
-		if($scope.dailyTasks[i].task == input) {
-			if ($scope.inTime($scope.dailyTasks[i].startTime, $scope.dailyTasks[i].endTime)) {
+$scope.$on('task-communication', function(event, data){
+	for (i = 0; i < $scope.dailyTasks.length; i++) {
+		if($scope.dailyTasks[i].task == data.task.name) {
+			if($scope.inTime($scope.dailyTasks[i].startTime, $scope.dailyTasks[i].endTime) && $scope.dailyTasks[i].done == false) {
 				$scope.dailyTasks[i].done = true;
-				//give points for completed task
+				$rootScope.score += 5000;
 			}
 		}
 	}
-};
+});
 
 var updater = $scope.$watch('dateEpoch', function(){
 	if($scope.dateEpoch != 1409565600 && first) {
 		first = false;
-		$scope.lastUpdated = getDateWithoutTime();
-		for(i = 0; i < $scope.dailyTasks.length; i++)
-		{
-			$scope.dailyTasks[i].endTime = new Date(0, 0, 0, 10, 0, 0);
-			$scope.dailyTasks[i].startTime = new Date(0, 0, 0, 7, 0, 0);
-		}
+		$scope.lastUpdated = $scope.getDateWithoutTime();
 	}
 	//Updates every new day
-	if(getDateWithoutTime() > $scope.lastUpdated) {
- 		console.log("New day");
+	if($scope.getDateWithoutTime() > $scope.lastUpdated) {
  		$scope.newDay();
+ 		$scope.firstDay = false;
  	}
  	//Checks if a deadline is missed on a daily task
  	for (i = 0; i < $scope.dailyTasks.length; i++) {
- 		if($scope.isMissed($scope.dailyTasks[i])) {
- 			//$scope.dailyTasks[i].missed = true;
- 			//Give negative points for missed task
+ 		if($scope.isMissed($scope.dailyTasks[i]) && $scope.dailyTasks[i].missed == false && $scope.firstDay == false) {
+ 			$scope.dailyTasks[i].missed = true;
+ 			$rootScope.score -= 10000;
  		}
  	};
- 	$scope.lastUpdated = getDateWithoutTime();
+ 	$scope.lastUpdated = $scope.getDateWithoutTime();
 });
 }]);
