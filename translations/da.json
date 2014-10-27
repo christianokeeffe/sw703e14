@@ -44,5 +44,11 @@
     "ACTIVATE":"Start nu",
     "delay":"Laveste pris",
     "noSelection":"Vælg venligst en opgave"
-  }
+  },
+ "upgradeModal":
+ {
+     "selectItem":"Vælg en opgradering",
+     "ACTIVATE":"Opgrader",
+     "noSelection":"Du skal vælge en opgradering"
+ }
 }

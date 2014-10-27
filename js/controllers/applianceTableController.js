@@ -119,9 +119,9 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
             size: ""
         });
 
-        modalInstance.result.then(function (schedule){
+        modalInstance.result.then(function (){
+            $scope.appliances = controllerService.getApplianceArray();
             $rootScope.startGameTime();
-            $scope.datesToSchedule.push(schedule);
         });
     };
 }]);
