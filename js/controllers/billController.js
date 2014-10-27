@@ -1,7 +1,8 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'controllerService', function($scope,$rootScope, priceService, controllerService){
-  var timeSincepaid = 1409565600;
+  var month = 3600
+  var timeSincepaid = 1409565600 + month;
   var timeSincelastMonth = 1409565600;
 
   $scope.content = {
@@ -24,10 +25,11 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   }
   $rootScope.test = function(){
     var temp = 1;
-    $rootScope.removeInBillList("task 2");
+    $rootScope.addbill("item 42", 20);
   };
 
   $rootScope.addbill = function(name, price){
+    alert("name: " + name + " price: " + price);
     var inList = false;
     for (var i = 0; i < $scope.content.addedbills.length && !inList; i++) {
       if ($scope.content.addedbills[i].item === name) {
@@ -36,7 +38,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }
     }
     if (!inList) {
-      alert("error in finding " + name + " in added bill list");
+      $scope.content.addedbills.push({"item": name , "expense": price})
     };
   };
 
@@ -70,18 +72,18 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     return total;
   };
 
-  $scope.$watch('dateEpoch', function() {3600
-    if ($scope.dateEpoch - timeSincepaid >= 3600)
+  $scope.$watch('dateEpoch', function() {
+    var tempDateEpoch = $scope.dateEpoch;
+    if (tempDateEpoch - timeSincepaid >= month)
     {
-      timeSincepaid = timeSincepaid + 3600;
-      var Appliances = applianceTableController.getAppliances();
-      for (var i = 0; i < Appliances.length; i++) {
-        $rootScope.addbill(Appliances[i].name, priceService.getPriceNow($scope.dateEpoch,Appliances[i].energyConsumption));
-
+      timeSincepaid = timeSincepaid + month;
+      var Appliances = controllerService.getApplianceArray();
+      for (var x = 0; x < Appliances.length ; x++) {
+        var name = Appliances[x].name;
+        var price =  priceService.getPriceNow(tempDateEpoch, Appliances[x].energyConsumption);
+        alert("app" + x + " name:"+ name + " price: " + price);
+        $rootScope.addbill(name, price);
       }
     }
-
   });
-
-
   }]);

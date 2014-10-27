@@ -84,18 +84,21 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		}
 	};
 	this.getPriceNow = function(time, powerUsage) {
-		if(startTime <= latesttime){
+		console.log("Her er pris: " + price);
+		if(time <= latesttime){
 			var price = 0;
-			while(parseInt(timevars[id].time) != startTime)
+			var id = 0;
+			while(parseInt(timevars[id].time) != time)
 			{
 				id++;
 			}
-			price = parseFloat(powerUsage) * parseFloat(timevars[id+(time/3600)+(j/3600)].price);
+			price = powerUsage * parseFloat(timevars[id].price);
+			console.log("Her er pris: " + price);
 			return price;
 		}
 		else
 		{
-		    getData(time, time);
+		    getData(time, time + 3600*24*7);
 		}
 
 	};
