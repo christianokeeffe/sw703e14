@@ -8,6 +8,10 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
         $rootScope.$broadcast('status-communication', {category: cat, value: val});
     };
 
+    var taskBroadcast = function(task) {
+        $rootScope.$broadcast('task-communication', {task: task});
+    };
+
     $scope.startTimer = function (runTime, appliance, task){
         $scope.timerRunning = true;
 
@@ -27,6 +31,7 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
 
                 $scope.timersToSchedule.splice($scope.checkIndexOnTimerList(appliance.name),1);
                 $scope.completeScheduleList.splice($scope.checkIndexOnCompleteList(appliance.name),1);
+                taskBroadcast(task);
                 unSuscribeWatch();
             }
         });
@@ -34,7 +39,7 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
 
     $scope.$on('module-communication', function (event, data){
         if($scope.timerSchedule.task.name == data.task.name){
-            var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.task.executionTime);
+            var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.task.executionTime) - $rootScope.gameSecOnRealSec;
             $scope.startTimer(runTime, data.appliance, data.task);
         }
     });

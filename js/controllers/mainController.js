@@ -2,7 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage,priceService){
 
-	$scope.gameSecOnRealSec = 3600;
+	$rootScope.gameSecOnRealSec = 3600;
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
 	$rootScope.balance = 0;
@@ -29,14 +29,15 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
                                   $rootScope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
 					            timeSinceLastWeek = parseInt(response.data.date);
+								$rootScope.startGameTime();
 					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
 					            $rootScope.dishes = parseFloat(response.data.dishes);
 					            $rootScope.hygiene = parseFloat(response.data.hygiene);
 					            $rootScope.laundry = parseFloat(response.data.laundry);
 					            break;
 					        case '204':
-					          	
-					          break;
+								$rootScope.startGameTime();
+					          	break;
 					        }
 	    		},
 	    		function () {
@@ -88,7 +89,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	{
 		$rootScope.currentUser = $sessionStorage.currentUser;
 		$scope.loadData();
-		$rootScope.startGameTime();
 	}
 
     $rootScope.setBalance = function (balance)
