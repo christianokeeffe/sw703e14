@@ -78,6 +78,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
           $rootScope.startGameTime();
         };
       };
+    }, function () {
+        $rootScope.startGameTime();
     });
   };
 
