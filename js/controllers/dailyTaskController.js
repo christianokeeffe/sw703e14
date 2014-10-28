@@ -29,7 +29,6 @@ $scope.dailyTasks = {};
             	$scope.dailyTasks[i].done = false;
             	$scope.dailyTasks[i].missed = false;
             }
-            console.log(JSON.stringify($scope.dailyTasks));
             break;
         }
       },
