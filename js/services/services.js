@@ -12,7 +12,7 @@ var sessionid;
 var sessionend;
 
 //service style, probably the simplest one
-services.service('formatRequest', ['$translate','authFactoryNew', function($translate, authFactoryNew) {
+services.service('formatRequest', ['$translate','authFactory', function($translate, authFactory) {
     var thisvar = this;
     var isCalled = false;
 	this.checkSession = function()
@@ -42,11 +42,22 @@ services.service('formatRequest', ['$translate','authFactoryNew', function($tran
 		    'requestHash':hash
 		    };
 
-            authFactoryNew.getSession(headersVar).then(function(result) {  // this is only run after $http completes
-                var data = result;
-                sessionend = data.expire;
-                sessionid = data.session;
-            });
+            authFactory.getSession(headersVar,
+                function (response) {
+                    //console.log("Got session: ");
+                    sessionid = response.data.session;
+                    //console.log(sessionid);
+                    //console.log("expires:")
+                    sessionend = new Date(response.data.expire).getTime();
+                    //console.log(sessionend);
+                    isCalled = false;
+                },
+                function (response) {
+                    //alert(JSON.stringify(response));
+                    isCalled = false;
+
+                    document.write(JSON.stringify(response));
+                });
 
 		    return false;
 		}
