@@ -3,20 +3,10 @@
 /* Services */
 var services = angular.module('smartgridgame');
 
-var api_resource_appliancesOfType = api_url + "/appliancesType";
+var api_resource_dailyOptionalTask = api_url + "/dailyTask";
 
-services.factory('allAppliancesFactory', ['$http',
-    function ($http) {
-        return {
-            allAppliances: function (endurl, type) {
-
-                var promise = $http.get(api_resource_appliancesOfType + '/' + type + endurl).success(function(response) {
-                    return response.data.data;
-                }, function (error) {
-                    //error
-                })
-                return promise;
-            }
-        }
-    }
-]);
+services.factory("dailyOptionalTaskFactory", function($resource) {
+    return $resource(api_resource_dailyOptionalTask + ":endurl", {}, {
+        dailyOptionalTask : { method: 'GET', isArray: false}
+    });
+});

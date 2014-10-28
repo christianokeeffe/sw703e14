@@ -10,7 +10,7 @@
 		<tbody>
 			<tr ng-repeat="item in dailyTasks">
 				<div>
-					<td>{{item.task}}</td>
+					<td>{{item.name}}</td>
 					<td>{{item.deadline}}</td>
 					<td ng-if="item.done"><img src="./views/pics/checkMark.png" style="width:25px;height:25px"></td>
 					<td ng-if="!item.done && !item.missed"></td>
