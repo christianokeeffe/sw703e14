@@ -6,17 +6,14 @@ myApp.service('controllerService', function () {
 	var Appliance;
 	var ApplianceArray;
 
-	//used to contain the selected task in the actionModal
-	var Task;
-	//used to contain the selected appliance's tasks
-	var Tasks;
-	//used to store all tasks
+	//used to contain the index of the selected task
+	var TaskID;
+
+	//used to store all tasks in sperated list for each appliance, stored at the id of the specific appliance
 	var StoredTasks = [];
 
 	this.setAppliance = function(appliance) {
 		Appliance = appliance;
-
-		this.SelectTasksByApplianceID(appliance.id);
 	};
 
 	this.getAppliance = function() {
@@ -32,42 +29,38 @@ myApp.service('controllerService', function () {
 	};
 
 	this.setTask = function(task) {
-		Task = task;
+		TaskID = StoredTasks[Appliance.id].indexOf(task);
 	};
 
 	this.getTask = function() {
-		return Task;
+		return StoredTasks[Appliance.id][TaskID];
 	};
 
 	this.getTasks = function() {
-		return Tasks;
+		return StoredTasks[Appliance.id];
 	};
-
+	
 	this.StoreAllTasks = function(tasks) {
-		StoredTasks = tasks;
-	};
-
-	this.SelectTasksByApplianceID = function(id) {
-		var tempTaskContainer = [];
-
-		if(this.checkApplianceHasTasks(id)){
-			for(i = 0; i < StoredTasks.length; i++){
-				if(StoredTasks[i].refAppliance == id){
-					tempTaskContainer.push(StoredTasks[i]);
+		for (var i = 0; i < ApplianceArray.length; i++){
+			var temp = [];
+			for (var j = 0; j < tasks.length; j++){
+				if (ApplianceArray[i].id == tasks[j].refAppliance){
+					temp.push(tasks[j]);
 				}
-			}
-		}
+			};
 
-		Tasks = tempTaskContainer;
+			if(temp.length != 0){
+				StoredTasks[ApplianceArray[i].id] = temp;
+			}
+		};
 	};
 
 	this.checkApplianceHasTasks = function(id){
-		for(i = 0; i < StoredTasks.length; i++){
-			if(StoredTasks[i].refAppliance == id){
-				return true;
-			}
+		if(StoredTasks[id] != undefined){
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	};
 
 	this.setTimer = function(date) {

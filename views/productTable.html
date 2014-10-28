@@ -8,16 +8,14 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in productArray">
-			<div>
 				<td>
 					{{item.name}}
 				</td>
 				<td>
-					<button type="button" class="btn btn-primary">
+					<button type="button" class="btn btn-info" ng-click="openProductModal(item)" ng-show="!item.brought">
 						{{"Press"}}
 					</button>
 				</td>
-				</div>
 			</tr>
 		</tbody>
 	</table>
