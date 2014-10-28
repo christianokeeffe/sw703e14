@@ -2,6 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('userLoginController', ['$scope','usersLoginFactory','formatRequest','$rootScope','$location','$sessionStorage', function($scope, usersLoginFactory,formatRequest,$rootScope,$location,$sessionStorage){
 $scope.user = {};
+$scope.invalidLogin = false;
   $scope.Login = function(){
     var geturl = {};
 
@@ -13,7 +14,7 @@ $scope.user = {};
          }, 10);
     }
     else
-    { 
+    {
       geturl.user = $scope.user.userName;
       geturl.pass = $scope.user.password;
       usersLoginFactory.findUser(geturl,
@@ -22,11 +23,11 @@ $scope.user = {};
         {
           case '200':
             $sessionStorage.currentUser = response.data;
-          $location.path("/");
+            $location.path("/");
             break;
-        case '409':
-          $scope.invalidEmail = true;
-          break;
+          case '401':
+            $scope.invalidLogin = true;
+            break;
         }
       },
       function () {
