@@ -108,10 +108,13 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     modalInstance.result.then(function (schedule){
       $rootScope.startGameTime();
       addToScheduleList(schedule);
+    }, function () {
+        $rootScope.startGameTime();
     });
   };
 
     $scope.openUpgradeModal = function(selectedAction) {
+        $rootScope.stopGameTime();
         controllerService.setAppliance(selectedAction);
         var modalInstance = $modal.open({
             templateUrl: 'views/upgradeModal.html',
@@ -119,9 +122,14 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
             size: ""
         });
 
-        modalInstance.result.then(function (){
+
+        modalInstance.result.then(function (selectedUpgrade){
             $scope.appliances = controllerService.getApplianceArray();
+            $rootScope.setBalance($rootScope.balance - selectedUpgrade.price);
+            $rootScope.startGameTime();
+        }, function () {
             $rootScope.startGameTime();
         });
+
     };
 }]);

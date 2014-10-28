@@ -5,7 +5,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	$scope.gameSecOnRealSec = 36000;
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
-	$scope.balance = 0;
+	$rootScope.balance = 0;
 
 	$scope.loadData = function()
 	{
@@ -26,7 +26,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					        {
 					          case '200':
 					            $rootScope.score = parseInt(response.data.score);
-					            $scope.balance = parseInt(response.data.savings);
+                                  $rootScope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
 					            timeSinceLastWeek = parseInt(response.data.date);
 					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
@@ -52,8 +52,8 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		if($scope.dateEpoch - timeSinceLastWeek >= 604800)
 		{
 			timeSinceLastWeek = timeSinceLastWeek + 604800;
-			$scope.balance += 500;
-			$scope.balance += $rootScope.totalBill();
+            $rootScope.balance += 500;
+            $rootScope.balance += $rootScope.totalBill();
 			$scope.saveData();
 		}
 		},1000);
@@ -91,7 +91,10 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		$rootScope.startGameTime();
 	}
 
-
+    $rootScope.setBalance = function (balance)
+    {
+        $rootScope.balance = balance;
+    }
 
 	$scope.saveData = function()
 	{
@@ -99,7 +102,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		var gamedata = {};
 		gamedata.userID = $scope.getUserID();
 		gamedata.score = $rootScope.score;
-		gamedata.savings = $scope.balance;
+		gamedata.savings = $rootScope.balance;
 		gamedata.date = $scope.dateEpoch;
 		gamedata.hygiene = $rootScope.hygiene;
 		gamedata.dishes = $rootScope.dishes;

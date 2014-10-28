@@ -1,24 +1,58 @@
         <div class="modal-header" >
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h3 class="modal-title">Upgrade {{header}}</h3>
+            <h3 class="modal-title">Upgrade {{chosenAppliance.typeString}}: {{chosenAppliance.name}}</h3>
         </div>
         <div class="modal-body">
-        	<div class="btn-group" dropdown is-open="status.isopen" style="margin-bottom: 15px">
-      			<button type="button" class="btn btn-danger dropdown-toggle">
-        			{{selectedItem}}<span class="caret"></span>
-      			</button>
-      			<ul class="dropdown-menu" role="menu">
-        			<li ng-repeat="item in appliances" dropdown-toggle>
-        				<a href ng-click="clicked(item);">
-        					{{item.name}}
-        				</a>
-        			</li>
-      			</ul> 
-    		</div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="btn-group" dropdown is-open="status.isopen" style="margin-bottom: 15px">
+                        <button type="button" class="btn btn-danger dropdown-toggle">
+                            {{selectedItem}}<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="item in appliances" dropdown-toggle>
+                                <a href ng-click="clicked(item);">
+                                    {{item.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        Price for upgrade: <b>{{selected.price | currency}}</b>
+                    </div>
+                    <div>
+                        <button class="btn {{btnUpgradeColor}}" ng-click="ok('now', selected)" style="margin-top:30px;" style={{buttonStyle}}>{{'upgradeModal.ACTIVATE' | translate}}</button>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{chosenAppliance.name}}</th>
+                                <th>{{selected.name}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>EnergyLabel</td>
+                            <td><span style="color: {{currentEnergyLabelCol}};">{{chosenAppliance.energyLabel}}</span></td>
+                            <td><span style="color: {{selectedEnergyLabelCol}};">{{selected.energyLabel}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>EnergyConsumption</td>
+                            <td><span style="color: {{currentEnergyConsumpCol}};">{{chosenAppliance.energyConsumption}}</span></td>
+                            <td><span style="color: {{selectedEnergyConsumpCol}};">{{selected.energyConsumption}}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
         <div class="modal-footer">
-            <button class="btn" ng-click="ok('now', selected)" style={{buttonStyle}}>{{'upgradeModal.ACTIVATE' | translate}}</button>
             <div>
                 <alert type="danger" ng-show="alertShown">{{'upgradeModal.noSelection' | translate}}</alert>
+                <alert type="danger" ng-show="alertCannotAfford">{{'upgradeModal.cannotAfford' | translate}}</alert>
             </div>
         </div>
