@@ -136,5 +136,16 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		return d;
 	}
 
+    window.onbeforeunload = function (event) {
+        var message = 'Sure you want to leave?';
+        $scope.saveData();
+        if (typeof event == 'undefined') {
+            event = window.event;
+        }
+        if (event) {
+            event.returnValue = message;
+        }
+        return message;
+    }
 	
 } ]);
