@@ -168,7 +168,6 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
        // variable that decides if something should be drawn on mousemove
       var drawing = false;
 	  var canvas = document.getElementById('face');
-	  canvas.width = canvas.width;
 	  var context = canvas.getContext('2d');
 	  var centerX = canvas.width / 2;
 	  var centerY = canvas.height / 2;
