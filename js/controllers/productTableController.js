@@ -20,11 +20,13 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', fun
     });
 
     modalInstance.result.then(function (broughtProduct) {
-    	$rootScope.startGameTime();
 
     	var index = $scope.productArray.indexOf(broughtProduct);
     	$rootScope.balance = $rootScope.balance - broughtProduct.cost;
     	$scope.productArray[index].brought = true;
+    	$rootScope.startGameTime();
+    }, function (){
+    	$rootScope.startGameTime();
     });
   };
 }]);

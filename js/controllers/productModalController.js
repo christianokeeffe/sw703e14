@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('productModalController',['$scope', '$rootScope', '$modalInstance', 'selectedProduct', function($scope, $rootScope, $modalInstance, selectedProduct){
+myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', function($scope, $modalInstance, selectedProduct){
 	$scope.product = selectedProduct;
 	$scope.calculatedResult;
 	$scope.times = 1;
@@ -19,11 +19,6 @@ myApp.controller('productModalController',['$scope', '$rootScope', '$modalInstan
 			$scope.times = time;
 		}
 		$scope.calculatePreview();
-	}
-
-	$scope.dismiss = function(){
-		$scope.startGameTime();
-		$modalInstance.dismiss("Closed");
 	}
 
 	$scope.buy = function(){
