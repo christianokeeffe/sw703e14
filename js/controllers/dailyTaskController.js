@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('dailyTaskController', ['$scope', '$rootScope', 'dailyOptionalTaskFactory', 'formatRequest', function($scope, $rootScope, dailyOptionalTaskFactory, formatRequest){
+myApp.controller('dailyTaskController', ['$scope', '$rootScope', 'dailyTaskFactory', 'formatRequest', function($scope, $rootScope, dailyTaskFactory, formatRequest){
 
 var first = true;
 var firstDay = true;
@@ -19,7 +19,7 @@ $scope.dailyTasks = {};
     }
     else
     {
-      dailyOptionalTaskFactory.dailyOptionalTask(geturl,
+      dailyTaskFactory.dailyTask(geturl,
       function (response) {
         switch(response.status_code)
         {
@@ -39,6 +39,7 @@ $scope.dailyTasks = {};
   };
 
   $scope.getDailyTasks();
+  console.log(JSON.stringify($scope.dailyTasks));
 
 $scope.getDateWithoutTime = function() {
 	currentDate = $scope.curDate();
