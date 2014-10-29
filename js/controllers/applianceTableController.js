@@ -62,6 +62,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
+          $rootScope.startGameTime();
         if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1)
         {
           $scope.timersToSchedule.push({appliance: controllerService.getAppliance(), task: controllerService.getTask(), timerStarted: false})
@@ -107,6 +108,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (schedule){
       addToScheduleList(schedule);
+        $rootScope.startGameTime();
     }, function () {
         $rootScope.startGameTime();
     });
@@ -125,6 +127,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
         modalInstance.result.then(function (selectedUpgrade){
             $scope.appliances = controllerService.getApplianceArray();
             $rootScope.setBalance($rootScope.balance - selectedUpgrade.price);
+            $rootScope.startGameTime();
         }, function () {
             $rootScope.startGameTime();
         });
