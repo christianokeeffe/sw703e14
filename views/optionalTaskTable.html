@@ -1,0 +1,21 @@
+<div ng-controller="optionalTaskController">
+	<table class="table table-condensed table-bordered">
+		<thead>
+			<tr>
+				<th>{{'optimalTasks.optionalTasks' | translate}}</th>
+				<th>{{'optimalTasks.completed' | translate}}</th>
+				<th>{{'optimalTasks.times' | translate}}</th>
+			</tr>	
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in optionalTasks">
+				<div>
+					<td>{{item.name}}</td>
+					<td>{{item.deadline}}</td>
+					<td ng-if="item.done"><img src="./views/pics/checkMark.png" style="width:25px;height:25px"></td>
+					<td ng-if="!item.done">{{item.timesDone}}</td>
+				</div>
+			</tr>
+		</tbody>
+	</table>
+</div>
