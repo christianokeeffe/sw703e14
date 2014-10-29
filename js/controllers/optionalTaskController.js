@@ -25,6 +25,7 @@ var geturl = {};
             	$scope.optionalTasks[i].done = false;
             	$scope.optionalTasks[i].missed = false;
             }
+            console.log(JSON.stringify($scope.optionalTasks));
             break;
         }
       },
@@ -35,5 +36,4 @@ var geturl = {};
   };
 
   $scope.getOptionalTasks();
-  console.log(JSON.stringify($scope.optionalTasks));
 }]);

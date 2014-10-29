@@ -25,6 +25,7 @@ $scope.dailyTasks = {};
         {
           case '200':
             $scope.dailyTasks = response.data;
+            console.log(JSON.stringify($scope.dailyTasks));
             for (var i = 0; i < $scope.dailyTasks.length; i++) {
             	$scope.dailyTasks[i].done = false;
             	$scope.dailyTasks[i].missed = false;
@@ -39,7 +40,6 @@ $scope.dailyTasks = {};
   };
 
   $scope.getDailyTasks();
-  console.log(JSON.stringify($scope.dailyTasks));
 
 $scope.getDateWithoutTime = function() {
 	currentDate = $scope.curDate();
