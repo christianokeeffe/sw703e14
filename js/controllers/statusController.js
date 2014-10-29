@@ -7,6 +7,8 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 	$rootScope.laundry = 100;
 	$rootScope.score = 0;
 
+	var statusBarFloorValue = 0.1;
+
 	function hourToPercentDrop(fullPercentDropInDays,numbOfHours)
 	{
 		return (numbOfHours/(fullPercentDropInDays*24))*100;
@@ -61,7 +63,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
 		if($rootScope.dishes - $dishChange < 0)
 		{
-			$rootScope.dishes = 0.1;
+			$rootScope.dishes = statusBarFloorValue;
 		}
 		else
 		{
@@ -70,7 +72,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
 		if($rootScope.laundry - $laundryChange < 0)
 		{
-			$rootScope.laundry = 0.1;
+			$rootScope.laundry = statusBarFloorValue;
 		}
 		else
 		{
@@ -79,7 +81,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
 		if($rootScope.hygiene - $hygieneChange < 0)
 		{
-			$rootScope.hygiene = 0.1;
+			$rootScope.hygiene = statusBarFloorValue;
 		}
 		else
 		{
