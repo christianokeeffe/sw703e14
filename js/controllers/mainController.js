@@ -1,11 +1,11 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage){
+myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage,priceService){
 
-	$scope.gameSecOnRealSec = 3600;
+	$rootScope.gameSecOnRealSec = 3600;
 	$scope.dateEpoch = 1409565600;
 	var timeSinceLastWeek = 1409565600;
-	$scope.balance = 0;
+	$rootScope.balance = 0;
 
 	$scope.loadData = function()
 	{
@@ -25,14 +25,19 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					switch(response.status_code)
 					        {
 					          case '200':
-					            $scope.score = parseInt(response.data.score);
-					            $scope.balance = parseInt(response.data.savings);
+					            $rootScope.score = parseInt(response.data.score);
+                                  $rootScope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
 					            timeSinceLastWeek = parseInt(response.data.date);
+								$rootScope.startGameTime();
+					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
+					            $rootScope.dishes = parseFloat(response.data.dishes);
+					            $rootScope.hygiene = parseFloat(response.data.hygiene);
+					            $rootScope.laundry = parseFloat(response.data.laundry);
 					            break;
 					        case '204':
-					          	
-					          break;
+								$rootScope.startGameTime();
+					          	break;
 					        }
 	    		},
 	    		function () {
@@ -41,19 +46,19 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	    }
 	}
 
+
 	$rootScope.startGameTime = function() {
 		interval = $interval(function(){
 		$scope.dateEpoch += $scope.gameSecOnRealSec;
 		if($scope.dateEpoch - timeSinceLastWeek >= 604800)
 		{
 			timeSinceLastWeek = timeSinceLastWeek + 604800;
-			$scope.balance += 500;
-			$scope.balance += $rootScope.totalBill();
+            $rootScope.balance += 500;
+            $rootScope.balance += $rootScope.totalBill();
 			$scope.saveData();
 		}
 		},1000);
 	}
-
 
 	$rootScope.stopGameTime = function() {
 		$interval.cancel(interval);
@@ -76,7 +81,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		return $rootScope.currentUser !== undefined;
 	}
 
-    if($sessionStorage.currentUser === undefined)
+    if($sessionStorage.currentUser === undefined || $sessionStorage.currentUser == "undefined")
     {
     	$location.path("/login");
 	}
@@ -84,10 +89,12 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	{
 		$rootScope.currentUser = $sessionStorage.currentUser;
 		$scope.loadData();
-		$rootScope.startGameTime();
 	}
 
-
+    $rootScope.setBalance = function (balance)
+    {
+        $rootScope.balance = balance;
+    }
 
 	$scope.saveData = function()
 	{
@@ -95,8 +102,11 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		var gamedata = {};
 		gamedata.userID = $scope.getUserID();
 		gamedata.score = $rootScope.score;
-		gamedata.savings = $scope.balance;
+		gamedata.savings = $rootScope.balance;
 		gamedata.date = $scope.dateEpoch;
+		gamedata.hygiene = $rootScope.hygiene;
+		gamedata.dishes = $rootScope.dishes;
+		gamedata.laundry = $rootScope.laundry;
 
         request.game = gamedata;
 
@@ -126,5 +136,16 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		return d;
 	}
 
+    window.onbeforeunload = function (event) {
+        var message = 'Sure you want to leave?';
+        $scope.saveData();
+        if (typeof event == 'undefined') {
+            event = window.event;
+        }
+        if (event) {
+            event.returnValue = message;
+        }
+        return message;
+    }
 	
 } ]);

@@ -56,7 +56,7 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
     {
       var tempSchedule = $scope.datesToSchedule[index];
 
-      if((tempSchedule.deadline - $scope.curDate().getTime()/1000) <= 0)
+      if((tempSchedule.starttime - $scope.curDate().getTime()/1000) <= 0)
       {
         $scope.timersToSchedule.push({appliance: tempSchedule.appliance, task: tempSchedule.task, timerStarted: false});
         $scope.datesToSchedule.splice(index, 1);

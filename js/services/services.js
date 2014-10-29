@@ -11,7 +11,6 @@ var privateHash = 'c90adb0a3a6f0865062a639f5ad54f113f559031a658d503903ec48ced130
 var sessionid;
 var sessionend;
 
-
 //service style, probably the simplest one
 services.service('formatRequest', ['$translate','authFactory', function($translate, authFactory) {
     var thisvar = this;
@@ -43,24 +42,23 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
 		    'requestHash':hash
 		    };
 
-            //console.log("Getting new session");
+            authFactory.getSession(headersVar,
+                function (response) {
+                    //console.log("Got session: ");
+                    sessionid = response.data.session;
+                    //console.log(sessionid);
+                    //console.log("expires:")
+                    sessionend = new Date(response.data.expire).getTime();
+                    //console.log(sessionend);
+                    isCalled = false;
+                },
+                function (response) {
+                    //alert(JSON.stringify(response));
+                    isCalled = false;
 
-		    authFactory.getSession(headersVar,
-		    function (response) {
-                //console.log("Got session: ");
-		        sessionid = response.data.session;
-                //console.log(sessionid);
-                //console.log("expires:")
-		        sessionend = new Date(response.data.expire).getTime();
-                //console.log(sessionend);
-		    	isCalled = false;
-		    },
-		    function (response) {
-		        //alert(JSON.stringify(response));
-		        isCalled = false;
+                    document.write(JSON.stringify(response));
+                });
 
-		        document.write(JSON.stringify(response));
-		    });
 		    return false;
 		}
 		else if(sessionid !== undefined)
@@ -113,3 +111,18 @@ services.factory("authFactory", function($resource) {
         getSession : { method: 'POST', isArray: false, params: {'publicKey': '@publicKey', 'request':'@request', 'requestHash':'@requestHash'}}
     });
 });
+
+ services.factory('authFactoryNew', ['$http', function ($http) {
+    return {
+        getSession: function (headersVar) {
+
+        var promise = $http.post(api_url + '/auth', {'publicKey': headersVar.publicKey, 'request':headersVar.request, 'requestHash':headersVar.requestHash}).then(function(response) {
+            return response.data.data;
+        }, function (error) {
+            //error
+        })
+        return promise;
+    }
+ }
+ }
+ ]);

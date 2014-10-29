@@ -1,10 +1,10 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('statusController', ['$scope','$rootScope', function($scope, $rootScope){
-	$scope.dishes = 100;
-	$scope.lastEpochUpdate = $scope.dateEpoch;
-	$scope.hygiene = 100;
-	$scope.laundry = 100;
+	$rootScope.dishes = 100;
+	$rootScope.lastEpochUpdate = $scope.dateEpoch;
+	$rootScope.hygiene = 100;
+	$rootScope.laundry = 100;
 	$rootScope.score = 0;
 
 	function hourToPercentDrop(fullPercentDropInDays,numbOfHours)
@@ -18,72 +18,72 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		switch(data.category)
 		{
 			case "dishes":
-				if($scope.dishes + value > 100)
+				if($rootScope.dishes + value > 100)
 				{
-					$scope.dishes = 100;
+					$rootScope.dishes = 100;
 				}
 				else
 				{
-					$scope.dishes += value;
+					$rootScope.dishes += value;
 				}
 				break;
 			case "hygiene":
-				if($scope.hygiene + value > 100)
+				if($rootScope.hygiene + value > 100)
 				{
-					$scope.hygiene = 100;
+					$rootScope.hygiene = 100;
 				} 
 				else
 				{
-					$scope.hygiene += value;
+					$rootScope.hygiene += value;
 				}
 				break;
 			case "laundry":
-				if($scope.laundry + value > 100)
+				if($rootScope.laundry + value > 100)
 				{
-					$scope.laundry = 100;
+					$rootScope.laundry = 100;
 				}
 				else
 				{
-					$scope.laundry += value;
+					$rootScope.laundry += value;
 				}
 				break;
 		}	
     });
 
 	$scope.$watch('dateEpoch', function() {
-		var hourChange = ($scope.dateEpoch - $scope.lastEpochUpdate)/3600;
-		$scope.lastEpochUpdate = $scope.dateEpoch;
+		var hourChange = ($scope.dateEpoch - $rootScope.lastEpochUpdate)/3600;
+		$rootScope.lastEpochUpdate = $scope.dateEpoch;
 		$dishChange = hourToPercentDrop(4,hourChange);
 		$laundryChange = hourToPercentDrop(21,hourChange);
 		$hygieneChange = hourToPercentDrop(14,hourChange);
-        $scope.happiness = ($scope.dishes+$scope.hygiene+$scope.laundry)/3;
+        $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.laundry)/3;
         $rootScope.score += Math.round(hourChange*$scope.happiness);
 
-		if($scope.dishes - $dishChange <= 0)
+		if($rootScope.dishes - $dishChange < 0)
 		{
-			$scope.dishes = 0.1;
+			$rootScope.dishes = 0.1;
 		}
 		else
 		{
-			$scope.dishes -= $dishChange;
+			$rootScope.dishes -= $dishChange;
 		}
 
-		if($scope.laundry - $laundryChange <= 0)
+		if($rootScope.laundry - $laundryChange < 0)
 		{
-			$scope.laundry = 0.1;
+			$rootScope.laundry = 0.1;
 		}
 		else
 		{
-			$scope.laundry -= $laundryChange;
+			$rootScope.laundry -= $laundryChange;
 		}
 
-		if($scope.hygiene - $hygieneChange <= 0)
+		if($rootScope.hygiene - $hygieneChange < 0)
 		{
-			$scope.hygiene = 0.1;
+			$rootScope.hygiene = 0.1;
 		}
 		else
 		{
-			$scope.hygiene -= $hygieneChange;
+			$rootScope.hygiene -= $hygieneChange;
 		}
 	});
 
