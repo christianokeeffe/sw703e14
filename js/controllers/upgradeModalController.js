@@ -110,7 +110,6 @@ myApp.controller('upgradeModalController', ['$scope', '$rootScope', '$modalInsta
   };
 
   $scope.cancel = function () {
-    $scope.startGameTime();
     $modalInstance.dismiss('cancel');
   };
 }]);
