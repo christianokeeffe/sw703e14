@@ -104,5 +104,11 @@
     "dailyTasks":"Daily Tasks",
     "deadline":"Deadline",
     "taskSolved":"Task Solved"
+  },
+  "optimalTasks":
+  {
+    "optionalTasks":"Optional Tasks",
+    "completed":"Can be completed",
+    "times":"Times done/Completed"
   }
 }

@@ -25,7 +25,6 @@ $scope.dailyTasks = {};
         {
           case '200':
             $scope.dailyTasks = response.data;
-            console.log(JSON.stringify($scope.dailyTasks));
             for (var i = 0; i < $scope.dailyTasks.length; i++) {
             	$scope.dailyTasks[i].done = false;
             	$scope.dailyTasks[i].missed = false;
@@ -83,7 +82,7 @@ $scope.$on('task-communication', function(event, data){
 		if($scope.dailyTasks[i].taskID == data.task.id) {
 			if($scope.inTime($scope.dailyTasks[i].startTime, $scope.dailyTasks[i].endTime) && $scope.dailyTasks[i].done == false) {
 				$scope.dailyTasks[i].done = true;
-				$rootScope.score += 5000;
+				$rootScope.score += parseInt($scope.dailyTasks[i].reward);
 			}
 		}
 	}
@@ -107,7 +106,7 @@ var updater = $scope.$watch('dateEpoch', function(){
  			}
  		} else if($scope.isMissed($scope.dailyTasks[i]) && $scope.dailyTasks[i].missed == false && $scope.firstDay == false) {
  			$scope.dailyTasks[i].missed = true;
- 			$rootScope.score -= 10000;
+ 			$rootScope.score += parseInt($scope.dailyTasks[i].penalty);
  		}
  	};
  	$scope.lastUpdated = $scope.getDateWithoutTime();
