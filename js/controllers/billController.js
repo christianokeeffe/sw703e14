@@ -1,9 +1,9 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'controllerService', function($scope,$rootScope, priceService, controllerService){
-  var month = 3600
-  var timeSincepaid = 1409565600 + month;
-  var timeSincelastMonth = 1409565600;
+  var hour = 3600;
+  var timeSincepaid = 1409565600;
+  var timeSincelastMonth = $rootScope.curDate().getMonth();
 
   $scope.content = {
     "billList": [
@@ -17,19 +17,19 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
        "expense": -200
       }
     ],
-    "addedbills": [
-    {"item": "item 42",
-       "expense": 42
+    "addedbills":[
+      {"item": "item 1",
+       "expense": 55
       }
-    ]
+      ]
   }
   $rootScope.test = function(){
     var temp = 1;
-    $rootScope.addbill("item 42", 20);
+    var Appliances = controllerService.getApplianceArray();
+    $rootScope.addbill("item 42", Appliances[0].energyConsumption);
   };
 
   $rootScope.addbill = function(name, price){
-    alert("name: " + name + " price: " + price);
     var inList = false;
     for (var i = 0; i < $scope.content.addedbills.length && !inList; i++) {
       if ($scope.content.addedbills[i].item === name) {
@@ -43,7 +43,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   };
 
   $rootScope.resetAddedBills = function(){
-    $scope.content.addedbills = {};
+    $scope.content.addedbills = [{"item": "item 1","expense": 55}];
   };
 
 
@@ -55,7 +55,8 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
         $scope.content.billList.splice(i, 1);
       }
     }
-     if (!inList) {
+
+    if (!inList) {
       alert("error in finding " + name + " in bill list");
     };
   };
@@ -69,21 +70,46 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       total = total + $scope.content.billList[i].expense;
     }
 
+    for (var x = 0 ; x <= $scope.content.addedbills.length-1; x++) {
+      total = total + $scope.content.addedbills[x].expense;
+    }
+
     return total;
   };
 
   $scope.$watch('dateEpoch', function() {
     var tempDateEpoch = $scope.dateEpoch;
-    if (tempDateEpoch - timeSincepaid >= month)
-    {
-      timeSincepaid = timeSincepaid + month;
-      var Appliances = controllerService.getApplianceArray();
-      for (var x = 0; x < Appliances.length ; x++) {
-        var name = Appliances[x].name;
-        var price =  priceService.getPriceNow(tempDateEpoch, Appliances[x].energyConsumption);
-        alert("app" + x + " name:"+ name + " price: " + price);
-        $rootScope.addbill(name, price);
+    var Appliances = controllerService.getApplianceArray();
+    for (var x = 0; x < Appliances.length ; x++) {
+      var name = Appliances[x].name;
+      var timeleft = 3600; // get the time left on a task
+      var timeToPay =0;
+
+      if (true) { // see if the Appliances that need to be activated
+        if (timeleft > tempDateEpoch - timeSincelastMonth) { // see if the time left more then what is needed to be calculated
+        timeToPay = tempDateEpoch - timeSincelastMonth;
+        }
+        else{ 
+          timeToPay = timeleft;
+        }
       }
+      else{ // if the Appliances is always running
+        timeToPay = tempDateEpoch - timeSincelastMonth;
+      }
+
+      var price = priceService.getTotalPrice(timeSincepaid, timeToPay,  Appliances[x].energyConsumption);
+        
+      if(angular.isUndefined(price) || price === null){
+        price = 0 ;
+      }
+      timeSincepaid = tempDateEpoch;   
+      $rootScope.addbill(name, price);
     }
+
+    if (timeSincelastMonth < $rootScope.curDate().getMonth()) {
+      $rootScope.resetAddedBills();
+      timeSincelastMonth = $rootScope.curDate().getMonth();
+    };
+
   });
   }]);

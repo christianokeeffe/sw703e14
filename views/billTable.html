@@ -14,12 +14,12 @@
 
 	</thead>
 	<tbody>
-		<tr ng-repeat="t in content.billList"> 
+		<tr ng-if = "content.billList.length > 0" ng-repeat="t in content.billList"> 
 			<td> {{t.item}} </td>
 			<td> {{t.expense | currencyWithMinus}} </td>
 		</tr>
 
-		<tr ng-repeat="t in content.addedbills"> 
+		<tr ng-if = "content.addedbills.length > 0" ng-repeat="t in content.addedbills"> 
 			<td> {{t.item}} </td>
 			<td> {{t.expense | currencyWithMinus}} </td>
 		</tr>

@@ -64,27 +64,23 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		    getData(timenow,endbefore);
 		}
 	};
-	this.getTotalPrice = function(startTime, duration, powerUsage) {
-		if(startTime + duration <= latesttime){
+	this.getTotalPrice = function(startTime, endTime, powerUsage) {
+		if(startTime + endTime <= latesttime){
 			var totalPrice = 0;
 			var id = 0;
-			while(parseInt(timevars[id].time) != startTime)
-			{
-				id++;
+
+			for (var i = 0 ; i < endTime ; i=i+3600) {
+				totalPrice =totalPrice + (getPriceNow( startTime+i , powerUsage) /3600)* endTime;
 			}
-			for(var j = 0; j < duration; j = j+3600)
-			{
-				totalPrice += parseFloat(powerUsage) * parseFloat(timevars[id+((i-startTime)/3600)+(j/3600)].price);
-			}
-			return totalPrice ;
+			return totalPrice;
 		}
 		else
 		{
-		    getData(startTime, startTime + duration);
+		    getData(startTime - 3600, startTime + endTime + 3600*24*7);
 		}
 	};
-	this.getPriceNow = function(time, powerUsage) {
-		console.log("Her er pris: " + price);
+
+	getPriceNow = function(time, powerUsage) {
 		if(time <= latesttime){
 			var price = 0;
 			var id = 0;
@@ -93,7 +89,6 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 				id++;
 			}
 			price = powerUsage * parseFloat(timevars[id].price);
-			console.log("Her er pris: " + price);
 			return price;
 		}
 		else
