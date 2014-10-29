@@ -27,7 +27,7 @@ myApp.controller('productModalController',['$scope', '$rootScope', '$modalInstan
 	}
 
 	$scope.buy = function(){
-		$modalInstance.close(true);
+		$modalInstance.close(selectedProduct);
 	}
 
 	$scope.cancel = function(){
