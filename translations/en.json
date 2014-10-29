@@ -11,7 +11,8 @@
   	"dishes":"Clean Dishes",
   	"laundry":"Clean Clothes",
   	"hygiene":"Hygiene",
-    "balance":"Balance"
+    "balance":"Balance",
+    "carBattery":"Car Battery Level"
   },
   "textToPriceTable":
   {

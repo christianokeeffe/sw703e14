@@ -5,7 +5,9 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 	$rootScope.lastEpochUpdate = $scope.dateEpoch;
 	$rootScope.hygiene = 100;
 	$rootScope.laundry = 100;
+    $rootScope.carBattery = 100;
 	$rootScope.score = 0;
+    $scope.carBatCount = 0;
 
 	var statusBarFloorValue = 0.1;
 
@@ -58,7 +60,8 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		$dishChange = hourToPercentDrop(4,hourChange);
 		$laundryChange = hourToPercentDrop(21,hourChange);
 		$hygieneChange = hourToPercentDrop(14,hourChange);
-        $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.laundry)/3;
+
+        $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.laundry+$rootScope.carBattery)/3;
         $rootScope.score += Math.round(hourChange*$scope.happiness);
 
 		if($rootScope.dishes - $dishChange < 0)
@@ -87,6 +90,26 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		{
 			$rootScope.hygiene -= $hygieneChange;
 		}
+
+
+        var currentHour = $scope.dateEpoch / 60 / 60;
+        currentHour = (currentHour%24)+1;
+
+        var currentDay = $scope.dateEpoch / 60 / 60 / 24;
+
+        currentDay = Math.floor(currentDay%7);
+
+        if((currentHour == 7 || currentHour == 17) && currentDay != 2 && currentDay != 3)
+        {
+            if($rootScope.carBattery - 20 <= 0)
+            {
+                $rootScope.carBattery = statusBarFloorValue;
+            }
+            else
+            {
+                $rootScope.carBattery -= 20;
+            }
+        }
 	});
 
 	$scope.getStatusType = function(value)
