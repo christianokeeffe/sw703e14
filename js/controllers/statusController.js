@@ -9,6 +9,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 	$rootScope.score = 0;
     $scope.carBatCount = 0;
 
+
 	var statusBarFloorValue = 0.1;
 
 	function hourToPercentDrop(fullPercentDropInDays,numbOfHours)
@@ -91,23 +92,30 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 			$rootScope.hygiene -= $hygieneChange;
 		}
 
-
+        var hourOfLastUpdate = $scope.lastEpochUpdate / 60 / 60;
         var currentHour = $scope.dateEpoch / 60 / 60;
         currentHour = (currentHour%24)+1;
+        hourOfLastUpdate = (hourOfLastUpdate%24);
 
+
+        var dayOfLastUpdate = $scope.lastEpochUpdate / 60 / 60 / 24;
         var currentDay = $scope.dateEpoch / 60 / 60 / 24;
 
+        dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
         currentDay = Math.floor(currentDay%7);
 
-        if((currentHour == 7 || currentHour == 17) && currentDay != 2 && currentDay != 3)
+        if( (hourOfLastUpdate < 7 && 7 <= currentHour) || (hourOfLastUpdate < 17 && 17 <= currentHour) )
         {
-            if($rootScope.carBattery - 20 <= 0)
+            if(currentDay != 2 && currentDay !=3 )
             {
-                $rootScope.carBattery = statusBarFloorValue;
-            }
-            else
-            {
-                $rootScope.carBattery -= 20;
+                if($rootScope.carBattery - 10 <= 0)
+                {
+                    $rootScope.carBattery = statusBarFloorValue;
+                }
+                else
+                {
+                    $rootScope.carBattery -= 10;
+                }
             }
         }
 	});
