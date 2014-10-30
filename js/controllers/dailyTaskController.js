@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('dailyTaskController', ['$scope', '$rootScope', 'dailyOptionalTaskFactory', 'formatRequest', function($scope, $rootScope, dailyOptionalTaskFactory, formatRequest){
+myApp.controller('dailyTaskController', ['$scope', '$rootScope', 'dailyTaskFactory', 'formatRequest', function($scope, $rootScope, dailyTaskFactory, formatRequest){
 
 var first = true;
 var firstDay = true;
@@ -19,7 +19,7 @@ $scope.dailyTasks = {};
     }
     else
     {
-      dailyOptionalTaskFactory.dailyOptionalTask(geturl,
+      dailyTaskFactory.dailyTask(geturl,
       function (response) {
         switch(response.status_code)
         {
@@ -82,7 +82,7 @@ $scope.$on('task-communication', function(event, data){
 		if($scope.dailyTasks[i].taskID == data.task.id) {
 			if($scope.inTime($scope.dailyTasks[i].startTime, $scope.dailyTasks[i].endTime) && $scope.dailyTasks[i].done == false) {
 				$scope.dailyTasks[i].done = true;
-				$rootScope.score += 5000;
+				$rootScope.score += parseInt($scope.dailyTasks[i].reward);
 			}
 		}
 	}
@@ -106,7 +106,7 @@ var updater = $scope.$watch('dateEpoch', function(){
  			}
  		} else if($scope.isMissed($scope.dailyTasks[i]) && $scope.dailyTasks[i].missed == false && $scope.firstDay == false) {
  			$scope.dailyTasks[i].missed = true;
- 			$rootScope.score -= 10000;
+ 			$rootScope.score += parseInt($scope.dailyTasks[i].penalty);
  		}
  	};
  	$scope.lastUpdated = $scope.getDateWithoutTime();
