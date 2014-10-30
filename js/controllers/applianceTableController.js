@@ -17,13 +17,13 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     else
     { 
       geturl.userID = $scope.getUserID();
-      appliancesFactory.getAppliances(geturl,
-      function (response) {
+      var appliancePromise = appliancesFactory.getAppliances(geturl);
+
+      appliancePromise.$promise.then(function(response){
         $scope.appliances = response.data;
         controllerService.setApplianceArray($scope.appliances);
-      },
-      function () {
-        document.write(JSON.stringify(response));
+
+        $scope.getTasks();
       });
     }
   };
@@ -38,18 +38,15 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     }
     else
     {
-      tasksFactory.getTasks(geturl,
-      function (response) {
+      var taskPromise = tasksFactory.getTasks(geturl);
+
+      taskPromise.$promise.then(function(response){
         controllerService.StoreAllTasks(response.data);
-      },
-      function () {
-        document.write(JSON.stringify(response));
       });
     }
   };
 
   $scope.getAppliances();
-  $scope.getTasks();
 
 	$scope.openActionModal = function (selectedAction) {
     $rootScope.stopGameTime();
