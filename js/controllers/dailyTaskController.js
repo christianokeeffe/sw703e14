@@ -112,8 +112,8 @@ var updater = $scope.$watch('dateEpoch', function(){
         	dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
         	currentDay = Math.floor(currentDay%7);
  			
- 			if(hourOfLastUpdate < 7 && 7 <= currentHour && currentDay != 2 && currentDay !=3) {
- 				if($rootScope.carBattery - 2 * $rootScope.carChange >= 0) {	
+ 			if(hourOfLastUpdate < 6 && 6 <= currentHour && currentDay != 2 && currentDay !=3) {
+ 				if($rootScope.carBattery - 2 * $rootScope.carChange >= 0) {
  					$rootScope.score += parseInt($scope.dailyTasks[i].reward);
  					$scope.dailyTasks[i].done = true;
  				} else {
