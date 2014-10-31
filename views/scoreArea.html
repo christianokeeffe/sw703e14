@@ -19,4 +19,9 @@
         <bar value="hygiene" type="success"><b ng-show="hygiene >= 50">{{hygiene | number:0}}%</b></bar>
         <bar value="100-hygiene" type="danger"><b ng-show="hygiene < 50">{{hygiene | number:0}}%</b></bar>
     </progress>
+    <label for="carBattery">{{'scorearea.carBattery' | translate}}</label>
+    <progress animate="false" max="100" id="carBattery">
+        <bar value="carBattery" type="success"><b ng-show="carBattery >= 50">{{carBattery | number:0}}%</b></bar>
+        <bar value="100-carBattery" type="danger"><b ng-show="carBattery < 50">{{carBattery | number:0}}%</b></bar>
+    </progress>
 </div>

@@ -3,6 +3,7 @@
 /* Services */
 var services = angular.module('smartgridgame');
 
+
 var api_url = "http://localhost/sw703e14-backend";
 //var api_url = "http://api.smartgrid.okeeffe.dk";
 

@@ -17,13 +17,13 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     else
     { 
       geturl.userID = $scope.getUserID();
-      appliancesFactory.getAppliances(geturl,
-      function (response) {
+      var appliancePromise = appliancesFactory.getAppliances(geturl);
+
+      appliancePromise.$promise.then(function(response){
         $scope.appliances = response.data;
         controllerService.setApplianceArray($scope.appliances);
-      },
-      function () {
-        document.write(JSON.stringify(response));
+
+        $scope.getTasks();
       });
     }
   };
@@ -38,18 +38,15 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     }
     else
     {
-      tasksFactory.getTasks(geturl,
-      function (response) {
+      var taskPromise = tasksFactory.getTasks(geturl);
+
+      taskPromise.$promise.then(function(response){
         controllerService.StoreAllTasks(response.data);
-      },
-      function () {
-        document.write(JSON.stringify(response));
       });
     }
   };
 
   $scope.getAppliances();
-  $scope.getTasks();
 
 	$scope.openActionModal = function (selectedAction) {
     $rootScope.stopGameTime();
@@ -62,6 +59,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
+          $rootScope.startGameTime();
         if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1)
         {
           $scope.timersToSchedule.push({appliance: controllerService.getAppliance(), task: controllerService.getTask(), timerStarted: false})
@@ -107,6 +105,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (schedule){
       addToScheduleList(schedule);
+        $rootScope.startGameTime();
     }, function () {
         $rootScope.startGameTime();
     });
@@ -125,6 +124,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
         modalInstance.result.then(function (selectedUpgrade){
             $scope.appliances = controllerService.getApplianceArray();
             $rootScope.setBalance($rootScope.balance - selectedUpgrade.price);
+            $rootScope.startGameTime();
         }, function () {
             $rootScope.startGameTime();
         });

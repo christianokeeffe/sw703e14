@@ -46,12 +46,14 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 
 
 	$rootScope.startGameTime = function() {
+		var pay = 500;
 		interval = $interval(function(){
 		$scope.dateEpoch += $scope.gameSecOnRealSec;
 		if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
 		{
-            $rootScope.balance += 500;
-            $rootScope.balance += $rootScope.totalBill();
+            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
+            $rootScope.timesMissedWork = 0;
+            //$rootScope.balance += $rootScope.totalBill();
 			$scope.saveData();
 			$scope.saveGraphData();
 		}
