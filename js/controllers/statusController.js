@@ -52,6 +52,16 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 					$rootScope.laundry += value;
 				}
 				break;
+			case "car":
+				if($rootScope.carBattery + value > 100)
+				{
+					$rootScope.carBattery = 100;
+				}
+				else
+				{
+					$rootScope.carBattery += value;
+				}
+				break;
 		}	
     });
 
@@ -92,6 +102,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 			$rootScope.hygiene -= $hygieneChange;
 		}
 
+		$rootScope.carChange = 25;
         var hourOfLastUpdate = $scope.lastEpochUpdate / 60 / 60;
         var currentHour = $scope.dateEpoch / 60 / 60;
         currentHour = (currentHour%24)+1;
@@ -108,13 +119,13 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
         {
             if(currentDay != 2 && currentDay !=3 )
             {
-                if($rootScope.carBattery - 10 <= 0)
+                if($rootScope.carBattery - $rootScope.carChange <= 0)
                 {
                     $rootScope.carBattery = statusBarFloorValue;
                 }
                 else
                 {
-                    $rootScope.carBattery -= 10;
+                    $rootScope.carBattery -= $rootScope.carChange;
                 }
             }
         }
