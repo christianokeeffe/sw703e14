@@ -53,7 +53,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		{
             $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
             $rootScope.timesMissedWork = 0;
-            //$rootScope.balance += $rootScope.totalBill();
+            $rootScope.balance += $rootScope.totalBill();
 			$scope.saveData();
 			$scope.saveGraphData();
 		}

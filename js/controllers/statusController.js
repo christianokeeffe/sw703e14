@@ -102,7 +102,6 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 			$rootScope.hygiene -= $hygieneChange;
 		}
 
-		$rootScope.carChange = 25;
         var hourOfLastUpdate = $scope.lastEpochUpdate / 60 / 60;
         var currentHour = $scope.dateEpoch / 60 / 60;
         currentHour = (currentHour%24)+1;
