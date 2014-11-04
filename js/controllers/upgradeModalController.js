@@ -38,11 +38,6 @@ myApp.controller('upgradeModalController', ['$scope', '$rootScope', '$modalInsta
     });
 
     $scope.calTableColors = function(currentAppliance, selectedAppliance) {
-
-        console.log("Comparing: ");
-
-        console.log(currentAppliance);
-        console.log(selectedAppliance);
         if(selectedAppliance.energyConsumption != undefined)
         {
             if(parseInt(currentAppliance.energyConsumption) > parseInt(selectedAppliance.energyConsumption))
