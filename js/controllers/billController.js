@@ -2,9 +2,10 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'controllerService', function($scope,$rootScope, priceService, controllerService){
   var hour = 3600;
-  var timeForLastpaid = 1409565600;
+  var timeForLastpaid = $scope.dateEpoch;
   var timeSincelastMonth = $rootScope.curDate().getMonth();
-
+  var passiveAppliances = [];
+  var first = true;
   $scope.content = {
     "runningAppliances": [
       {"name": "", "time": 0}
@@ -15,10 +16,16 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }
       ]
   }
-  $rootScope.test = function(){
-    var temp = 1;
-    var Appliances = controllerService.getApplianceArray();
-    $scope.addbill("item 42", Appliances[0].energyConsumption);
+
+  $scope.getAppliances = function(){
+    //passiveAppliances = [];
+    var temp = controllerService.getApplianceArray();
+    console.log(JSON.stringify(temp));
+    for (var i = 0; i < temp.length; i++) {
+      if(temp[i].passive == "1"){
+        passiveAppliances.push(temp[i]);
+      }
+    }
   };
 
   $scope.addbill = function(name, price){
@@ -77,29 +84,20 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   });
 
   $scope.$watch('dateEpoch', function() {
-    alert(" lenght: " + $scope.content.runningAppliances.length);
+    if (first) {
+      $scope.getAppliances();
+      first = false;
+    };
     var tempDateEpoch = $scope.dateEpoch;
-    var Appliances = controllerService.getApplianceArray();
-    for (var x = 0; x < Appliances.length ; x++) {
-      var name = Appliances[x].name;
-      var timesincepaid = tempDateEpoch - timeForLastpaid;
-      var timeleft = $scope.findTimeLeft(name, timesincepaid); // get the time left on a task
-      var timeToPay = 0;
-
-      if (Appliances[x].passive == 0) { // see if the Appliances that need to be activated
-        timeToPay = timeleft;
-      }
-      else{ // if the Appliances is always running
-        timeToPay = timesincepaid;
-      }
-      var price = priceService.getTotalPrice(timeForLastpaid, timeToPay,  Appliances[x].energyConsumption);
+    var timesincepaid = tempDateEpoch - timeForLastpaid;
+    for (var x = 0; x < passiveAppliances.length ; x++) {
+      var price = priceService.getTotalPrice(timeForLastpaid, timesincepaid,  passiveAppliances[x].energyConsumption);
       if(angular.isUndefined(price) || price === null){
         price = 0 ;
       }   
-      $scope.addbill(name, price);
+      $scope.addbill(passiveAppliances[x].name, price);
     }
     timeForLastpaid = tempDateEpoch;
-
     if (timeSincelastMonth < $rootScope.curDate().getMonth()) {
       $scope.resetAddedBills();
       timeSincelastMonth = $rootScope.curDate().getMonth();
