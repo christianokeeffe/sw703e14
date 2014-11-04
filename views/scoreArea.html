@@ -14,6 +14,11 @@
         <bar value="laundry" type="success"><b ng-show="laundry >= 50">{{laundry | number:0}}%</b></bar>
         <bar value="100-laundry" type="danger"><b ng-show="laundry < 50">{{laundry | number:0}}%</b></bar>
     </progress>
+    <label for="dryClothes">{{'scorearea.dryClothes' | translate}}</label>
+    <progress animate="false" max="100" id="dryClothes">
+        <bar value="dryClothes" type="success"><b ng-show="dryClothes >= 50">{{dryClothes | number:0}}%</b></bar>
+        <bar value="100-dryClothes" type="danger"><b ng-show="dryClothes < 50">{{dryClothes | number:0}}%</b></bar>
+    </progress>
     <label for="hygiene">{{'scorearea.hygiene' | translate}}</label>
     <progress animate="false" max="100" id="hygiene">
         <bar value="hygiene" type="success"><b ng-show="hygiene >= 50">{{hygiene | number:0}}%</b></bar>
