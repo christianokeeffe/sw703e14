@@ -115,10 +115,6 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
             $scope.sunlevel += ((Math.floor(Math.random() * 80) + 1)*plusOrMinus)
         }
 
-
-
-        console.log("hour: " + currentHour + " sun level: " + $scope.sunlevel);
-
         var dayOfLastUpdate = $scope.lastEpochUpdate / 60 / 60 / 24;
         var currentDay = $scope.dateEpoch / 60 / 60 / 24;
 
