@@ -5,6 +5,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     return controllerService.checkApplianceHasTasks(id);
   };
 
+  $scope.appliances = undefined;
+
   $scope.getAppliances = function()
   {
     var geturl = formatRequest.get({});
