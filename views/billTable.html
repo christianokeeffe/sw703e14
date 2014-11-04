@@ -14,14 +14,9 @@
 
 	</thead>
 	<tbody>
-		<tr ng-if = "content.billList.length > 0" ng-repeat="t in content.billList"> 
-			<td> {{t.item}} </td>
-			<td> {{t.expense | currencyWithMinus}} </td>
-		</tr>
-
 		<tr ng-if = "content.addedbills.length > 0" ng-repeat="t in content.addedbills"> 
-			<td> {{t.item}} </td>
-			<td> {{t.expense | currencyWithMinus}} </td>
+			<td ng-show ="t.expense != 0"> {{t.item}} </td>
+			<td ng-show ="t.expense != 0"> {{t.expense | currencyWithMinus}} </td>
 		</tr>
 	</tbody>
 </table>

@@ -81,6 +81,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 	};
 
 	getPriceNow = function(time, powerUsage) {
+
 		if(time <= latesttime){
 			var price = 0;
 			var id = 0;
