@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only">Close</span></button>
+    <h3 class="modal-title">Information Window</h3>
+</div>
+<div class="modal-body">
+    <dl class="dl">
+        <dt>
+            Name:
+        </dt>
+        <dd>
+            {{product.name}}
+        </dd>
+        <dt>
+            Cost:
+        </dt>
+        <dd>
+            {{product.cost}}
+        </dd>
+        <dt>
+            Saving Factor:
+        </dt>
+        <dd>
+            <p> Enter a value between 0 and 1200 to preview how much you would save by buying this product.</p>
+            <div class="row" style ="display: flex; align-items:center;">
+                <div class="col-xs-6">
+                    <form name="previewForm">
+                        <input name="numberField" type="number" class="form-control" min="0" max="1200" ng-model="times" ng-change="preformCheck(times)">
+                    </form>
+                </div>
+            <div class="col-xs-1"><label> = </label></div>
+                <div class="col-xs-5">
+                    <label>
+                        {{calculatedResult}}
+                    </label>
+                </div>
+            </div>
+            <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="!previewForm.numberField.$valid">May only contain numbers.</div>
+
+        </dd>
+        <dt>
+            Description:
+        </dt>
+        <dd>
+            {{product.description}}
+        </dd>
+    </dl>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" ng-click="buy()"> 
+            {{"Buy"}}
+        </button>
+        <button type="button" class="btn" ng-click="cancel()">
+            {{"Cancel"}}
+        </button>
+    </div>  
+</div>

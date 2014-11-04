@@ -17,13 +17,17 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     else
     { 
       geturl.userID = $scope.getUserID();
-      appliancesFactory.getAppliances(geturl,
-      function (response) {
+      var appliancePromise = appliancesFactory.getAppliances(geturl);
+
+      appliancePromise.$promise.then(function(response){
         $scope.appliances = response.data;
         controllerService.setApplianceArray($scope.appliances);
-      },
-      function () {
-        document.write(JSON.stringify(response));
+        for(i = 0; i < $scope.appliances.length; i++) {
+          if($scope.appliances[i].type == "2") {
+            $rootScope.carChange = parseInt($scope.appliances[i].energyConsumption) * 3;
+          }
+        }
+        $scope.getTasks();
       });
     }
   };
@@ -38,18 +42,15 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     }
     else
     {
-      tasksFactory.getTasks(geturl,
-      function (response) {
+      var taskPromise = tasksFactory.getTasks(geturl);
+
+      taskPromise.$promise.then(function(response){
         controllerService.StoreAllTasks(response.data);
-      },
-      function () {
-        document.write(JSON.stringify(response));
       });
     }
   };
 
   $scope.getAppliances();
-  $scope.getTasks();
 
 	$scope.openActionModal = function (selectedAction) {
     $rootScope.stopGameTime();
@@ -62,7 +63,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
     modalInstance.result.then(function (returnValue) {
       if (returnValue == 'now') {
-        $rootScope.startGameTime();
+          $rootScope.startGameTime();
         if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1)
         {
           $scope.timersToSchedule.push({appliance: controllerService.getAppliance(), task: controllerService.getTask(), timerStarted: false})
@@ -75,9 +76,10 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
           $scope.openLowPrice();
         } else {
           alert("The chosen appliance is already in use!");
-          $rootScope.startGameTime();
         };
       };
+    }, function () {
+        $rootScope.startGameTime();
     });
   };
 
@@ -106,12 +108,15 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     });
 
     modalInstance.result.then(function (schedule){
-      $rootScope.startGameTime();
       addToScheduleList(schedule);
+        $rootScope.startGameTime();
+    }, function () {
+        $rootScope.startGameTime();
     });
   };
 
     $scope.openUpgradeModal = function(selectedAction) {
+        $rootScope.stopGameTime();
         controllerService.setAppliance(selectedAction);
         var modalInstance = $modal.open({
             templateUrl: 'views/upgradeModal.html',
@@ -119,9 +124,14 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
             size: ""
         });
 
-        modalInstance.result.then(function (){
+
+        modalInstance.result.then(function (selectedUpgrade){
             $scope.appliances = controllerService.getApplianceArray();
+            $rootScope.setBalance($rootScope.balance - selectedUpgrade.price);
+            $rootScope.startGameTime();
+        }, function () {
             $rootScope.startGameTime();
         });
+
     };
 }]);

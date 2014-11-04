@@ -5,7 +5,13 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 	$rootScope.lastEpochUpdate = $scope.dateEpoch;
 	$rootScope.hygiene = 100;
 	$rootScope.laundry = 100;
+    $rootScope.carBattery = 100;
 	$rootScope.score = 0;
+    $scope.carBatCount = 0;
+    $scope.onWork = false;
+
+
+	var statusBarFloorValue = 0.1;
 
 	function hourToPercentDrop(fullPercentDropInDays,numbOfHours)
 	{
@@ -47,6 +53,16 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 					$rootScope.laundry += value;
 				}
 				break;
+			case "car":
+				if($rootScope.carBattery + value > 100)
+				{
+					$rootScope.carBattery = 100;
+				}
+				else
+				{
+					$rootScope.carBattery += value;
+				}
+				break;
 		}	
     });
 
@@ -56,12 +72,13 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		$dishChange = hourToPercentDrop(4,hourChange);
 		$laundryChange = hourToPercentDrop(21,hourChange);
 		$hygieneChange = hourToPercentDrop(14,hourChange);
-        $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.laundry)/3;
+
+        $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.laundry+$rootScope.carBattery)/3;
         $rootScope.score += Math.round(hourChange*$scope.happiness);
 
 		if($rootScope.dishes - $dishChange < 0)
 		{
-			$rootScope.dishes = 0;
+			$rootScope.dishes = statusBarFloorValue;
 		}
 		else
 		{
@@ -70,7 +87,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
 		if($rootScope.laundry - $laundryChange < 0)
 		{
-			$rootScope.laundry = 0;
+			$rootScope.laundry = statusBarFloorValue;
 		}
 		else
 		{
@@ -79,12 +96,51 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
 		if($rootScope.hygiene - $hygieneChange < 0)
 		{
-			$rootScope.hygiene = 0;
+			$rootScope.hygiene = statusBarFloorValue;
 		}
 		else
 		{
 			$rootScope.hygiene -= $hygieneChange;
 		}
+
+        var hourOfLastUpdate = $scope.lastEpochUpdate / 60 / 60;
+        var currentHour = $scope.dateEpoch / 60 / 60;
+        currentHour = (currentHour%24)+1;
+        hourOfLastUpdate = (hourOfLastUpdate%24);
+
+
+        var dayOfLastUpdate = $scope.lastEpochUpdate / 60 / 60 / 24;
+        var currentDay = $scope.dateEpoch / 60 / 60 / 24;
+
+        dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
+        currentDay = Math.floor(currentDay%7);
+
+        if(hourOfLastUpdate < 7 && 7 <= currentHour && currentDay != 2 && currentDay !=3 && $rootScope.carBattery - 2 * $rootScope.carChange >= 0)
+        {
+        	if($rootScope.carBattery - $rootScope.carChange == 0)
+        	{
+        		$rootScope.carBattery = statusBarFloorValue;
+        		$scope.onWork = true;
+        	}
+        	else
+        	{
+        		$rootScope.carBattery -= $rootScope.carChange;
+        		$scope.onWork = true;
+        	}
+        }
+        if(hourOfLastUpdate < 17 && 17 <= currentHour && $scope.onWork == true)
+        {
+        	if($rootScope.carBattery - $rootScope.carChange == 0)
+        	{
+        		$rootScope.carBattery = statusBarFloorValue;
+        		$scope.onWork = false;
+        	}
+        	else
+        	{
+        		$rootScope.carBattery -= $rootScope.carChange;
+        		$scope.onWork = false;
+        	}
+        }
 	});
 
 	$scope.getStatusType = function(value)
@@ -143,7 +199,6 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
        // variable that decides if something should be drawn on mousemove
       var drawing = false;
 	  var canvas = document.getElementById('face');
-	  canvas.width = canvas.width;
 	  var context = canvas.getContext('2d');
 	  var centerX = canvas.width / 2;
 	  var centerY = canvas.height / 2;

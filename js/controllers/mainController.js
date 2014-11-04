@@ -1,11 +1,10 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage,priceService){
+myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
-	$scope.gameSecOnRealSec = 3600;
-	$scope.dateEpoch = 1409565600;
-	var timeSinceLastWeek = 1409565600;
-	$scope.balance = 0;
+	$rootScope.gameSecOnRealSec = 3600;
+	var startDate = 1409565600;
+	var secondsInWeek = 604800;
 
 	$scope.loadData = function()
 	{
@@ -26,17 +25,17 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					        {
 					          case '200':
 					            $rootScope.score = parseInt(response.data.score);
-					            $scope.balance = parseInt(response.data.savings);
+                                $rootScope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
-					            timeSinceLastWeek = parseInt(response.data.date);
+								$rootScope.startGameTime();
 					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
 					            $rootScope.dishes = parseFloat(response.data.dishes);
 					            $rootScope.hygiene = parseFloat(response.data.hygiene);
 					            $rootScope.laundry = parseFloat(response.data.laundry);
 					            break;
 					        case '204':
-					          	
-					          break;
+								$rootScope.startGameTime();
+					          	break;
 					        }
 	    		},
 	    		function () {
@@ -47,14 +46,16 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 
 
 	$rootScope.startGameTime = function() {
+		var pay = 500;
 		interval = $interval(function(){
 		$scope.dateEpoch += $scope.gameSecOnRealSec;
-		if($scope.dateEpoch - timeSinceLastWeek >= 604800)
+		if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
 		{
-			timeSinceLastWeek = timeSinceLastWeek + 604800;
-			$scope.balance += 500;
-			$scope.balance += $rootScope.totalBill();
+            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
+            $rootScope.timesMissedWork = 0;
+            $rootScope.balance += $rootScope.totalBill();
 			$scope.saveData();
+			$scope.saveGraphData();
 		}
 		},1000);
 	}
@@ -88,10 +89,40 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	{
 		$rootScope.currentUser = $sessionStorage.currentUser;
 		$scope.loadData();
-		$rootScope.startGameTime();
 	}
 
+    $rootScope.setBalance = function (balance)
+    {
+        $rootScope.balance = balance;
+    }
 
+    $scope.saveGraphData = function()
+    {
+    	var request = {};
+    	var graphdata = {};
+    	graphdata.userID = $scope.getUserID();
+		graphdata.score = $rootScope.score;
+		graphdata.date = $scope.dateEpoch;
+
+		request.graph = graphdata;
+		var params = formatRequest.put(request);
+	  if(params === undefined)
+	  {
+	    setTimeout(function(){
+	          return $scope.saveGraphData();
+	       }, 10);
+	  }
+	  else
+	  { 
+	    graphdataFactory.saveGraphData(params,
+	    function (response) {
+	    //alert(JSON.stringify(response));
+		},
+	    function (response) {
+	        document.write(JSON.stringify(response));
+	    });
+	  }
+    };
 
 	$scope.saveData = function()
 	{
@@ -99,7 +130,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		var gamedata = {};
 		gamedata.userID = $scope.getUserID();
 		gamedata.score = $rootScope.score;
-		gamedata.savings = $scope.balance;
+		gamedata.savings = $rootScope.balance;
 		gamedata.date = $scope.dateEpoch;
 		gamedata.hygiene = $rootScope.hygiene;
 		gamedata.dishes = $rootScope.dishes;
@@ -133,5 +164,16 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		return d;
 	}
 
+    window.onbeforeunload = function (event) {
+        var message = 'Sure you want to leave?';
+        $scope.saveData();
+        if (typeof event == 'undefined') {
+            event = window.event;
+        }
+        if (event) {
+            event.returnValue = message;
+        }
+        return message;
+    }
 	
 } ]);

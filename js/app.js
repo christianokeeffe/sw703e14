@@ -36,6 +36,16 @@
   });
 });
 
+    //////////////////CACHE REMOVE START ////////////////////
+    app.run(function($rootScope, $templateCache) {
+        $rootScope.$on('$routeChangeStart', function(event, next, current) {
+            if (typeof(current) !== 'undefined'){
+                $templateCache.remove(current.templateUrl);
+            }
+        });
+    });
+    //////////////////CACHE REMOVE STOP/////////////////////
+
   app.config(['$translateProvider', function($translateProvider) {
   	// add translation table
   	$translateProvider.useStaticFilesLoader({

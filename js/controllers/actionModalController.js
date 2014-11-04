@@ -25,8 +25,17 @@ myApp.controller('actionModalController', ['$scope', '$modalInstance','controlle
     }
   };
 
+  $scope.formatTime = function (time) {
+    return pad(Math.floor(time/3600),2)+":"+pad((time%3600),2);
+  };
+
+  function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
   $scope.cancel = function () {
-    $scope.startGameTime();
     $modalInstance.dismiss('cancel');
   };
 }]);
