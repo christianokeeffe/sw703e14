@@ -8,6 +8,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
     $rootScope.carBattery = 100;
 	$rootScope.score = 0;
     $scope.carBatCount = 0;
+    $scope.onWork = false;
 
 
 	var statusBarFloorValue = 0.1;
@@ -114,19 +115,31 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
         dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
         currentDay = Math.floor(currentDay%7);
 
-        if( (hourOfLastUpdate < 7 && 7 <= currentHour) || (hourOfLastUpdate < 17 && 17 <= currentHour) )
+        if(hourOfLastUpdate < 7 && 7 <= currentHour && currentDay != 2 && currentDay !=3 && $rootScope.carBattery - 2 * $rootScope.carChange >= 0)
         {
-            if(currentDay != 2 && currentDay !=3 )
-            {
-                if($rootScope.carBattery - $rootScope.carChange <= 0)
-                {
-                    $rootScope.carBattery = statusBarFloorValue;
-                }
-                else
-                {
-                    $rootScope.carBattery -= $rootScope.carChange;
-                }
-            }
+        	if($rootScope.carBattery - $rootScope.carChange == 0)
+        	{
+        		$rootScope.carBattery = statusBarFloorValue;
+        		$scope.onWork = true;
+        	}
+        	else
+        	{
+        		$rootScope.carBattery -= $rootScope.carChange;
+        		$scope.onWork = true;
+        	}
+        }
+        if(hourOfLastUpdate < 17 && 17 <= currentHour && $scope.onWork == true)
+        {
+        	if($rootScope.carBattery - $rootScope.carChange == 0)
+        	{
+        		$rootScope.carBattery = statusBarFloorValue;
+        		$scope.onWork = false;
+        	}
+        	else
+        	{
+        		$rootScope.carBattery -= $rootScope.carChange;
+        		$scope.onWork = false;
+        	}
         }
 	});
 
