@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.service('controllerService', function () {
+myApp.service('controllerService', ['$rootScope', function ($rootScope) {
 
 	var beforeTime;
 	var Appliance;
@@ -39,6 +39,13 @@ myApp.service('controllerService', function () {
 
 	this.setApplianceArray = function(applianceArray) {
 		ApplianceArray = applianceArray;
+		ApplianceArray.forEach(function(appliance)
+		{
+			if(appliance.passive == 1)
+			{
+				$rootScope.timersToSchedule.push({appliance: appliance, task: null, timerStarted: false});
+			}
+		});
 	}
 
 	this.getApplianceArray = function() {
@@ -87,4 +94,4 @@ myApp.service('controllerService', function () {
 	this.getTimer = function() {
 		return beforeTime;
 	};
-});
+}]);

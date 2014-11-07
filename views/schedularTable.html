@@ -18,6 +18,7 @@
 				</div>
 			</tr>
 			<tr ng-repeat="timerSchedule in timersToSchedule">
+				<div ng-if="timerSchedule.appliance.passive">
 				<td>
 					{{timerSchedule.task.name}}
 				</td>
@@ -26,6 +27,7 @@
 						{{difference | time}} 
 					</div>
 				</td>
+			</div>
 			</tr>
 		</tbody>
 	</table>

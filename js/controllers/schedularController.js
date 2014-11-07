@@ -18,9 +18,9 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
   }
 
   $rootScope.checkIndexOnTimerList = function(name){
-    for (i = 0; i < $scope.timersToSchedule.length; i++)
+    for (i = 0; i < $rootScope.timersToSchedule.length; i++)
     {
-        if ($scope.timersToSchedule[i].appliance.name == name)
+        if ($rootScope.timersToSchedule[i].appliance.name == name)
         {
             return i;
         }
@@ -41,14 +41,14 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
 
   var schedular = $scope.$watch('dateEpoch', function(){
 
-    for(i = 0; i < $scope.timersToSchedule.length; i++) 
+    for(i = 0; i < $rootScope.timersToSchedule.length; i++) 
     {
-      var tempTimer = $scope.timersToSchedule[i];
+      var tempTimer = $rootScope.timersToSchedule[i];
 
       if(tempTimer.timerStarted == false)
       {
         boardCastActivation(tempTimer.task, tempTimer.appliance);
-        $scope.timersToSchedule[i].timerStarted = true;
+        $rootScope.timersToSchedule[i].timerStarted = true;
       }
     }
 
@@ -56,9 +56,9 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
     {
       var tempSchedule = $scope.datesToSchedule[index];
 
-      if((tempSchedule.starttime - $scope.curDate().getTime()/1000) <= 0)
+      if((tempSchedule.passive == 0 && tempSchedule.starttime - $scope.curDate().getTime()/1000) <= 0)
       {
-        $scope.timersToSchedule.push({appliance: tempSchedule.appliance, task: tempSchedule.task, timerStarted: false});
+        $rootScope.timersToSchedule.push({appliance: tempSchedule.appliance, task: tempSchedule.task, timerStarted: false});
         $scope.datesToSchedule.splice(index, 1);
       }
     }

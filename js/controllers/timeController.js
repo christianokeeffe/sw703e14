@@ -42,7 +42,9 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
     $scope.$on('module-communication', function (event, data){
         if($scope.timerSchedule.task.name == data.task.name){
             var runTime = parseInt($scope.curDate().getTime()/1000) + parseInt(data.task.executionTime) - $rootScope.gameSecOnRealSec;
+            if(data.task.passive == 0){
             $scope.startTimer(runTime, data.appliance, data.task);
+            }
         }
     });
 }]);
