@@ -24,7 +24,11 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       appliancePromise.$promise.then(function(response){
         $scope.appliances = response.data;
         controllerService.setApplianceArray($scope.appliances);
-
+        for(i = 0; i < $scope.appliances.length; i++) {
+          if($scope.appliances[i].type == "2") {
+            $rootScope.carChange = parseInt($scope.appliances[i].energyConsumption) * 3;
+          }
+        }
         $scope.getTasks();
       });
     }

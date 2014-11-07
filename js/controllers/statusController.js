@@ -8,6 +8,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
     $rootScope.carBattery = 100;
 	$rootScope.score = 0;
     $scope.carBatCount = 0;
+    $scope.onWork = false;
     $scope.sunlevel = 700;
 
 
@@ -51,6 +52,16 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 				else
 				{
 					$rootScope.laundry += value;
+				}
+				break;
+			case "car":
+				if($rootScope.carBattery + value > 100)
+				{
+					$rootScope.carBattery = 100;
+				}
+				else
+				{
+					$rootScope.carBattery += value;
 				}
 				break;
 		}	

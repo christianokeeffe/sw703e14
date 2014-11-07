@@ -1,11 +1,10 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory','formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,formatRequest,$location,$sessionStorage,priceService){
+myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
 	$rootScope.gameSecOnRealSec = 3600;
-	$scope.dateEpoch = 1409565600;
-	var timeSinceLastWeek = 1409565600;
-	$rootScope.balance = 0;
+	var startDate = 1409565600;
+	var secondsInWeek = 604800;
 
 	$scope.loadData = function()
 	{
@@ -26,9 +25,8 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					        {
 					          case '200':
 					            $rootScope.score = parseInt(response.data.score);
-                                  $rootScope.balance = parseInt(response.data.savings);
+                                $rootScope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
-					            timeSinceLastWeek = parseInt(response.data.date);
 								$rootScope.startGameTime();
 					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
 					            $rootScope.dishes = parseFloat(response.data.dishes);
@@ -48,14 +46,16 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 
 
 	$rootScope.startGameTime = function() {
+		var pay = 500;
 		interval = $interval(function(){
 		$scope.dateEpoch += $scope.gameSecOnRealSec;
-		if($scope.dateEpoch - timeSinceLastWeek >= 604800)
+		if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
 		{
-			timeSinceLastWeek = timeSinceLastWeek + 604800;
-            $rootScope.balance += 500;
+            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
+            $rootScope.timesMissedWork = 0;
             $rootScope.balance += $rootScope.totalBill();
 			$scope.saveData();
+			$scope.saveGraphData();
 		}
 		},1000);
 	}
@@ -95,6 +95,34 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
     {
         $rootScope.balance = balance;
     }
+
+    $scope.saveGraphData = function()
+    {
+    	var request = {};
+    	var graphdata = {};
+    	graphdata.userID = $scope.getUserID();
+		graphdata.score = $rootScope.score;
+		graphdata.date = $scope.dateEpoch;
+
+		request.graph = graphdata;
+		var params = formatRequest.put(request);
+	  if(params === undefined)
+	  {
+	    setTimeout(function(){
+	          return $scope.saveGraphData();
+	       }, 10);
+	  }
+	  else
+	  { 
+	    graphdataFactory.saveGraphData(params,
+	    function (response) {
+	    //alert(JSON.stringify(response));
+		},
+	    function (response) {
+	        document.write(JSON.stringify(response));
+	    });
+	  }
+    };
 
 	$scope.saveData = function()
 	{
