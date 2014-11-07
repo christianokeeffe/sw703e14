@@ -73,16 +73,17 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
 	}
 
     this.post = function(input) {
-    	if (thisvar.checkSession()) {
-	    	input.language = $translate.use();
-			var stringInput = JSON.stringify(input);
-	    	var hash = String(CryptoJS.HmacSHA256(stringInput, privateHash));
-	    	var headersVar = {
-		    'publicKey': publicHash,
-		    'request': stringInput,
-		    'requestHash':hash
-		    };
-	        return headersVar;
+        if (thisvar.checkSession()) {
+            input.language = $translate.use();
+            var stringInput = JSON.stringify(input);
+            var hash = String(CryptoJS.HmacSHA256(stringInput, privateHash));
+            var headersVar = {
+                'publicKey': publicHash,
+                'request': stringInput,
+                'requestHash':hash,
+                'session':sessionid
+            };
+            return headersVar;
         }
     };
     this.put = function(input) {
