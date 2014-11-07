@@ -66,11 +66,11 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 	};
 	
 	this.getTotalPrice = function(startTime, runningTime, powerUsage) {
-		if(startTime + runningTime <= latesttime){
+		if(startTime + 3600*24 <= latesttime){
 			var totalPrice = 0;
-			var timeToCalculate =0;
 
 			for (var i = 0 ; i < runningTime ; i=i+3600) {
+				var timeToCalculate =0;
 				if (runningTime-i <= 3600) {
 					timeToCalculate = runningTime;
 				}
@@ -78,13 +78,13 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 					timeToCalculate = 3600;
 				}
 
-				totalPrice += (getPriceNow( startTime+i , powerUsage) /3600) * (runningTime - i);
+				totalPrice += (getPriceNow( startTime+i , powerUsage) /3600) * timeToCalculate;
 			}
 			return totalPrice;
 		}
 		else
 		{
-		    getData(startTime - 3600, startTime + runningTime + 3600*24*7);
+		    getData(startTime - 3600, startTime + 3600*24*7);
 		}
 	};
 
