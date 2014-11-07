@@ -12,7 +12,8 @@
   	"laundry":"Clean Clothes",
   	"hygiene":"Hygiene",
     "balance":"Balance",
-    "carBattery":"Car Battery Level"
+    "carBattery":"Car Battery Level",
+    "dryClothes":"Dry Clothes"
   },
   "textToPriceTable":
   {

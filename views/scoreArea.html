@@ -1,6 +1,9 @@
 <div ng-controller="statusController">
     <canvas id="face" width="150" bezier="0" height="150" >
     </canvas>
+    <br />
+    <canvas id="sun" width="150" bezier="0" height="150" >
+    </canvas>
     <br/>
     <h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
     <h4>{{'scorearea.balance' | translate}}: <small>{{balance | currency}}</small></h4>
@@ -13,6 +16,11 @@
     <progress animate="false" max="100" id="laundry">
         <bar value="laundry" type="success"><b ng-show="laundry >= 50">{{laundry | number:0}}%</b></bar>
         <bar value="100-laundry" type="danger"><b ng-show="laundry < 50">{{laundry | number:0}}%</b></bar>
+    </progress>
+    <label for="dryClothes">{{'scorearea.dryClothes' | translate}}</label>
+    <progress animate="false" max="100" id="dryClothes">
+        <bar value="dryClothes" type="success"><b ng-show="dryClothes >= 50">{{dryClothes | number:0}}%</b></bar>
+        <bar value="100-dryClothes" type="danger"><b ng-show="dryClothes < 50">{{dryClothes | number:0}}%</b></bar>
     </progress>
     <label for="hygiene">{{'scorearea.hygiene' | translate}}</label>
     <progress animate="false" max="100" id="hygiene">

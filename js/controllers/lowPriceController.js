@@ -11,7 +11,7 @@ myApp.controller('lowPriceController', ['$scope', '$rootScope', '$modalInstance'
   };
 
   $scope.formatTime = function (time) {
-    return pad(Math.floor(time/3600),2)+":"+pad((time%3600),2);
+    return pad(Math.floor(time/3600),2)+":"+pad(((time%3600)/3600)*60,2);
   };
 
   function pad(num, size) {
@@ -19,7 +19,7 @@ myApp.controller('lowPriceController', ['$scope', '$rootScope', '$modalInstance'
     while (s.length < size) s = "0" + s;
     return s;
 }
-$scope.duration = $scope.formatTime(controllerService.getTask().executionTime);
+$scope.duration = $scope.inputlist(controllerService.getTask().executionTime);
 
   $scope.setTimer = function () {
     $scope.beforeTime = controllerService.getTimer();

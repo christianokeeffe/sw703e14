@@ -26,7 +26,7 @@ myApp.controller('actionModalController', ['$scope', '$modalInstance','controlle
   };
 
   $scope.formatTime = function (time) {
-    return pad(Math.floor(time/3600),2)+":"+pad((time%3600),2);
+    return pad(Math.floor(time/3600),2)+":"+pad(((time%3600)/3600)*60,2);
   };
 
   function pad(num, size) {
