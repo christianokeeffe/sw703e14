@@ -4,7 +4,6 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   var hour = 3600;
   var timeForLastpaid = $scope.dateEpoch;
   var timeSincelastMonth = $rootScope.curDate().getMonth();
-  var passiveAppliances = [];
   var first = true;
   $scope.content = {
     "runningAppliances": [
@@ -16,17 +15,6 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }
       ]
   }
-
-  $scope.getAppliances = function(){
-    //passiveAppliances = [];
-    var temp = controllerService.getApplianceArray();
-    console.log(JSON.stringify(temp));
-    for (var i = 0; i < temp.length; i++) {
-      if(temp[i].passive == "1"){
-        passiveAppliances.push(temp[i]);
-      }
-    }
-  };
 
   $scope.addbill = function(name, price){
     var inList = false;
@@ -77,26 +65,15 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   $scope.removetask = function(index){
     $scope.content.runningAppliances.splice(index, 1);
   }
-
-  $scope.$on('bill-communication', function (event, data){
-    $scope.content.runningAppliances.push({"name": data.name, "time": data.time});
-
-  });
-
   $scope.$watch('dateEpoch', function() {
-    if (first) {
-      $scope.getAppliances();
-      first = false;
-    };
     var tempDateEpoch = $scope.dateEpoch;
     var timesincepaid = tempDateEpoch - timeForLastpaid;
-    for (var x = 0; x < passiveAppliances.length ; x++) {
-      var price = priceService.getTotalPrice(timeForLastpaid, timesincepaid,  passiveAppliances[x].energyConsumption);
-      if(angular.isUndefined(price) || price === null){
-        price = 0 ;
-      }   
-      $scope.addbill(passiveAppliances[x].name, price);
-    }
+
+    for (var i = 0; i < $rootScope.timersToSchedule.length; i++) {
+      $rootScope.timersToSchedule[i].Appliances.name
+      console.log($rootScope.timersToSchedule[i].task.starttime)
+    };
+
     timeForLastpaid = tempDateEpoch;
     if (timeSincelastMonth < $rootScope.curDate().getMonth()) {
       $scope.resetAddedBills();
