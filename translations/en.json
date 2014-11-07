@@ -9,11 +9,13 @@
   	"score":"Score",
   	"points":"points",
   	"dishes":"Clean Dishes",
-  	"laundry":"Clean Clothes",
+    "dirtyDishes":"Dirty Dishes"
+    "cleanClothes":"Clean Clothes",
+    "wetClothes":"Wet Clothes",
+    "dirtyClothes":"Dirty Clothes",
   	"hygiene":"Hygiene",
     "balance":"Balance",
-    "carBattery":"Car Battery Level",
-    "dryClothes":"Dry Clothes"
+    "carBattery":"Car Battery Level"
   },
   "textToPriceTable":
   {

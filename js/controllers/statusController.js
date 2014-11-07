@@ -4,20 +4,20 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 	$rootScope.dishes = 100;
 	$rootScope.lastEpochUpdate = $scope.dateEpoch;
 	$rootScope.hygiene = 100;
-	$rootScope.laundry = 100;
-	$rootScope.dryClothes = 100;
+	$rootScope.cleanClothes = 100;
+	$rootScope.wetClothes = 0.1;
     $rootScope.carBattery = 100;
 	$rootScope.score = 0;
     $scope.carBatCount = 0;
     $scope.onWork = false;
     $scope.sunlevel = 700;
 
-
 	var statusBarFloorValue = 0.1;
 
 	function hourToPercentDrop(fullPercentDropInDays,numbOfHours)
 	{
-		return (numbOfHours/(fullPercentDropInDays*24))*100;
+		var returnval = (numbOfHours/(fullPercentDropInDays*24))*100;
+		return returnval;
 	}
 
 	$scope.$on('status-communication', function (event, data)
@@ -46,39 +46,25 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 				}
 				break;
 			case "laundry":
-				if($rootScope.laundry + value > 100)
+				if(100 - $rootScope.cleanClothes - $rootScope.wetClothes < value)
 				{
-					if($rootScope.dryClothes - (100 - $rootScope.laundry) <= 0)
-					{
-						$rootScope.dryClothes = statusBarFloorValue;
-					}
-					else
-					{
-						$rootScope.dryClothes -= 100 - $rootScope.laundry;
-					}
-					$rootScope.laundry = 100;
+					$rootScope.wetClothes += 100 - $rootScope.cleanClothes - $rootScope.wetClothes;
 				}
 				else
 				{
-					$rootScope.laundry += value;
-					if($rootScope.dryClothes - value <= 0)
-					{
-						$rootScope.dryClothes = statusBarFloorValue;
-					}
-					else
-					{
-						$rootScope.dryClothes -= value;
-					}
+					$rootScope.wetClothes += value;
 				}
 				break;
-			case "dryClothes":
-				if($rootScope.dryClothes + value > 100)
+			case "wetClothes":
+				if($rootScope.wetClothes <= value)
 				{
-					$rootScope.dryClothes = 100;
+					$rootScope.cleanClothes += $rootScope.wetClothes;
+					$rootScope.wetClothes = statusBarFloorValue;
 				}
 				else
 				{
-					$rootScope.dryClothes += value;
+					$rootScope.wetClothes -= value;
+					$rootScope.cleanClothes += value;
 				}
 			case "car":
 				if($rootScope.carBattery + value > 100)
@@ -100,7 +86,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		$laundryChange = hourToPercentDrop(21,hourChange);
 		$hygieneChange = hourToPercentDrop(14,hourChange);
 
-        $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.laundry+$rootScope.carBattery+$rootScope.dryClothes)/5;
+        $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.cleanClothes+$rootScope.carBattery)/4;
 
         $rootScope.score += Math.round(hourChange*$scope.happiness);
 
@@ -113,13 +99,18 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 			$rootScope.dishes -= $dishChange;
 		}
 
-		if($rootScope.laundry - $laundryChange < 0)
+		if($rootScope.cleanClothes - $laundryChange < 0)
 		{
-			$rootScope.laundry = statusBarFloorValue;
+			$rootScope.cleanClothes = statusBarFloorValue;
+			console.log(statusBarFloorValue);
+			console.log($rootScope.cleanClothes);
 		}
 		else
 		{
-			$rootScope.laundry -= $laundryChange;
+			console.log("før " + $rootScope.cleanClothes);
+			console.log("change " + $laundryChange);
+			$rootScope.cleanClothes -= $laundryChange;
+			console.log("efter " + $rootScope.cleanClothes);
 		}
 
 		if($rootScope.hygiene - $hygieneChange < 0)

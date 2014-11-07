@@ -24,7 +24,7 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
                 if(appliance.type == 3){                    
                     statusBroadcast("laundry", parseInt(task.updateValue));
                 } else if (appliance.type == 4 || appliance.type == 8){
-                    statusBroadcast("dryClothes", parseInt(task.updateValue));
+                    statusBroadcast("wetClothes", parseInt(task.updateValue));
                 } else if (appliance.type == 6){
                     statusBroadcast("dishes", parseInt(task.updateValue));
                 } else if (appliance.type == 7){
