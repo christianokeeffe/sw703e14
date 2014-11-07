@@ -23,6 +23,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
         $scope.appliances = response.data;
         controllerService.setApplianceArray($scope.appliances);
 
+        //starts the quary to fetch the tasks
+        //reason is the way the tasks are errange needs appliances for it
         $scope.getTasks();
       });
     }
@@ -42,6 +44,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
       taskPromise.$promise.then(function(response){
         controllerService.StoreAllTasks(response.data);
+
+        $rootScope.$broadcast('data-fetch-done');
       });
     }
   };
