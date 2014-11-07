@@ -4,17 +4,30 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   var hour = 3600;
   var timeForLastpaid = $scope.dateEpoch;
   var timeSincelastMonth = $rootScope.curDate().getMonth();
+  var passiveAppliances = [];
+  var runningAppliances = [];
   var first = true;
   $scope.content = {
-    "runningAppliances": [
-      {"name": "", "time": 0}
-    ],
     "addedbills":[
       {"item": "",
        "expense": 0
       }
       ]
   }
+
+  $scope.getAppliances = function(){
+    passiveAppliances = [];
+    var temp = controllerService.getApplianceArray();
+    if(angular.isUndefined(temp) || temp === null){
+          temp = [];
+    }
+    for (var i = 0; i < temp.length; i++) {
+      if(temp[i].passive == "1"){
+        passiveAppliances.push(temp[i]);
+      }
+    }
+    temp = null;
+  };
 
   $scope.addbill = function(name, price){
     var inList = false;
@@ -43,42 +56,51 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     return total;
   };
 
-  $scope.findTimeLeft = function(name, timesincepaid){
-    var timeleft = 0;
-    for (var x = 0 ; x <= $scope.content.runningAppliances.length-1 ; x++) {
-      if ($scope.content.runningAppliances[x] == name) {
-        timeleft = scope.content.runningAppliances[x].time;
-        alert("timeleft: "+ timeleft);
-        if (timeleft < timesincepaid) {
-          $scope.removetask(x);
+  $scope.removetask = function(index){
+    runningAppliances.splice(index, 1);
+  }
+
+  $scope.$on('bill-communication', function (event, data){
+    runningAppliances.push({"name": data.name, "time": data.time , "energyConsumption": data.energyConsumption});
+
+  });
+  $scope.$watch('dateEpoch', function() {
+    if (passiveAppliances.length == 0) {
+      $scope.getAppliances();
+      first = false;
+    };
+    for (var x = 0; x < passiveAppliances.length ; x++) {
+      var price = priceService.getTotalPrice(timeForLastpaid, $rootScope.gameSecOnRealSec,  passiveAppliances[x].energyConsumption);
+      if(angular.isUndefined(price) || price === null){
+        price = 0 ;
+      }   
+      $scope.addbill(passiveAppliances[x].name, price);
+    }
+    for (var i = 0; i < runningAppliances.length; i++) {
+      if (runningAppliances[i].time < $rootScope.gameSecOnRealSec) {
+        var price = priceService.getTotalPrice(timeForLastpaid, runningAppliances[i].time,  runningAppliances[i].energyConsumption);
+        if(angular.isUndefined(price) || price === null){
+          price = 0 ;
+        }   
+        $scope.addbill(runningAppliances[i].name, price);
+        $scope.removetask(i);
+      }
+      else{
+        runningAppliances[i].time = runningAppliances[i].time - $rootScope.gameSecOnRealSec
+        var price = priceService.getTotalPrice(timeForLastpaid, $rootScope.gameSecOnRealSec,  runningAppliances[i].energyConsumption);
+        
+        if(angular.isUndefined(price) || price === null){
+          price = 0 ;
         }
-        else{
-          scope.content.runningAppliances[x].time = timeleft - timesincepaid;
-        }
-        return timeleft;
+        $scope.addbill(runningAppliances[i].name, price);
 
       }
-    }
-    return 0;
-  }
-
-  $scope.removetask = function(index){
-    $scope.content.runningAppliances.splice(index, 1);
-  }
-  $scope.$watch('dateEpoch', function() {
-    var tempDateEpoch = $scope.dateEpoch;
-    var timesincepaid = tempDateEpoch - timeForLastpaid;
-
-    for (var i = 0; i < $rootScope.timersToSchedule.length; i++) {
-      $rootScope.timersToSchedule[i].Appliances.name
-      console.log($rootScope.timersToSchedule[i].task.starttime)
+      $scope.addbill(runningAppliances[i].name, price);
     };
-
-    timeForLastpaid = tempDateEpoch;
+    timeForLastpaid = $scope.dateEpoch;
     if (timeSincelastMonth < $rootScope.curDate().getMonth()) {
       $scope.resetAddedBills();
       timeSincelastMonth = $rootScope.curDate().getMonth();
     };
-
   });
   }]);
