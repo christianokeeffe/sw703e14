@@ -71,25 +71,25 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     };
     for (var x = 0; x < passiveAppliances.length ; x++) {
       var price = priceService.getTotalPrice(timeForLastpaid, $rootScope.gameSecOnRealSec,  passiveAppliances[x].energyConsumption);
-      if(angular.isUndefined(price) || price === null){
+      if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
         price = 0 ;
       }   
       $scope.addbill(passiveAppliances[x].name, price);
     }
-    for (var i = 0; i < runningAppliances.length; i++) {
+    for (var i = 0; i < runningAppliances.length; i++) { // if the running time is shorter then gameSecOnRealSec
       if (runningAppliances[i].time < $rootScope.gameSecOnRealSec) {
         var price = priceService.getTotalPrice(timeForLastpaid, runningAppliances[i].time,  runningAppliances[i].energyConsumption);
-        if(angular.isUndefined(price) || price === null){
+        if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
           price = 0 ;
         }   
         $scope.addbill(runningAppliances[i].name, price);
         $scope.removetask(i);
       }
-      else{
+      else{ // if the running time is longer then gameSecOnRealSec
         runningAppliances[i].time = runningAppliances[i].time - $rootScope.gameSecOnRealSec
         var price = priceService.getTotalPrice(timeForLastpaid, $rootScope.gameSecOnRealSec,  runningAppliances[i].energyConsumption);
-        
-        if(angular.isUndefined(price) || price === null){
+
+        if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
           price = 0 ;
         }
         $scope.addbill(runningAppliances[i].name, price);
