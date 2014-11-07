@@ -150,6 +150,7 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
                 });
 
             $rootScope.setBalance($rootScope.balance - selectedUpgrade.price);
+            $scope.getTasks();
             $rootScope.startGameTime();
         }, function () {
             $rootScope.startGameTime();
