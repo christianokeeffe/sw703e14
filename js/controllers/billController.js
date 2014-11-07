@@ -76,12 +76,16 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }   
       $scope.addbill(passiveAppliances[x].name, price);
     }
+
+
     for (var i = 0; i < runningAppliances.length; i++) { // if the running time is shorter then gameSecOnRealSec
       if (runningAppliances[i].time < $rootScope.gameSecOnRealSec) {
+        
         var price = priceService.getTotalPrice(timeForLastpaid, runningAppliances[i].time,  runningAppliances[i].energyConsumption);
+        console.log(runningAppliances[i].name + " " + runningAppliances[i].time + " price: " + price + " EC "+ runningAppliances[i].energyConsumption);
         if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
           price = 0 ;
-        }   
+        }
         $scope.addbill(runningAppliances[i].name, price);
         $scope.removetask(i);
       }
