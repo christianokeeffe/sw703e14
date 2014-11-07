@@ -135,7 +135,8 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
                 applianceIDs.push(entry.id);
             });
 
-            var request = {id:3, appliances:applianceIDs};
+            var userid = $scope.getUserID();
+            var request = {id:userid, appliances:applianceIDs};
             var params = {user_appliance:request};
             params = formatRequest.post(params);
 
