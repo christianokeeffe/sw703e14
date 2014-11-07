@@ -64,4 +64,22 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		    getData(timenow,endbefore);
 		}
 	};
+
+
+    this.getCurrentSolarPrice = function(timenow) {
+        if(timenow <= latesttime)
+        {
+            var id = 0;
+            while(parseInt(timevars[id].time) != timenow)
+            {
+                id++;
+            }
+
+            return timevars[id];
+        }
+        else
+        {
+            getData(timenow,timenow+(3600*24*7));
+        }
+    };
 }]);
