@@ -68,8 +68,16 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 	this.getTotalPrice = function(startTime, runningTime, powerUsage) {
 		if(startTime + runningTime <= latesttime){
 			var totalPrice = 0;
+			var timeToCalculate =0;
 
 			for (var i = 0 ; i < runningTime ; i=i+3600) {
+				if (runningTime-i <= 3600) {
+					timeToCalculate = runningTime;
+				}
+				else{
+					timeToCalculate = 3600;
+				}
+
 				totalPrice += (getPriceNow( startTime+i , powerUsage) /3600) * (runningTime - i);
 			}
 			return totalPrice;
