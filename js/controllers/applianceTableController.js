@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory','priceService', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory,priceService){
+myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'userApplianceFactory', 'tasksFactory','priceService', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, userApplianceFactory, tasksFactory,priceService){
   $scope.hasTasks = function(id) {
     return controllerService.checkApplianceHasTasks(id);
   };
@@ -129,6 +129,26 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
         modalInstance.result.then(function (selectedUpgrade){
             $scope.appliances = controllerService.getApplianceArray();
+
+            var applianceIDs = [];
+            $scope.appliances.forEach(function(entry) {
+                applianceIDs.push(entry.id);
+            });
+
+            var userid = $scope.getUserID();
+            var request = {id:userid, appliances:applianceIDs};
+            var params = {user_appliance:request};
+            params = formatRequest.post(params);
+
+            userApplianceFactory.updateUserAppliance(params,
+                function (response) {
+                    //call successful
+                },
+                function (response) {
+                    //alert(JSON.stringify(response));
+                    document.write(JSON.stringify(response));
+                });
+
             $rootScope.setBalance($rootScope.balance - selectedUpgrade.price);
             $rootScope.startGameTime();
         }, function () {

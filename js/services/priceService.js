@@ -64,6 +64,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		    getData(timenow,endbefore);
 		}
 	};
+	
 	this.getTotalPrice = function(startTime, runningTime, powerUsage) {
 		if(startTime + runningTime <= latesttime){
 			var totalPrice = 0;
@@ -97,4 +98,21 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		}
 
 	};
+
+    this.getCurrentSolarPrice = function(timenow) {
+        if(timenow <= latesttime)
+        {
+            var id = 0;
+            while(parseInt(timevars[id].time) != timenow)
+            {
+                id++;
+            }
+
+            return timevars[id];
+        }
+        else
+        {
+            getData(timenow,timenow+(3600*24*7));
+        }
+    };
 }]);
