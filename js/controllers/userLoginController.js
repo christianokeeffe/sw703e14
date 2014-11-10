@@ -3,6 +3,12 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('userLoginController', ['$scope','usersLoginFactory','formatRequest','$rootScope','$location','$sessionStorage', function($scope, usersLoginFactory,formatRequest,$rootScope,$location,$sessionStorage){
 $scope.user = {};
 $scope.invalidLogin = false;
+
+
+    $scope.isUnchanged = function(user) {
+        return angular.equals(user.userName, undefined) || angular.equals(user.password, undefined);
+    };
+
   $scope.Login = function(){
     var geturl = {};
 
