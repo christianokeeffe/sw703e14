@@ -11,6 +11,8 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
     $scope.carBatCount = 0;
     $scope.onWork = false;
     $scope.sunlevel = 700;
+    $rootScope.lastSave = 0;
+
 
 	var statusBarFloorValue = 0.1;
 
@@ -76,7 +78,8 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 					$rootScope.carBattery += value;
 				}
 				break;
-		}	
+		}
+        $rootScope.saveData();
     });
 
 	$scope.$watch('dateEpoch', function() {
@@ -85,6 +88,12 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		$dishChange = hourToPercentDrop(4,hourChange);
 		$laundryChange = hourToPercentDrop(21,hourChange);
 		$hygieneChange = hourToPercentDrop(14,hourChange);
+
+        if(($scope.dateEpoch - $scope.lastSave)/60/60/24 >= 1)
+        {
+            $rootScope.saveData();
+            $rootScope.lastSave = $scope.dateEpoch;
+        }
 
         $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.cleanClothes+$rootScope.carBattery)/4;
 
