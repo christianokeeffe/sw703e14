@@ -9,13 +9,15 @@
   	"score":"Score",
   	"points":"points",
   	"dishes":"Clean Dishes",
-    "dirtyDishes":"Dirty Dishes"
+    "dirtyDishes":"Dirty Dishes",
     "cleanClothes":"Clean Clothes",
     "wetClothes":"Wet Clothes",
     "dirtyClothes":"Dirty Clothes",
-  	"hygiene":"Hygiene",
+  	"hygiene":"Clean House",
+    "filthy":"Filthy House",
     "balance":"Balance",
-    "carBattery":"Car Battery Level"
+    "carBattery":"Car Battery Charged",
+    "dead":"Discharged"
   },
   "textToPriceTable":
   {

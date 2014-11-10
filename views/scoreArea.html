@@ -7,7 +7,7 @@
     <br/>
     <h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
     <h4>{{'scorearea.balance' | translate}}: <small>{{balance | currency}}</small></h4>
-    <label for="dishes"><font color="green">{{'scorearea.dishes' | translate}}</font><font color="#B22222"></font></label>
+    <label for="dishes"><font color="green">{{'scorearea.dishes' | translate}}</font>/<font color="#B22222">{{'scorearea.dirtyDishes' | translate}}</font></label>
     <progress animate="false" max="100" id="dishes">
         <bar value="dishes" type="success"><b ng-show="dishes >= 50">{{dishes | number:0}}%</b></bar>
         <bar value="100-dishes" type="danger"><b ng-show="dishes < 50">{{dishes | number:0}}%</b></bar>
@@ -18,12 +18,12 @@
     <bar value="wetClothes" type="info"><b ng-show="wetClothes >= 10">{{wetClothes | number:0}}%</b></bar>
     <bar value="100-cleanClothes-wetClothes" type="danger"><b ng-show="wetClothes+cleanClothes <= 90">{{100-cleanClothes-wetClothes | number:0}}%</b></bar>
     </progress>
-    <label for="hygiene"><font color="green">{{'scorearea.hygiene' | translate}}</font><font color="#B22222"></font></label>
+    <label for="hygiene"><font color="green">{{'scorearea.hygiene' | translate}}</font>/<font color="#B22222">{{'scorearea.filthy' | translate}}</font></label>
     <progress animate="false" max="100" id="hygiene">
         <bar value="hygiene" type="success"><b ng-show="hygiene >= 50">{{hygiene | number:0}}%</b></bar>
         <bar value="100-hygiene" type="danger"><b ng-show="hygiene < 50">{{hygiene | number:0}}%</b></bar>
     </progress>
-    <label for="carBattery"><font color="green">{{'scorearea.carBattery' | translate}}</font><font color="#B22222"></font></label>
+    <label for="carBattery"><font color="green">{{'scorearea.carBattery' | translate}}</font>/<font color="#B22222">{{'scorearea.dead' | translate}}</font></label>
     <progress animate="false" max="100" id="carBattery">
         <bar value="carBattery" type="success"><b ng-show="carBattery >= 50">{{carBattery | number:0}}%</b></bar>
         <bar value="100-carBattery" type="danger"><b ng-show="carBattery < 50">{{carBattery | number:0}}%</b></bar>
