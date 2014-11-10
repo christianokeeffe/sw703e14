@@ -116,5 +116,10 @@
     "optionalTasks":"Optional Tasks",
     "completed":"Can be completed",
     "times":"Times done/Completed"
+  },
+  "settings":
+  {
+    "allowdischarge":"Allow to discharge car to sellback to the grid when the electricity is expensive",
+    "dischargeval":"Discharge at maximum to a battery level at (in %):"
   }
 }

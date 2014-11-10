@@ -1,3 +1,13 @@
-<div ng-controller="settingsController">
-Test
-</div>
+<div class="col-md-8" ng-controller="settingsController">
+<div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="allow_discharge">{{'settings.allowdischarge' | translate}} 
+    </label>
+  </div>
+  </br>
+<div class="number" ng-if="allow_discharge">
+    <label>
+      {{'settings.dischargeval' | translate}} <input type="number" min=0 max=100 class="form-control" ng-model="dischargeVal">
+    </label>
+  </div>
+  </div>
