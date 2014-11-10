@@ -3,10 +3,10 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'controllerService', function($scope,$rootScope, priceService, controllerService){
   var hour = 3600;
   var timeForLastpaid = $scope.dateEpoch;
-  var timeSincelastMonth = $rootScope.curDate().getMonth();
+  var lastMonth;
   var passiveAppliances = [];
   var runningAppliances = [];
-  var first = true;
+  var start = true;
   var payLastMonth = 0;
   $rootScope.billPassiveHelper = 0;
   $scope.content = {
@@ -72,6 +72,12 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
 
   });
   $scope.$watch('dateEpoch', function() {
+    if(angular.isUndefined(lastMonth) || lastMonth === null|| isNaN(lastMonth)){
+      console.log("NEEEJ");
+      lastMonth = null;
+      lastMonth = $rootScope.curDate().getMonth();
+    }
+
     if ($rootScope.billPassiveHelper == 0) {
       $scope.getAppliances();
       first = false;
@@ -108,11 +114,12 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       $scope.addbill(runningAppliances[i].name, -price);
     };
     timeForLastpaid = $scope.dateEpoch;
-    if (timeSincelastMonth < $rootScope.curDate().getMonth()) {
+    if (lastMonth != $rootScope.curDate().getMonth()) { // probem if time is more then a month
+      console.log("test");
       $rootScope.balance += $rootScope.totalBill();
       payLastMonth = $rootScope.totalBill();
       $scope.resetAddedBills();
-      timeSincelastMonth = $rootScope.curDate().getMonth();
-    };
+      lastMonth = $rootScope.curDate().getMonth();
+    }
   });
-  }]);
+}]);
