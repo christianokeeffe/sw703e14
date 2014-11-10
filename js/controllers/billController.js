@@ -75,7 +75,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
         price = 0 ;
       }   
-      $scope.addbill(passiveAppliances[x].name, price);
+      $scope.addbill(passiveAppliances[x].name, -price);
     }
     for (var i = 0; i < runningAppliances.length; i++) { // if the running time is shorter then gameSecOnRealSec
       if (runningAppliances[i].time < $rootScope.gameSecOnRealSec) {
@@ -83,7 +83,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
         if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
           price = 0 ;
         }   
-        $scope.addbill(runningAppliances[i].name, price);
+        $scope.addbill(runningAppliances[i].name, -price);
         $scope.removetask(i);
       }
       else{ // if the running time is longer then gameSecOnRealSec
@@ -93,10 +93,10 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
         if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
           price = 0 ;
         }
-        $scope.addbill(runningAppliances[i].name, price);
+        $scope.addbill(runningAppliances[i].name, -price);
 
       }
-      $scope.addbill(runningAppliances[i].name, price);
+      $scope.addbill(runningAppliances[i].name, -price);
     };
     timeForLastpaid = $scope.dateEpoch;
     if (timeSincelastMonth < $rootScope.curDate().getMonth()) {
