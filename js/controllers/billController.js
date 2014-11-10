@@ -91,6 +91,16 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }   
       $scope.addbill(passiveAppliances[x].name, -price);
     }
+    for (var x = 0; x < $rootScope.productArray.length ; x++) {
+      if($rootScope.productArray[x].bought)
+      {
+        var price = priceService.getTotalSolarPrice(timeForLastpaid, $rootScope.gameSecOnRealSec, $rootScope.productArray[x].watt);
+        if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
+          price = 0 ;
+        }   
+        $scope.addbill($rootScope.productArray[x].name, price);
+      }
+    }
     for (var i = 0; i < runningAppliances.length; i++) { // if the running time is shorter then gameSecOnRealSec
       if (runningAppliances[i].time < $rootScope.gameSecOnRealSec) {
         var price = priceService.getTotalPrice(timeForLastpaid, runningAppliances[i].time,  runningAppliances[i].energyConsumption);

@@ -88,6 +88,51 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		}
 	};
 
+	this.getTotalSolarPrice = function(startTime, runningTime, watt) {
+		if(startTime + 3600*24 <= latesttime){
+			var totalPrice = 0;
+
+			for (var i = 0 ; i < runningTime ; i=i+3600) {
+				var timeToCalculate =0;
+				if (runningTime-i <= 3600) {
+					timeToCalculate = runningTime;
+				}
+				else{
+					timeToCalculate = 3600;
+				}
+				totalPrice += (getSolarPriceNow( startTime+i , watt) /3600) * timeToCalculate;
+
+			}
+			return totalPrice;
+		}
+		else
+		{
+		    getData(startTime - 3600, startTime + 3600*24*7);
+		}
+	};
+
+	getSolarPriceNow = function(time, watt) {
+
+		if(time <= latesttime){
+			var price = 0;
+			var id = 0;
+			while(parseInt(timevars[id].time) != time)
+			{
+				id++;
+			}
+			price = watt * parseFloat(timevars[id].solar_price_per_unit);
+			console.log(JSON.stringify(timevars[id]));
+			return price;
+		}
+		else
+		{
+		    getData(time, time + 3600*24*7);
+		}
+
+	};
+
+
+
 	getPriceNow = function(time, powerUsage) {
 
 		if(time <= latesttime){
