@@ -2,7 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
-	$rootScope.gameSecOnRealSec = 3600*24;
+	$rootScope.gameSecOnRealSec = 3600;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
 
@@ -31,7 +31,9 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
 					            $rootScope.dishes = parseFloat(response.data.dishes);
 					            $rootScope.hygiene = parseFloat(response.data.hygiene);
-					            $rootScope.laundry = parseFloat(response.data.laundry);
+					            $rootScope.cleanClothes = parseFloat(response.data.cleanClothes);
+					            $rootScope.wetClothes = parseFloat(response.data.wetClothes);
+					            $rootScope.carBattery = parseFloat(response.data.carBattery);
 					            break;
 					        case '204':
 								$rootScope.startGameTime();
@@ -123,7 +125,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	  }
     };
 
-	$scope.saveData = function()
+    $rootScope.saveData = function()
 	{
         var request = {};
 		var gamedata = {};
@@ -133,7 +135,9 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		gamedata.date = $scope.dateEpoch;
 		gamedata.hygiene = $rootScope.hygiene;
 		gamedata.dishes = $rootScope.dishes;
-		gamedata.laundry = $rootScope.laundry;
+		gamedata.cleanClothes = $rootScope.cleanClothes;
+		gamedata.wetClothes = $rootScope.wetClothes;
+		gamedata.carBattery = $rootScope.carBattery;
 
         request.game = gamedata;
 
@@ -148,7 +152,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	  { 
 	    gamedataFactory.saveGameData(params,
 	    function (response) {
-	    //alert(JSON.stringify(response));
+            console.log("Saved!");
 		},
 	    function (response) {
 	        
@@ -162,17 +166,4 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		d.setUTCSeconds($scope.dateEpoch);
 		return d;
 	}
-
-    window.onbeforeunload = function (event) {
-        var message = 'Sure you want to leave?';
-        $scope.saveData();
-        if (typeof event == 'undefined') {
-            event = window.event;
-        }
-        if (event) {
-            event.returnValue = message;
-        }
-        return message;
-    }
-	
 } ]);

@@ -1,8 +1,9 @@
 <div ng-controller="userLoginController">
-  <form novalidate class="col-md-8">
-    {{'regUser.username' | translate}} : <input class="form-control" type="text" ng-model="user.userName" /><br />
-    {{'regUser.pass' | translate}} : <input class="form-control" type="password" ng-model="user.password" /><br />
+  <form novalidate class="col-md-8" name="loginForm">
+    {{'regUser.username' | translate}} : <input class="form-control" type="text" ng-model="user.userName" required /><br />
+    {{'regUser.pass' | translate}} : <input class="form-control" type="password" ng-model="user.password" required /><br />
     <p class="help-block" ng-if="invalidLogin">{{'Login.errors.invalidlogin' | translate}}</p>
-    <button class="btn btn-default" ng-click="Login()">{{'Login.ButtonText' | translate}}</button>
+    <button class="btn btn-default" ng-disabled="isUnchanged(user)" ng-click="Login()">{{'Login.ButtonText' | translate}}</button>
+
   </form>
 </div>
