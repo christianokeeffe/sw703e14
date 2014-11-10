@@ -80,7 +80,6 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
 
     if ($rootScope.billPassiveHelper == 0) {
       $scope.getAppliances();
-      first = false;
     }
     if (passiveAppliances.length == 0) {
       $rootScope.billPassiveHelper == 1;
