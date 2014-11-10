@@ -91,7 +91,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 	};
 
 	this.getTotalSolarPrice = function(startTime, runningTime, watt) {
-		if(startTime + 3600*24 <= latesttime){
+		if(startTime + runningTime <= latesttime){
 			var totalPrice = 0;
 
 			for (var i = 0 ; i < runningTime ; i=i+3600) {
