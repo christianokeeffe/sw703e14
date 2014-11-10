@@ -31,7 +31,9 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
 					            $rootScope.dishes = parseFloat(response.data.dishes);
 					            $rootScope.hygiene = parseFloat(response.data.hygiene);
-					            $rootScope.laundry = parseFloat(response.data.laundry);
+					            $rootScope.cleanClothes = parseFloat(response.data.cleanClothes);
+					            $rootScope.wetClothes = parseFloat(response.data.wetClothes);
+					            $rootScope.carBattery = parseFloat(response.data.carBattery);
 					            break;
 					        case '204':
 								$rootScope.startGameTime();
@@ -134,7 +136,9 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		gamedata.date = $scope.dateEpoch;
 		gamedata.hygiene = $rootScope.hygiene;
 		gamedata.dishes = $rootScope.dishes;
-		gamedata.laundry = $rootScope.laundry;
+		gamedata.cleanClothes = $rootScope.cleanClothes;
+		gamedata.wetClothes = $rootScope.wetClothes;
+		gamedata.carBattery = $rootScope.carBattery;
 
         request.game = gamedata;
 
