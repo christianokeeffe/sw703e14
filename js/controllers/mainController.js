@@ -56,7 +56,6 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
             $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
             $rootScope.timesMissedWork = 0;
             $rootScope.balance += $rootScope.totalBill();
-			$scope.saveData();
 			$scope.saveGraphData();
 		}
 		},1000);
@@ -126,7 +125,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	  }
     };
 
-	$scope.saveData = function()
+    $rootScope.saveData = function()
 	{
         var request = {};
 		var gamedata = {};
@@ -153,7 +152,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	  { 
 	    gamedataFactory.saveGameData(params,
 	    function (response) {
-	    //alert(JSON.stringify(response));
+            console.log("Saved!");
 		},
 	    function (response) {
 	        
