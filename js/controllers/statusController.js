@@ -102,15 +102,10 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		if($rootScope.cleanClothes - $laundryChange < 0)
 		{
 			$rootScope.cleanClothes = statusBarFloorValue;
-			console.log(statusBarFloorValue);
-			console.log($rootScope.cleanClothes);
 		}
 		else
 		{
-			console.log("før " + $rootScope.cleanClothes);
-			console.log("change " + $laundryChange);
 			$rootScope.cleanClothes -= $laundryChange;
-			console.log("efter " + $rootScope.cleanClothes);
 		}
 
 		if($rootScope.hygiene - $hygieneChange < 0)
