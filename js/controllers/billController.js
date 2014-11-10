@@ -7,6 +7,8 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   var passiveAppliances = [];
   var runningAppliances = [];
   var first = true;
+  var payLastMonth = 0;
+  $rootScope.billPassiveHelper = 0;
   $scope.content = {
     "addedbills":[
       {"item": "",
@@ -27,6 +29,10 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }
     }
     temp = null;
+  };
+
+  $scope.getPayLastMonth = function(){
+    return payLastMonth;
   };
 
   $scope.addbill = function(name, price){
@@ -66,10 +72,13 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
 
   });
   $scope.$watch('dateEpoch', function() {
-    if (passiveAppliances.length == 0) {
+    if ($rootScope.billPassiveHelper == 0) {
       $scope.getAppliances();
       first = false;
-    };
+    }
+    if (passiveAppliances.length == 0) {
+      $rootScope.billPassiveHelper == 1;
+    }
     for (var x = 0; x < passiveAppliances.length ; x++) {
       var price = priceService.getTotalPrice(timeForLastpaid, $rootScope.gameSecOnRealSec,  passiveAppliances[x].energyConsumption);
       if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
@@ -100,6 +109,8 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     };
     timeForLastpaid = $scope.dateEpoch;
     if (timeSincelastMonth < $rootScope.curDate().getMonth()) {
+      $rootScope.balance += $rootScope.totalBill();
+      payLastMonth = $rootScope.totalBill();
       $scope.resetAddedBills();
       timeSincelastMonth = $rootScope.curDate().getMonth();
     };

@@ -76,6 +76,7 @@
   {
     "item" : "Bill",
     "expense" : "Expense",
+    "payLastMonth" : "pay last month",
     "totalBill" : "Total Bill"
   },
   "actionModal":

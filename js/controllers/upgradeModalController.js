@@ -99,6 +99,7 @@ myApp.controller('upgradeModalController', ['$scope', '$rootScope', '$modalInsta
         if($rootScope.balance > selected.price)
         {
             controllerService.replaceAppliance(selected);
+            $rootScope.billPassiveHelper = 0;
             if(selected.type == "2") {
                 $rootScope.carChange = selected.energyConsumption*3;
                 $rootScope.carBattery = 100;

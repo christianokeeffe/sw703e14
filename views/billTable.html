@@ -4,6 +4,12 @@
 			<th> {{ 'billTable.item' | translate}} </th>
 			<th> {{ 'billTable.expense' | translate}} </th>
 		</tr>
+
+		<tr>
+			<th> {{ 'billTable.payLastMonth' | translate}}</th>
+			<th> {{ getPayLastMonth() | currencyWithMinus}} </th>
+		</tr>
+
 		<tr>
 			
 			<th> {{'billTable.totalBill' | translate}} </th>
