@@ -9,10 +9,15 @@
   	"score":"Score",
   	"points":"points",
   	"dishes":"Clean Dishes",
-  	"laundry":"Clean Clothes",
-  	"hygiene":"Hygiene",
+    "dirtyDishes":"Dirty Dishes",
+    "cleanClothes":"Clean Clothes",
+    "wetClothes":"Wet Clothes",
+    "dirtyClothes":"Dirty Clothes",
+  	"hygiene":"Clean House",
+    "filthy":"Filthy House",
     "balance":"Balance",
-    "carBattery":"Car Battery Level"
+    "carBattery":"Car Battery Charged",
+    "dead":"Discharged"
   },
   "textToPriceTable":
   {
@@ -75,6 +80,7 @@
   {
     "item" : "Bill",
     "expense" : "Expense",
+    "payLastMonth" : "pay last month",
     "totalBill" : "Total Bill"
   },
   "actionModal":
@@ -111,5 +117,10 @@
     "optionalTasks":"Optional Tasks",
     "completed":"Can be completed",
     "times":"Times done/Completed"
+  },
+  "settings":
+  {
+    "allowdischarge":"Allow to discharge car to sellback to the grid when the electricity is expensive",
+    "dischargeval":"Discharge at maximum to a battery level at (in %):"
   }
 }

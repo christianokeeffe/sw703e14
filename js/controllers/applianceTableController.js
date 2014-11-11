@@ -1,9 +1,11 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'tasksFactory','priceService', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, tasksFactory,priceService){
+myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','appliancesFactory','formatRequest','controllerService', 'userApplianceFactory', 'tasksFactory','priceService', function($scope, $rootScope, $modal, appliancesFactory, formatRequest, controllerService, userApplianceFactory, tasksFactory,priceService){
   $scope.hasTasks = function(id) {
     return controllerService.checkApplianceHasTasks(id);
   };
+
+  $scope.appliances = undefined;
 
   $scope.getAppliances = function()
   {
@@ -23,8 +25,14 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
         $scope.appliances = response.data;
         controllerService.setApplianceArray($scope.appliances);
 
+        for(i = 0; i < $scope.appliances.length; i++) {
+          if($scope.appliances[i].type == "2") {
+            $rootScope.carChange = parseInt($scope.appliances[i].energyConsumption) * 3;
+          }
+        }
         //starts the quary to fetch the tasks
         //reason is the way the tasks are errange needs appliances for it
+
         $scope.getTasks();
       });
     }
@@ -127,7 +135,29 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
 
         modalInstance.result.then(function (selectedUpgrade){
             $scope.appliances = controllerService.getApplianceArray();
+
+            var applianceIDs = [];
+            $scope.appliances.forEach(function(entry) {
+                applianceIDs.push(entry.id);
+            });
+
+            var userid = $scope.getUserID();
+            var request = {id:userid, appliances:applianceIDs};
+            var params = {user_appliance:request};
+            params = formatRequest.post(params);
+
+            userApplianceFactory.updateUserAppliance(params,
+                function (response) {
+                    //call successful
+                },
+                function (response) {
+                    //alert(JSON.stringify(response));
+                    document.write(JSON.stringify(response));
+                });
+
             $rootScope.setBalance($rootScope.balance - selectedUpgrade.price);
+            $rootScope.saveData();
+            $scope.getTasks();
             $rootScope.startGameTime();
         }, function () {
             $rootScope.startGameTime();

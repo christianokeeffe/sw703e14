@@ -8,6 +8,7 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
 
   function boardCastActivation(task, appliance)
   {
+    $rootScope.$broadcast('bill-communication', {name: appliance.name, time: task.executionTime, energyConsumption: appliance.energyConsumption});
     $scope.$broadcast('module-communication', {task: task, appliance: appliance});
   }
 

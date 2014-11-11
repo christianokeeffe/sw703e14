@@ -66,7 +66,7 @@ myApp.service('controllerService', function () {
 		for (var i = 0; i < ApplianceArray.length; i++){
 			var temp = [];
 			for (var j = 0; j < tasks.length; j++){
-				if (ApplianceArray[i].id == tasks[j].refAppliance){
+				if (ApplianceArray[i].type == tasks[j].refAppliance){
 					temp.push(tasks[j]);
 				}
 			};

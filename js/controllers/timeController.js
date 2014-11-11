@@ -21,16 +21,20 @@ myApp.controller('timeController', ['$scope', '$rootScope','$interval', function
             if($scope.difference <= 0)
             {
                 $scope.timerRunning = false;
-                if(appliance.type == 3 || appliance.type == 4){                    
+                if(appliance.type == 3){                    
                     statusBroadcast("laundry", parseInt(task.updateValue));
+                } else if (appliance.type == 4 || appliance.type == 8){
+                    statusBroadcast("wetClothes", parseInt(task.updateValue));
                 } else if (appliance.type == 6){
                     statusBroadcast("dishes", parseInt(task.updateValue));
                 } else if (appliance.type == 7){
                     statusBroadcast("hygiene", parseInt(task.updateValue));
+                } else if (appliance.type == 2) {
+                    statusBroadcast("car", parseInt(task.updateValue));
                 }
 
-                $scope.timersToSchedule.splice($scope.checkIndexOnTimerList(appliance.name),1);
-                $scope.completeScheduleList.splice($scope.checkIndexOnCompleteList(appliance.name),1);
+                $scope.timersToSchedule.splice($rootScope.checkIndexOnTimerList(appliance.name),1);
+                $scope.completeScheduleList.splice($rootScope.checkIndexOnCompleteList(appliance.name),1);
                 taskBroadcast(task);
                 unSuscribeWatch();
             }

@@ -4,6 +4,12 @@
 			<th> {{ 'billTable.item' | translate}} </th>
 			<th> {{ 'billTable.expense' | translate}} </th>
 		</tr>
+
+		<tr>
+			<th> {{ 'billTable.payLastMonth' | translate}}</th>
+			<th> {{ getPayLastMonth() | currencyWithMinus}} </th>
+		</tr>
+
 		<tr>
 			
 			<th> {{'billTable.totalBill' | translate}} </th>
@@ -14,9 +20,9 @@
 
 	</thead>
 	<tbody>
-		<tr ng-repeat="t in content.billList"> 
-			<td> {{t.item}} </td>
-			<td> {{t.expense | currencyWithMinus}} </td>
+		<tr ng-if = "content.addedbills.length > 0" ng-repeat="t in content.addedbills"> 
+			<td ng-show ="t.expense != 0"> {{t.item}} </td>
+			<td ng-show ="t.expense != 0"> {{t.expense | currencyWithMinus}} </td>
 		</tr>
 	</tbody>
 </table>

@@ -1,9 +1,10 @@
 var myApp = angular.module('smartgridgame');
 
 myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'formatRequest', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, formatRequest){
-	$scope.productArray = [{id: 1, name: "Small Solarpanel", brought: true, saveFactor: 15, cost: 50000, description: "Solarpanel generates electricisy by being exposed to solar radiance."},
-						{id: 2, name: "Big solarpanel", brought: false, saveFactor: 25, cost: 1000000, description: "Geothermal energy works by exstracting heat from the ground and by pressure difference transfer the heat energy to water which the household then can use."},
-						{id: 3, name: "Micro CHP", brought: false, saveFactor: 27.9, cost: 102000, description: "A micro CHP is a small powerplant in a household which both provides heat as well as electricity."}];
+
+	$rootScope.productArray = [{id: 1, name: "Solarpanel", watt:10000, bought: true, category: "el", saveFactor: 50, cost: 50000, description: "Solarpanel generates electricisy by being exposed to solar radiance."},
+						{id: 2, name: "Geothermal Energy", bought: false, category: "varme", saveFactor: 80, cost: 1000000, description: "Geothermal energy works by exstracting heat from the ground and by pressure difference transfer the heat energy to water which the household then can use."},
+						{id: 3, name: "Micro CHP", bought: false, category: "varme", saveFactor: 25, cost: 2000000, description: "A micro CHP is a small powerplant in a household which both provides heat as well as electricity."}];
 
 	$scope.estimateOfPowerUsage = 0;
 
@@ -108,9 +109,9 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
     modalInstance.result.then(function (broughtProduct) {
 
-    	var index = $scope.productArray.indexOf(broughtProduct);
+    	var index = $rootScope.productArray.indexOf(broughtProduct);
     	$rootScope.balance = $rootScope.balance - broughtProduct.cost;
-    	$scope.productArray[index].brought = true;
+    	$rootScope.productArray[index].brought = true;
     	$rootScope.startGameTime();
     }, function (){
     	$rootScope.startGameTime();

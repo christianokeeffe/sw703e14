@@ -6,6 +6,7 @@ var first = true;
 var firstDay = true;
 
 $scope.dailyTasks = {};
+$rootScope.timesMissedWork = 0;
   
  $scope.getDailyTasks = function(){
  var geturl = {};
@@ -79,7 +80,7 @@ $scope.isMissed = function(item) {
 
 $scope.$on('task-communication', function(event, data){
 	for (i = 0; i < $scope.dailyTasks.length; i++) {
-		if($scope.dailyTasks[i].taskID == data.task.id) {
+		if($scope.dailyTasks[i].taskID == data.task.id && $scope.dailyTasks[i].id != "4") {
 			if($scope.inTime($scope.dailyTasks[i].startTime, $scope.dailyTasks[i].endTime) && $scope.dailyTasks[i].done == false) {
 				$scope.dailyTasks[i].done = true;
 				$rootScope.score += parseInt($scope.dailyTasks[i].reward);
@@ -101,10 +102,27 @@ var updater = $scope.$watch('dateEpoch', function(){
  	//Checks if a deadline is missed on a daily task
  	for (i = 0; i < $scope.dailyTasks.length; i++) {
  		if($scope.dailyTasks[i].id == "4") {
- 			if($scope.getGameTimeInMin() == $scope.dailyTasks[i].endTime) {
- 				// tjek om bilen er på 80 %
+
+ 			var hourOfLastUpdate = $scope.lastEpochUpdate / 60 / 60;
+        	var currentHour = $scope.dateEpoch / 60 / 60;
+        	currentHour = (currentHour%24)+1;
+        	hourOfLastUpdate = (hourOfLastUpdate%24);
+        	var dayOfLastUpdate = $scope.lastEpochUpdate / 60 / 60 / 24;
+        	var currentDay = $scope.dateEpoch / 60 / 60 / 24;
+        	dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
+        	currentDay = Math.floor(currentDay%7);
+ 			
+ 			if(hourOfLastUpdate < 6 && 6 <= currentHour && currentDay != 2 && currentDay !=3) {
+ 				if($rootScope.carBattery - 2 * $rootScope.carChange >= 0) {
+ 					$rootScope.score += parseInt($scope.dailyTasks[i].reward);
+ 					$scope.dailyTasks[i].done = true;
+ 				} else {
+ 					$rootScope.timesMissedWork += 1;
+ 					$rootScope.score += parseInt($scope.dailyTasks[i].penalty);
+ 					$scope.dailyTasks[i].missed = true;
+ 				}
  			}
- 		} else if($scope.isMissed($scope.dailyTasks[i]) && $scope.dailyTasks[i].missed == false && $scope.firstDay == false) {
+ 		} else if($scope.isMissed($scope.dailyTasks[i]) && $scope.dailyTasks[i].missed == false && $scope.firstDay == false && $scope.dailyTasks[i].id != "4") {
  			$scope.dailyTasks[i].missed = true;
  			$rootScope.score += parseInt($scope.dailyTasks[i].penalty);
  		}

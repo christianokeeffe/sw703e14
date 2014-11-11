@@ -13,6 +13,9 @@
       when('/login', {
         templateUrl: './views/userLogin.html'
       }).
+      when('/settings', {
+        templateUrl: './views/settingspage.html'
+      }).
       otherwise({
         redirectTo: '/'
       });

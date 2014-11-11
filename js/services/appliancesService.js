@@ -5,6 +5,7 @@ var services = angular.module('smartgridgame');
 
 var api_resource_appliances = api_url + "/appliances";
 var api_resource_appliancesOfType = api_url + "/appliancesType";
+var api_resource_userAppliance = api_url + "/user_appliance";
     	
 services.factory("appliancesFactory", function($resource) {
     return $resource(api_resource_appliances + "/:userID:endurl", {}, {
@@ -29,6 +30,12 @@ services.factory('allAppliancesFactory', ['$http',
         }
     }
 ]);
+
+services.factory("userApplianceFactory", function($resource) {
+    return $resource(api_resource_userAppliance, {}, {
+        updateUserAppliance : { method: 'POST', isArray: false, params: {'publicKey': '@publicKey', 'request':'@request', 'requestHash':'@requestHash'}}
+    });
+});
 
 /*
 services.factory("allAppliancesFactory", function($resource) {

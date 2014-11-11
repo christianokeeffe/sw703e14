@@ -2,6 +2,7 @@
 	<table class ="table table-condensed table-bordered">
 		<thead>
 			<tr>
+                <th></th>
 				<th>{{'applianceTable.items' | translate}}</th>
 				<th>{{'applianceTable.activate' | translate}}</th>
 				<th>{{'applianceTable.upgrade' | translate}}</th>
@@ -10,6 +11,9 @@
 		<tbody>
 			<tr ng-repeat="item in appliances">
 			<div>
+                <td>
+                    <img src="images/{{item.type}}.png" />
+                </td>
 				<td>
 					{{item.name}}
 				</td>

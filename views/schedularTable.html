@@ -23,7 +23,7 @@
 				</td>
 				<td>
 					<div ng-controller="timeController">
-						{{difference | time}} 
+						<span ng-if="difference>0">{{difference | time}} </span>
 					</div>
 				</td>
 			</tr>
