@@ -66,7 +66,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   }
 
   $scope.$on('bill-communication', function (event, data){
-    console.log("test 1");
+    //console.log("test 1");
     runningAppliances.push({"name": data.name, "time": data.time , "energyConsumption": data.energyConsumption});
 
   });
