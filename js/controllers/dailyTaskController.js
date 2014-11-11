@@ -102,7 +102,10 @@ var updater = $scope.$watch('dateEpoch', function(){
  	//Checks if a deadline is missed on a daily task
  	for (i = 0; i < $scope.dailyTasks.length; i++) {
  		if($scope.dailyTasks[i].id == "4") {
-
+ 			if($rootScope.carChange != undefined)
+ 			{
+ 				$scope.dailyTasks[i].deadline = "6:00 - " + ($rootScope.carChange * 2) + "%";
+ 			}
  			var hourOfLastUpdate = $scope.lastEpochUpdate / 60 / 60;
         	var currentHour = $scope.dateEpoch / 60 / 60;
         	currentHour = (currentHour%24)+1;
