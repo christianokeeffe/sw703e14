@@ -71,10 +71,12 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
 
   });
   $scope.$watch('dateEpoch', function() {
-    if(angular.isUndefined(timeForLastpaid = undefined))
+    if(angular.isUndefined(timeForLastpaid) || timeForLastpaid === null || isNaN(timeForLastpaid))
     {
       timeForLastpaid = $scope.dateEpoch;
     }
+    if(!(angular.isUndefined(timeForLastpaid) || timeForLastpaid === null || isNaN(timeForLastpaid)))
+    {
     if(angular.isUndefined(lastMonth) || lastMonth === null|| isNaN(lastMonth)){
       lastMonth = null;
       lastMonth = $rootScope.curDate().getMonth();
@@ -94,6 +96,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     }
     if(!angular.isUndefined($rootScope.productArray))
     {
+      console.log(timeForLastpaid);
       for (var x = 0; x < $rootScope.productArray.length ; x++) {
         if($rootScope.productArray[x].bought)
         {
@@ -132,5 +135,6 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       $scope.resetAddedBills();
       lastMonth = $rootScope.curDate().getMonth();
     }
+  }
   });
 }]);
