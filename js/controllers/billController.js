@@ -96,7 +96,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     }
     if(!angular.isUndefined($rootScope.productArray))
     {
-      console.log(timeForLastpaid);
+      
       for (var x = 0; x < $rootScope.productArray.length ; x++) {
         if($rootScope.productArray[x].bought)
         {

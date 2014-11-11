@@ -19,7 +19,7 @@ myApp.controller('lowPriceController', ['$scope', '$rootScope', '$modalInstance'
     while (s.length < size) s = "0" + s;
     return s;
 }
-$scope.duration = $scope.inputlist(controllerService.getTask().executionTime);
+$scope.duration = $scope.formatTime(controllerService.getTask().executionTime);
 
   $scope.setTimer = function () {
     $scope.beforeTime = controllerService.getTimer();
