@@ -1,13 +1,17 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', function($scope, $modalInstance, selectedProduct, powerUsage){
+myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', 'powerUsage', 'powerCost', function($scope, $modalInstance, selectedProduct, powerUsage, powerCost){
 	$scope.product = selectedProduct;
 	$scope.calculatedResult = 0;
 	$scope.times;
 
+	$scope.powerUsage = powerUsage;
+	$scope.powerCost = parseFloat(powerCost);
+	$scope.productsProductionPerMonth = 1200 / 12;
+
 	$scope.calculatePreview = function()
 	{
-		$scope.calculatedResult = powerUsage*(100-$scope.product.saveFactor);
+		$scope.calculatedResult = Math.floor(($scope.powerUsage*$scope.times*$scope.powerCost - $scope.productsProductionPerMonth*$scope.times*$scope.powerCost));
 	}
 
 	$scope.preformCheck = function(time){

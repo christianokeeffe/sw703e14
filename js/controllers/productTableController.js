@@ -1,11 +1,30 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', function($scope, $rootScope, $modal, controllerService){
+myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'formatRequest', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, formatRequest){
 	$scope.productArray = [{id: 1, name: "Small Solarpanel", brought: true, saveFactor: 15, cost: 50000, description: "Solarpanel generates electricisy by being exposed to solar radiance."},
 						{id: 2, name: "Big solarpanel", brought: false, saveFactor: 25, cost: 1000000, description: "Geothermal energy works by exstracting heat from the ground and by pressure difference transfer the heat energy to water which the household then can use."},
 						{id: 3, name: "Micro CHP", brought: false, saveFactor: 27.9, cost: 102000, description: "A micro CHP is a small powerplant in a household which both provides heat as well as electricity."}];
 
 	$scope.estimateOfPowerUsage = 0;
+
+	getAverage = function (){
+    var geturl = formatRequest.get({});
+	    if(geturl === undefined)
+	    {
+	      setTimeout(function(){
+	        return getAverage();
+	      }, 10);
+	    }
+	    else
+	    {
+	      var averagePromise = averageMarketPriceFactory.getAverageMarketPrice(geturl);
+	      	averagePromise.$promise.then(function(response){
+	        $scope.Average = response.data[0].average;
+	      });
+	    }
+  	};
+
+  	getAverage();
 
 	calculateEstimatePowerUsage = function(){
 		var appliances = controllerService.getApplianceArray();
@@ -45,9 +64,6 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 			}
 
 		};
-
-		//console.log($scope.estimateOfPowerUsage);
-
 	};
 
 	var NumberOfApplianceRuns = function(needsOnAMount, updateValue){
@@ -83,6 +99,9 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
       	},
       	powerUsage: function (){
       		return $scope.estimateOfPowerUsage;
+      	},
+      	powerCost: function (){
+      		return $scope.Average;
       	}
       }
     });

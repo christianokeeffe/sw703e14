@@ -22,11 +22,11 @@
             Saving Factor:
         </dt>
         <dd>
-            <p>Here is preview how much you would save by buying this product. The value indicates over have many month you wish to calculate the preview for. The value has to be between 0 to 1200.</p>
+            <p>Here is preview how much you would save by buying this product. The value indicates over have many month you wish to calculate the preview for.</p>
             <div class="row" style ="display: flex; align-items:center;">
                 <div class="col-xs-6">
                     <form name="previewForm">
-                        <input name="numberField" type="number" class="form-control" min="0" max="1200" ng-model="times" placeholder="month" ng-change="preformCheck(times)">
+                        <input name="numberField" type="number" class="form-control" ng-model="times" placeholder="month" ng-change="preformCheck(times)">
                     </form>
                 </div>
             <div class="col-xs-1"><label> = </label></div>
@@ -38,6 +38,8 @@
             </div>
             <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="!previewForm.numberField.$valid">May only contain numbers.</div>
 
+            <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="times < 0 || 
+            times > 1200">The value has to be between 0 to 1200.</div>
         </dd>
         <dt>
             Description:
