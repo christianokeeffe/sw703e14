@@ -122,8 +122,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 			{
 				id++;
 			}
-			price = watt * parseFloat(timevars[id].solar_price_per_unit);
-			console.log(JSON.stringify(timevars[id]));
+			price = watt * parseFloat(timevars[id].solar_price_per_unit) / 10;
 			return price;
 		}
 		else
