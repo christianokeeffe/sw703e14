@@ -11,3 +11,9 @@ services.factory("usersFactory", function($resource) {
         registerUser : { method: 'PUT', isArray: false, params: {'publicKey': '@publicKey', 'request':'@request', 'requestHash':'@requestHash'}}
     });
 });
+
+services.factory("usersLoginFactory", function($resource) {
+    return $resource(api_resource_user + "/:user/:pass:endurl", {}, {
+        findUser : { method: 'GET', isArray: false}
+    });
+});

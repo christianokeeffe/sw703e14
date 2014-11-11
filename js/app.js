@@ -1,6 +1,7 @@
 (function(){
 	
-  var app = angular.module('smartgridgame', ['pascalprecht.translate','ui.bootstrap','ngResource', 'ngRoute','ngCookies','ngDropdowns']);
+  var app = angular.module('smartgridgame', ['pascalprecht.translate','ui.bootstrap','ngResource', 'ngStorage', 'ngRoute','ngCookies','ngDropdowns','timer']);
+
   app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
     $routeProvider.
@@ -10,10 +11,17 @@
       when('/reg-user', {
         templateUrl: './views/regUser.html'
       }).
+      when('/login', {
+        templateUrl: './views/userLogin.html'
+      }).
+      when('/settings', {
+        templateUrl: './views/settingspage.html'
+      }).
       otherwise({
         redirectTo: '/'
       });
   }]);
+  
   app.config(function($httpProvider) {
   $httpProvider.interceptors.push(function($q) {
     var realEncodeURIComponent = window.encodeURIComponent;
@@ -31,6 +39,17 @@
     };
   });
 });
+
+    //////////////////CACHE REMOVE START ////////////////////
+    app.run(function($rootScope, $templateCache) {
+        $rootScope.$on('$routeChangeStart', function(event, next, current) {
+            if (typeof(current) !== 'undefined'){
+                $templateCache.remove(current.templateUrl);
+            }
+        });
+    });
+    //////////////////CACHE REMOVE STOP/////////////////////
+
   app.config(['$translateProvider', function($translateProvider) {
   	// add translation table
   	$translateProvider.useStaticFilesLoader({

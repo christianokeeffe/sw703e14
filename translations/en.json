@@ -1,15 +1,23 @@
- {
+﻿ {
   "cop":"Copyright © 2014 SW703E14",
   "HEADLINE":"What an awesome module!",
-  "PRESS":"Press",
-  "ACTIVATE":"Activate",
+  "title":"Smart Grid Game",
+  "navbar-headline":"Smart Grid",
+  "navbar-welcome":"Welcome",
   "scorearea":
   {
   	"score":"Score",
   	"points":"points",
   	"dishes":"Clean Dishes",
-  	"laundry":"Clean Clothes",
-  	"hygiene":"Hygiene"
+    "dirtyDishes":"Dirty Dishes",
+    "cleanClothes":"Clean Clothes",
+    "wetClothes":"Wet Clothes",
+    "dirtyClothes":"Dirty Clothes",
+  	"hygiene":"Clean House",
+    "filthy":"Filthy House",
+    "balance":"Balance",
+    "carBattery":"Car Battery Charged",
+    "dead":"Discharged"
   },
   "textToPriceTable":
   {
@@ -22,13 +30,25 @@
   	"coal":"Coal",
   	"bio":"BIO"
   },
-  "tasktable":
+  "applianceTable":
   {
-    "items":"Items"
+    "items":"Appliances",
+    "activate":"Start task",
+    "upgrade":"Upgrade appliances",
+    "upgradeBtn":"Upgrade",
+    "press":"Activate"
   },
-  "taskmodal":
+  "schedularTable":
   {
-    "delay":"Set activation time"
+    "name": "Tasks",
+    "deadline":"Deadline/Time left"
+  },
+  "lowPriceModal":
+  {
+    "FB":"Finish before:",
+    "setTime":"Set activation time",
+    "delay":"Set activation time",
+    "alert":"Invalid start time: The date and/or time is in the past or the task cannot be completed before the deadline!"
   },
   "TrueTaskTable":
   {
@@ -47,19 +67,60 @@
     "pass":"Password",
     "submit":"Register User",
     "errors":{
-      "usernamereq":"Username is required.",
-      "firstnamereq":"Firstname is required.",
-      "lastnamereq":"Lastname is required.",
-      "emailreq":"The email is required",
+      "usernamereq":"A username is required.",
+      "firstnamereq":"A firstname is required.",
+      "lastnamereq":"A lastname is required.",
+      "emailreq":"An email address is required",
       "emailerror":"The email address is invalid",
-      "emailduberror":"This email address has allready been used",
-      "passwordreq":"The password is required"
+      "invalidemailorusername":"The email or username is already in use",
+      "passwordreq":"A password is required"
     }
   },
   "billTable":
   {
     "item" : "Bill",
     "expense" : "Expense",
+    "payLastMonth" : "pay last month",
     "totalBill" : "Total Bill"
+  },
+  "actionModal":
+  {
+    "duration":"Duration",
+    "selectItem":"Select a task",
+    "ACTIVATE":"Activate",
+    "delay":"Set activation time",
+    "noSelection":"Please select a task"
+  },
+ "upgradeModal":
+ {
+     "selectItem":"Select an upgrade",
+     "ACTIVATE":"Upgrade",
+     "noSelection":"Please select an upgrade",
+     "cannotAfford":"You cannot afford this upgrade"
+ },
+  "Login":
+  {
+    "ButtonText":"Log in",
+    "errors":
+    {
+      "invalidlogin":"Invalid login credentials"
+    }
+  },
+  "dailyTaskTable":
+  {
+    "dailyTasks":"Daily Tasks",
+    "deadline":"Deadline",
+    "taskSolved":"Task Solved"
+  },
+  "optimalTasks":
+  {
+    "optionalTasks":"Optional Tasks",
+    "completed":"Can be completed",
+    "times":"Times done/Completed"
+  },
+  "settings":
+  {
+    "allowdischarge":"Allow to discharge car to sellback to the grid when the electricity is expensive",
+    "dischargeval":"Discharge at maximum to a battery level at (in %):"
   }
 }

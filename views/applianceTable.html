@@ -1,0 +1,34 @@
+<div ng-controller="applianceTableController">
+	<table class ="table table-condensed table-bordered">
+		<thead>
+			<tr>
+                <th></th>
+				<th>{{'applianceTable.items' | translate}}</th>
+				<th>{{'applianceTable.activate' | translate}}</th>
+				<th>{{'applianceTable.upgrade' | translate}}</th>
+			<tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in appliances">
+			<div>
+                <td>
+                    <img src="images/{{item.type}}.png" />
+                </td>
+				<td>
+					{{item.name}}
+				</td>
+				<td>
+					<button type="button" class="btn btn-primary" ng-show="hasTasks(item.id)" ng-click="openActionModal(item)">
+						{{'applianceTable.press' | translate}}
+					</button>
+				</td>
+				<td>
+					<button type="button" class="btn btn-primary" ng-click="openUpgradeModal(item)">
+						{{'applianceTable.upgradeBtn' | translate}}
+					</button>
+				</td>
+				</div>
+			</tr>
+		</tbody>
+	</table>
+</div>

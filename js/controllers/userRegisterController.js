@@ -1,6 +1,8 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('userRegisterController', ['$scope','$interval','usersFactory','formatRequest', function($scope,$interval,usersFactory,formatRequest){
+
+myApp.controller('userRegisterController', ['$scope','$interval','usersFactory','formatRequest','$location', function($scope,$interval,usersFactory,formatRequest,$location){
+
 	$scope.user = {};
 	$scope.invalidEmail = false;
 
@@ -22,6 +24,9 @@ myApp.controller('userRegisterController', ['$scope','$interval','usersFactory',
 	    		case '200':
 	    			$scope.regUser = response.data;
 	    			$scope.invalidEmail = false;
+
+	    			$location.path("/");
+
     				break;
 				case '409':
 					$scope.invalidEmail = true;

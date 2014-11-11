@@ -1,56 +1,176 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('statusController', ['$scope', function($scope){
-	$scope.dishes = 100;
-	$scope.lastEpochUpdate = $scope.dateEpoch;
-	$scope.hygiene = 100;
-	$scope.laundry = 100;
-	$scope.score = 0;
+myApp.controller('statusController', ['$scope','$rootScope', function($scope, $rootScope){
+	$rootScope.dishes = 100;
+	$rootScope.lastEpochUpdate = $scope.dateEpoch;
+	$rootScope.hygiene = 100;
+	$rootScope.cleanClothes = 100;
+	$rootScope.wetClothes = 0.1;
+    $rootScope.carBattery = 100;
+	$rootScope.score = 0;
+    $scope.carBatCount = 0;
+    $scope.onWork = false;
+    $scope.sunlevel = 700;
+    $rootScope.lastSave = 0;
+
+
+	var statusBarFloorValue = 0.1;
 
 	function hourToPercentDrop(fullPercentDropInDays,numbOfHours)
 	{
-		return (numbOfHours/(fullPercentDropInDays*24))*100;
+		var returnval = (numbOfHours/(fullPercentDropInDays*24))*100;
+		return returnval;
 	}
 
+	$scope.$on('status-communication', function (event, data)
+	{
+		var value = parseInt(data.value);
+		switch(data.category)
+		{
+			case "dishes":
+				if($rootScope.dishes + value > 100)
+				{
+					$rootScope.dishes = 100;
+				}
+				else
+				{
+					$rootScope.dishes += value;
+				}
+				break;
+			case "hygiene":
+				if($rootScope.hygiene + value > 100)
+				{
+					$rootScope.hygiene = 100;
+				} 
+				else
+				{
+					$rootScope.hygiene += value;
+				}
+				break;
+			case "laundry":
+				if(100 - $rootScope.cleanClothes - $rootScope.wetClothes < value)
+				{
+					$rootScope.wetClothes += 100 - $rootScope.cleanClothes - $rootScope.wetClothes;
+				}
+				else
+				{
+					$rootScope.wetClothes += value;
+				}
+				break;
+			case "wetClothes":
+				if($rootScope.wetClothes <= value)
+				{
+					$rootScope.cleanClothes += $rootScope.wetClothes;
+					$rootScope.wetClothes = statusBarFloorValue;
+				}
+				else
+				{
+					$rootScope.wetClothes -= value;
+					$rootScope.cleanClothes += value;
+				}
+			case "car":
+				if($rootScope.carBattery + value > 100)
+				{
+					$rootScope.carBattery = 100;
+				}
+				else
+				{
+					$rootScope.carBattery += value;
+				}
+				break;
+		}
+        $rootScope.saveData();
+    });
+
 	$scope.$watch('dateEpoch', function() {
-		var hourChange = ($scope.dateEpoch - $scope.lastEpochUpdate)/3600;
-		$scope.lastEpochUpdate = $scope.dateEpoch;
+		var hourChange = ($scope.dateEpoch - $rootScope.lastEpochUpdate)/3600;
+		$rootScope.lastEpochUpdate = $scope.dateEpoch;
 		$dishChange = hourToPercentDrop(4,hourChange);
 		$laundryChange = hourToPercentDrop(21,hourChange);
 		$hygieneChange = hourToPercentDrop(14,hourChange);
-		$scope.score += Math.round(hourChange*$scope.happiness);
 
-		if($scope.dishes - $dishChange < 0)
+        if(($scope.dateEpoch - $scope.lastSave)/60/60/24 >= 1)
+        {
+            $rootScope.saveData();
+            $rootScope.lastSave = $scope.dateEpoch;
+        }
+
+        $scope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.cleanClothes+$rootScope.carBattery)/4;
+
+        $rootScope.score += Math.round(hourChange*$scope.happiness);
+
+		if($rootScope.dishes - $dishChange < 0)
 		{
-			$scope.dishes = 0;
+			$rootScope.dishes = statusBarFloorValue;
 		}
 		else
 		{
-			$scope.dishes -= $dishChange;
+			$rootScope.dishes -= $dishChange;
 		}
 
-		if($scope.laundry - $laundryChange < 0)
+		if($rootScope.cleanClothes - $laundryChange < 0)
 		{
-			$scope.laundry = 0;
+			$rootScope.cleanClothes = statusBarFloorValue;
 		}
 		else
 		{
-			$scope.laundry -= $laundryChange;
+			$rootScope.cleanClothes -= $laundryChange;
 		}
 
-		if($scope.hygiene - $hygieneChange < 0)
+		if($rootScope.hygiene - $hygieneChange < 0)
 		{
-			$scope.hygiene = 0;
+			$rootScope.hygiene = statusBarFloorValue;
 		}
 		else
 		{
-			$scope.hygiene -= $hygieneChange;
+			$rootScope.hygiene -= $hygieneChange;
 		}
+
+        var hourOfLastUpdate = $scope.lastEpochUpdate / 60 / 60;
+        var currentHour = $scope.dateEpoch / 60 / 60;
+        currentHour = ((currentHour+2)%24);
+        hourOfLastUpdate = (hourOfLastUpdate%24);
+
+        var curSunLevel = (currentHour+12)%24
+        var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+
+        $scope.sunlevel = (-0.4647*(Math.pow(currentHour, 2))) + (10.462*currentHour);
+        $scope.sunlevel *=4;
+
+        if(currentHour <= 4)
+        {
+            $scope.sunlevel /=2;
+        }
+
+        if(currentHour < 8 && currentHour < 17)
+        {
+            $scope.sunlevel += ((Math.floor(Math.random() * 80) + 1)*plusOrMinus)
+        }
+
+        var dayOfLastUpdate = $scope.lastEpochUpdate / 60 / 60 / 24;
+        var currentDay = $scope.dateEpoch / 60 / 60 / 24;
+
+        dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
+        currentDay = Math.floor(currentDay%7);
+
+        if( (hourOfLastUpdate < 7 && 7 <= currentHour) || (hourOfLastUpdate < 17 && 17 <= currentHour) )
+        {
+            if(currentDay != 2 && currentDay !=3 )
+            {
+                if($rootScope.carBattery - 10 <= 0)
+                {
+                    $rootScope.carBattery = statusBarFloorValue;
+                }
+                else
+                {
+                    $rootScope.carBattery -= 10;
+                }
+            }
+        }
 	});
 
 	$scope.getStatusType = function(value)
 	{
-		$scope.happiness = ($scope.dishes+$scope.hygiene+$scope.laundry)/3;
 		if(value < 25)
 		{
 			return 'danger';
@@ -74,6 +194,7 @@ myApp.controller('statusController', ['$scope', function($scope){
 	}
      
      $scope.$watch('happiness', function() {
+
      	if($scope.happiness > 100)
      	{
      		$scope.happiness = 100;
@@ -104,7 +225,6 @@ myApp.controller('statusController', ['$scope', function($scope){
        // variable that decides if something should be drawn on mousemove
       var drawing = false;
 	  var canvas = document.getElementById('face');
-	  canvas.width = canvas.width;
 	  var context = canvas.getContext('2d');
 	  var centerX = canvas.width / 2;
 	  var centerY = canvas.height / 2;
@@ -149,5 +269,64 @@ myApp.controller('statusController', ['$scope', function($scope){
 	  //context.arc(eyeX, eyeY, eyeRadius, 0, 2 * Math.PI, false);
 	  context.strokeStyle = 'black';
 	  context.stroke();
-   }); 
+   });
+
+    function drawLine(context, fromX, fromY, toX, toY, color)
+    {
+        context.beginPath();
+        context.lineCap="square";
+        context.fillStyle = color;
+        context.moveTo(fromX, fromY);
+        context.lineTo(toX, toY);
+        context.stroke();
+    }
+
+    $scope.$watch('sunlevel', function() {
+
+        if($scope.sunlevel > 1000)
+        {
+            $scope.sunlevel = 1000;
+        }
+        else if ($scope.sunlevel < 0)
+        {
+            $scope.sunlevel = 0;
+        }
+        var bezier = $scope.sunlevel - 50;
+        var r = 0.0;
+        var g = 0.0;
+
+        r = (($scope.sunlevel));
+        g = (($scope.sunlevel));
+
+        var sunColor = rgbToHex(r,g,0);
+
+        // variable that decides if something should be drawn on mousemove
+        var canvas = document.getElementById('sun');
+        var context = canvas.getContext('2d');
+        var centerX = canvas.width / 2;
+        var centerY = canvas.height / 2;
+        var radius = 40;
+
+
+        // draw the yellow circle
+        context.beginPath();
+        context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        context.fillStyle = sunColor;
+        context.fill();
+        context.lineWidth = 1;
+        context.strokeStyle = 'black';
+        context.stroke();
+
+        //Sun beams
+        drawLine(context, centerX + 50, centerY, centerX + 300, centerY, sunColor);
+        drawLine(context, centerX - 50, centerY, centerX - 300, centerY, sunColor);
+        drawLine(context, centerX, centerY + 50, centerX, centerY + 300, sunColor);
+        drawLine(context, centerX, centerY - 50, centerX, centerY - 300, sunColor);
+
+        drawLine(context, centerX + (centerX/2), centerY + (centerY/2), centerX*1.3 + centerX/2, centerY*1.3 + centerY/2, sunColor);
+        drawLine(context, centerX*0.7 - centerX/2,centerY*0.7 - centerY/2, centerX - (centerX/2), centerY - (centerY/2), sunColor);
+        drawLine(context, centerX*1.3 + centerX/2,centerY*0.7 - centerY/2, centerX + (centerX/2), centerY - (centerY/2), sunColor);
+        drawLine(context, centerX - (centerX/2), centerY + (centerY/2), centerX*0.7 - centerX/2,centerY*1.3 + centerY/2, sunColor);
+
+    });
 }]);

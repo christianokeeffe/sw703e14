@@ -1,11 +1,31 @@
-<div ng-controller="statusController" face class="col-md-2">
-<canvas id="face" width="150" bezier="0" height="150" ></canvas><br/>
-<h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
-
-<label for="dishes">{{'scorearea.dishes' | translate}}</label>
-<progressbar animate="false" value="dishes" type="{{getStatusType(dishes)}}" max="100" id="dishes"><b>{{dishes| number:0}}%</b></progressbar>
-<label for="laundry">{{'scorearea.laundry' | translate}}</label>
-<progressbar animate="false" value="laundry" type="{{getStatusType(laundry)}}" max="100" id="laundry"><b>{{laundry | number:0}}%</b></progressbar>
-<label for="hygiene">{{'scorearea.hygiene' | translate}}</label>
-<progressbar animate="false" value="hygiene" type="{{getStatusType(hygiene)}}" max="100" id="hygiene"><b>{{hygiene| number:0}}%</b></progressbar>
+<div ng-controller="statusController">
+    <canvas id="face" width="150" bezier="0" height="150" >
+    </canvas>
+    <br />
+    <canvas id="sun" width="150" bezier="0" height="150" >
+    </canvas>
+    <br/>
+    <h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
+    <h4>{{'scorearea.balance' | translate}}: <small>{{balance | currency}}</small></h4>
+    <label for="dishes"><font color="green">{{'scorearea.dishes' | translate}}</font>/<font color="#B22222">{{'scorearea.dirtyDishes' | translate}}</font></label>
+    <progress animate="false" max="100" id="dishes">
+        <bar value="dishes" type="success"><b ng-show="dishes >= 10">{{dishes | number:0}}%</b></bar>
+        <bar value="100-dishes" type="danger"><b ng-show="dishes <= 90">{{100-dishes | number:0}}%</b></bar>
+    </progress>
+    <label for="clothes"><font color="green">{{'scorearea.cleanClothes' | translate}}</font>/<font color="#00BFFF">{{'scorearea.wetClothes' | translate}}</font>/<font color="#B22222">{{'scorearea.dirtyClothes' | translate}}</font></label>
+    <progress animate="false" max="100" id="clothes">
+    <bar value="cleanClothes" type="success"><b ng-show="cleanClothes >= 10">{{cleanClothes | number:0}}%</b></bar>
+    <bar value="wetClothes" type="info"><b ng-show="wetClothes >= 10">{{wetClothes | number:0}}%</b></bar>
+    <bar value="100-cleanClothes-wetClothes" type="danger"><b ng-show="wetClothes+cleanClothes <= 90">{{100-cleanClothes-wetClothes | number:0}}%</b></bar>
+    </progress>
+    <label for="hygiene"><font color="green">{{'scorearea.hygiene' | translate}}</font>/<font color="#B22222">{{'scorearea.filthy' | translate}}</font></label>
+    <progress animate="false" max="100" id="hygiene">
+        <bar value="hygiene" type="success"><b ng-show="hygiene >= 10">{{hygiene | number:0}}%</b></bar>
+        <bar value="100-hygiene" type="danger"><b ng-show="hygiene <= 90">{{100-hygiene | number:0}}%</b></bar>
+    </progress>
+    <label for="carBattery"><font color="green">{{'scorearea.carBattery' | translate}}</font>/<font color="#B22222">{{'scorearea.dead' | translate}}</font></label>
+    <progress animate="false" max="100" id="carBattery">
+        <bar value="carBattery" type="success"><b ng-show="carBattery >= 10">{{carBattery | number:0}}%</b></bar>
+        <bar value="100-carBattery" type="danger"><b ng-show="carBattery <= 90">{{100-carBattery | number:0}}%</b></bar>
+    </progress>
 </div>
