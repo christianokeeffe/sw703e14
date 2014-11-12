@@ -2,9 +2,8 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'productsFactory', 'formatRequest', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, productsFactory, formatRequest){
 
-	$rootScope.productArray = [{id: 1, name: "Solarpanel", watt:10000, bought: true, category: "el", saveFactor: 50, cost: 50000, description: "Solarpanel generates electricisy by being exposed to solar radiance."},
-						{id: 2, name: "Geothermal Energy", bought: false, category: "varme", saveFactor: 80, cost: 1000000, description: "Geothermal energy works by exstracting heat from the ground and by pressure difference transfer the heat energy to water which the household then can use."},
-						{id: 3, name: "Micro CHP", bought: false, category: "varme", saveFactor: 25, cost: 2000000, description: "A micro CHP is a small powerplant in a household which both provides heat as well as electricity."}];
+	$rootScope.productArray = {};
+	var flag = 0;
 
 	$scope.estimateOfPowerUsage = 0;
 
@@ -25,6 +24,8 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	    }
 	}
 
+	getProducts();
+	
 	getAverage = function (){
     var geturl = formatRequest.get({});
 	    if(geturl === undefined)
@@ -58,22 +59,30 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
 			switch(tempApp.type){
 				case "1":
+					flag = 0;
 					calculateHelpterFunction(tempApp.energyConsumption, tempTask, 12);
 					break;
 				case "2":
-					//car
+					flag = 0;
+					//calculateHelpterFunction(tempApp.energyConsumption, tempTask, 1);
 					break;
 				case "3":
+					flag = 1;
+					calculateHelpterFunction(tempApp.energyConsumption, tempTask, landryOnAMonth);
 				case "4":
+					flag = 1;
 					calculateHelpterFunction(tempApp.energyConsumption, tempTask, landryOnAMonth/2);
 					break;
 				case "5":
-					//baker
+					flag = 0;
+					calculateHelpterFunction(tempApp.energyConsumption, tempTask, 3);
 					break;
 				case "6":
+					flag = 1;
 					calculateHelpterFunction(tempApp.energyConsumption, tempTask, dishesOnAMonth);
 					break;
 				case "7":
+					flag = 1;
 					calculateHelpterFunction(tempApp.energyConsumption, tempTask, hygineOnAMonth);
 					break;
 				case "8":
@@ -89,7 +98,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	}
 
 	var calculateHelpterFunction = function(energyConsume, executionTask, needsOnAMonth){
-		if(executionTask != null) {
+		if(flag == 1) {
 			var task = executionTask[0];
 			var result = parseFloat(energyConsume)*(parseInt(task.executionTime) / 3600)* NumberOfApplianceRuns(needsOnAMonth, task.updateValue);
 			$scope.estimateOfPowerUsage += result;

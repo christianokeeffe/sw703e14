@@ -13,13 +13,13 @@
             {{product.name}}
         </dd>
         <dt>
-            Cost:
+            Price:
         </dt>
         <dd>
-            {{product.cost}}
+            {{product.price}}
         </dd>
         <dt>
-            Saving Factor:
+            Estimate of electricity cost reduction:
         </dt>
         <dd>
             <p>Here is preview how much you would save by buying this product. The value indicates over have many month you wish to calculate the preview for.</p>
@@ -38,8 +38,7 @@
             </div>
             <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="!previewForm.numberField.$valid">May only contain numbers.</div>
 
-            <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="times < 0 || 
-            times > 1200">The value has to be between 0 to 1200.</div>
+            <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="times < 0 || times > 1200">The value has to be between 0 to 1200.</div>
         </dd>
         <dt>
             Description:

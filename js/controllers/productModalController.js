@@ -5,13 +5,17 @@ myApp.controller('productModalController',['$scope', '$modalInstance', 'selected
 	$scope.calculatedResult = 0;
 	$scope.times;
 
-	$scope.powerUsage = powerUsage;
+	$scope.powerUsage = parseInt(powerUsage);
 	$scope.powerCost = parseFloat(powerCost);
-	$scope.productsProductionPerMonth = 1200 / 12;
+	$scope.productsProductionPerMonth = parseInt($scope.product.watt) / 12;
 
 	$scope.calculatePreview = function()
 	{
-		$scope.calculatedResult = Math.floor(($scope.powerUsage*$scope.times*$scope.powerCost - $scope.productsProductionPerMonth*$scope.times*$scope.powerCost));
+		var result1 = $scope.powerUsage*$scope.times*$scope.powerCost;
+		console.log(result1);
+		var result2 = $scope.productsProductionPerMonth*$scope.times*$scope.powerCost;
+		console.log(result2);
+		$scope.calculatedResult = Math.floor(result1 - result2);
 	}
 
 	$scope.preformCheck = function(time){
