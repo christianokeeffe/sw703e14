@@ -10,7 +10,6 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 	$rootScope.score = 0;
     $scope.carBatCount = 0;
     $scope.onWork = false;
-    $scope.sunlevel = 700;
     $rootScope.lastSave = 0;
 
 
@@ -130,26 +129,8 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
         var currentHour = $scope.dateEpoch / 60 / 60;
         currentHour = ((currentHour+2)%24);
         hourOfLastUpdate = (hourOfLastUpdate%24);
-
-        var curSunLevel = (currentHour+12)%24
-        var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-
-        $scope.sunlevel = (-0.4647*(Math.pow(currentHour, 2))) + (10.462*currentHour);
-        $scope.sunlevel *=4;
-
-        if(currentHour <= 4)
-        {
-            $scope.sunlevel /=2;
-        }
-
-        if(currentHour < 8 && currentHour < 17)
-        {
-            $scope.sunlevel += ((Math.floor(Math.random() * 80) + 1)*plusOrMinus)
-        }
-
         var dayOfLastUpdate = $scope.lastEpochUpdate / 60 / 60 / 24;
         var currentDay = $scope.dateEpoch / 60 / 60 / 24;
-
         dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
         currentDay = Math.floor(currentDay%7);
 
@@ -283,63 +264,4 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 	  context.strokeStyle = 'black';
 	  context.stroke();
    });
-
-    function drawLine(context, fromX, fromY, toX, toY, color)
-    {
-        context.beginPath();
-        context.lineCap="square";
-        context.fillStyle = color;
-        context.moveTo(fromX, fromY);
-        context.lineTo(toX, toY);
-        context.stroke();
-    }
-
-    $scope.$watch('sunlevel', function() {
-
-        if($scope.sunlevel > 1000)
-        {
-            $scope.sunlevel = 1000;
-        }
-        else if ($scope.sunlevel < 0)
-        {
-            $scope.sunlevel = 0;
-        }
-        var bezier = $scope.sunlevel - 50;
-        var r = 0.0;
-        var g = 0.0;
-
-        r = (($scope.sunlevel));
-        g = (($scope.sunlevel));
-
-        var sunColor = rgbToHex(r,g,0);
-
-        // variable that decides if something should be drawn on mousemove
-        var canvas = document.getElementById('sun');
-        var context = canvas.getContext('2d');
-        var centerX = canvas.width / 2;
-        var centerY = canvas.height / 2;
-        var radius = 40;
-
-
-        // draw the yellow circle
-        context.beginPath();
-        context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = sunColor;
-        context.fill();
-        context.lineWidth = 1;
-        context.strokeStyle = 'black';
-        context.stroke();
-
-        //Sun beams
-        drawLine(context, centerX + 50, centerY, centerX + 300, centerY, sunColor);
-        drawLine(context, centerX - 50, centerY, centerX - 300, centerY, sunColor);
-        drawLine(context, centerX, centerY + 50, centerX, centerY + 300, sunColor);
-        drawLine(context, centerX, centerY - 50, centerX, centerY - 300, sunColor);
-
-        drawLine(context, centerX + (centerX/2), centerY + (centerY/2), centerX*1.3 + centerX/2, centerY*1.3 + centerY/2, sunColor);
-        drawLine(context, centerX*0.7 - centerX/2,centerY*0.7 - centerY/2, centerX - (centerX/2), centerY - (centerY/2), sunColor);
-        drawLine(context, centerX*1.3 + centerX/2,centerY*0.7 - centerY/2, centerX + (centerX/2), centerY - (centerY/2), sunColor);
-        drawLine(context, centerX - (centerX/2), centerY + (centerY/2), centerX*0.7 - centerX/2,centerY*1.3 + centerY/2, sunColor);
-
-    });
 }]);

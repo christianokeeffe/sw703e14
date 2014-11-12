@@ -15,7 +15,6 @@
     "dirtyClothes":"Dirty Clothes",
   	"hygiene":"Clean House",
     "filthy":"Filthy House",
-    "balance":"Balance",
     "carBattery":"Car Battery Charged",
     "dead":"Discharged"
   },
@@ -81,7 +80,8 @@
     "item" : "Bill",
     "expense" : "Expense",
     "payLastMonth" : "Pay last month",
-    "totalBill" : "Total Bill"
+    "totalBill" : "Total Bill",
+    "balance":"Balance"
   },
   "actionModal":
   {
