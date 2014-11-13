@@ -5,41 +5,25 @@
     <h3 class="modal-title">Information Window</h3>
 </div>
 <div class="modal-body">
-    <dl class="dl">
+    <dl>
         <dt>
-            Name:
+            Name
         </dt>
         <dd>
             {{product.name}}
         </dd>
         <dt>
-            Price:
+            Price
         </dt>
         <dd>
             {{product.price}}
         </dd>
         <dt>
-            Estimate of electricity cost reduction:
+            Money saved in a year
         </dt>
         <dd>
-            <p>Here is preview how much you would save by buying this product. The value indicates over have many month you wish to calculate the preview for.</p>
-            <div class="row" style ="display: flex; align-items:center;">
-                <div class="col-xs-6">
-                    <form name="previewForm">
-                        <input name="numberField" type="number" class="form-control" ng-model="times" placeholder="month" ng-change="preformCheck(times)">
-                    </form>
-                </div>
-            <div class="col-xs-1"><label> = </label></div>
-                <div class="col-xs-5">
-                    <label>
-                        {{calculatedResult}}
-                    </label>
-                </div>
-            </div>
-            <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="!previewForm.numberField.$valid">May only contain numbers.</div>
-
-            <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="times < 0 || times > 1200">The value has to be between 0 to 1200.</div>
-        </dd>
+            {{productsProduction}}
+        </dd>    
         <dt>
             Description:
         </dt>
