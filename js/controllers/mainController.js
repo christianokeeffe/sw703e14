@@ -48,7 +48,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 
 
 	$rootScope.startGameTime = function() {
-		var pay = 500;
+		var pay = 1000;
 		interval = $interval(function(){
 		$scope.dateEpoch += $scope.gameSecOnRealSec;
 		if(($scope.dateEpoch - startDate)%secondsInWeek == 0)

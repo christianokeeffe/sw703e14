@@ -144,18 +144,31 @@ myApp.controller('statusController', ['$scope','$rootScope','priceService', func
         dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
         currentDay = Math.floor(currentDay%7);
 
-        if( (hourOfLastUpdate < 7 && 7 <= currentHour) || (hourOfLastUpdate < 17 && 17 <= currentHour) )
+        if(hourOfLastUpdate < 7 && 7 <= currentHour && !$scope.onWork && currentDay != 2 && currentDay !=3)
         {
-            if(currentDay != 2 && currentDay !=3 )
+        	if($rootScope.carBattery - ($rootScope.carChange * 2) > 0)
             {
-                if($rootScope.carBattery - 10 <= 0)
-                {
-                    $rootScope.carBattery = statusBarFloorValue;
-                }
-                else
-                {
-                    $rootScope.carBattery -= 10;
-                }
+            	$rootScope.carBattery -= $rootScope.carChange;
+                $scope.onWork = true;
+            }
+            else if ($rootScope.carBattery - ($rootScope.carChange * 2) == 0)
+            {
+            	$rootScope.carBattery = statusBarFloorValue;
+                $scope.onWork = true;
+            }
+        }
+
+        if(hourOfLastUpdate < 17 && 17 <= currentHour && $scope.onWork && currentDay != 2 && currentDay !=3)
+        {
+            if($rootScope.carBattery - $rootScope.carChange > 0)
+            {
+            	$rootScope.carBattery -= $rootScope.carChange;
+                $scope.onWork = false;
+            }
+            else
+            {
+                $rootScope.carBattery = statusBarFloorValue;
+                $scope.onWork = false;
             }
         }
 	});
