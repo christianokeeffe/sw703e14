@@ -23,7 +23,7 @@
 					</button>
 				</td>
 				<td>
-					<button type="button" class="btn btn-primary" ng-click="openUpgradeModal(item)">
+					<button type="button" class="btn btn-primary" ng-show="hasUpgrades(item.type)" ng-click="openUpgradeModal(item)">
 						{{'applianceTable.upgradeBtn' | translate}}
 					</button>
 				</td>

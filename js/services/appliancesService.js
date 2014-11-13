@@ -4,7 +4,6 @@
 var services = angular.module('smartgridgame');
 
 var api_resource_appliances = api_url + "/appliances";
-var api_resource_appliancesOfType = api_url + "/appliancesType";
 var api_resource_userAppliance = api_url + "/user_appliance";
     	
 services.factory("appliancesFactory", function($resource) {
@@ -20,7 +19,7 @@ services.factory('allAppliancesFactory', ['$http',
         return {
             allAppliances: function (endurl, type) {
 
-                var promise = $http.get(api_resource_appliancesOfType + '/' + type + endurl).success(function(response) {
+                var promise = $http.get(api_resource_appliances + endurl).success(function(response) {
                     return response.data.data;
                 }, function (error) {
                     //error
