@@ -4,7 +4,7 @@ myApp.controller('productModalController',['$scope', '$modalInstance', 'selected
 	$scope.product = selectedProduct;
 
 	$scope.powerCost = parseFloat(powerCost);
-	$scope.productsProduction = Math.floor(parseInt($scope.product.watt)*$scope.powerCost);
+	$scope.productsProduction = Math.ceil(parseInt($scope.product.watt)*$scope.powerCost/100)*100;
 
 
 	$scope.buy = function(){
