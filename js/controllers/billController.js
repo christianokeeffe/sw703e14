@@ -103,7 +103,9 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
           var price = priceService.getTotalSolarPrice(timeForLastpaid, $rootScope.gameSecOnRealSec, $rootScope.productArray[x].watt);
           if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
             price = 0 ;
-          }   
+          }
+
+            $rootScope.priceInSun = price.toFixed(2);
           $scope.addbill($rootScope.productArray[x].name, price);
         }
       }
