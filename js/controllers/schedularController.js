@@ -8,8 +8,17 @@ myApp.controller('schedularController', ['$scope', '$rootScope', function($scope
 
   function boardCastActivation(task, appliance)
   {
-    $rootScope.$broadcast('bill-communication', {name: appliance.name, time: task.executionTime, energyConsumption: appliance.energyConsumption});
-    $scope.$broadcast('module-communication', {task: task, appliance: appliance});
+    var extime = task.executionTime;
+    if(appliance.type == 2)
+    {
+      console.log("Org time:" + task.executionTime);
+      var chargePerTime = task.updateValue/task.executionTime;
+      extime = (100-$rootScope.carBattery)/chargePerTime;
+      extime = extime - extime%60;
+      console.log("New time:" + extime);
+    }
+    $rootScope.$broadcast('bill-communication', {name: appliance.name, time: extime, energyConsumption: appliance.energyConsumption});
+    $scope.$broadcast('module-communication', {task: task, time: extime, appliance: appliance});
   }
 
   $scope.secondsToDate = function(input){

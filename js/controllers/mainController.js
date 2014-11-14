@@ -2,6 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
+	$rootScope.tabView = false;
 	$rootScope.gameSecOnRealSec = 3600;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
@@ -46,9 +47,33 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	    }
 	}
 
+    //LINQ like where clause for arrays. Usage: myArray.where({ id: 4 });
+    Array.prototype.where = function (filter) {
+        switch(typeof filter) {
+            case 'function':
+                return $.grep(that, filter);
+
+            case 'object':
+                var filtered = this;
+                for(var prop in filter) {
+                    if(!filter.hasOwnProperty(prop)) {
+                        continue; // ignore inherited properties
+                    }
+                    filtered = $.grep(filtered, function (item) {
+                        return item[prop] === filter[prop];
+                    });
+                }
+                return filtered.slice(0); // copy the array
+            // (in case of empty object filter)
+
+            default:
+                throw new TypeError('func must be either a' +
+                    'function or an object of properties and values to filter by');
+        }
+    };
 
 	$rootScope.startGameTime = function() {
-		var pay = 500;
+		var pay = 1000;
 		interval = $interval(function(){
 		$scope.dateEpoch += $scope.gameSecOnRealSec;
 		if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
@@ -166,4 +191,4 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		d.setUTCSeconds($scope.dateEpoch);
 		return d;
 	}
-} ]);
+}]);

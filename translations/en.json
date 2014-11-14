@@ -4,6 +4,8 @@
   "title":"Smart Grid Game",
   "navbar-headline":"Smart Grid",
   "navbar-welcome":"Welcome",
+  "navbar-tabview":"Show Non-Tab-View",
+  "navbar-nontabview":"Show Tab-View",
   "scorearea":
   {
   	"score":"Score",
@@ -15,7 +17,6 @@
     "dirtyClothes":"Dirty Clothes",
   	"hygiene":"Clean House",
     "filthy":"Filthy House",
-    "balance":"Balance",
     "carBattery":"Car Battery Charged",
     "dead":"Discharged"
   },
@@ -80,8 +81,9 @@
   {
     "item" : "Bill",
     "expense" : "Expense",
-    "payLastMonth" : "pay last month",
-    "totalBill" : "Total Bill"
+    "payLastMonth" : "Pay last month",
+    "totalBill" : "Total Bill",
+    "balance":"Balance"
   },
   "actionModal":
   {
@@ -122,5 +124,11 @@
   {
     "allowdischarge":"Allow to discharge car to sellback to the grid when the electricity is expensive",
     "dischargeval":"Discharge at maximum to a battery level at (in %):"
+  },
+  "mainView":
+  {
+    "appliances":"Appliances",
+    "tasks":"Tasks",
+    "score":"Score/Status"
   }
 }

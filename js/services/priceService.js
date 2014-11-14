@@ -4,6 +4,10 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 	latesttime = 0;
 	timevars = {};
 
+    function isInt(n){
+        return typeof n== "number" && isFinite(n) && n%1===0;
+    }
+
 	getData = function(fromtime, totime) {
 		geturl = formatRequest.get({});
 		    if(geturl === undefined)
@@ -13,10 +17,17 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		         }, 10);
 		    }
 		    else
-		    { 
+		    {
+                if(!isInt(fromtime) || !isInt(totime))
+                {
+                    fromtime = 1409565600;
+                    totime = 1409565600;
+                }
 		      //geturl.fromtime = $scope.dateEpoch;
 		      geturl.fromtime = fromtime;
 		      geturl.totime = totime;
+
+
 		      marketpriceFactory.getMarketPrice(geturl,
 		      function (response) {
 		        switch(response.status_code)
@@ -122,7 +133,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 			{
 				id++;
 			}
-			price = watt * parseFloat(timevars[id].solar_price_per_unit) / 10;
+			price = watt * parseFloat(timevars[id].solar_price_per_unit);
 			return price;
 		}
 		else
