@@ -21,4 +21,16 @@ myApp.controller('rootController', ['$scope','$location','$rootScope','$sessionS
   	{
   		return $sessionStorage.currentUser !== undefined;
   	}
+
+    $scope.changeView = function()
+    {
+      if($rootScope.tabView)
+      {
+        $rootScope.tabView = false;
+      }
+      else 
+      {
+        $rootScope.tabView = true;
+      }
+    }
 }]);

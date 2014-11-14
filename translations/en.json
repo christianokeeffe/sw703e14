@@ -4,6 +4,8 @@
   "title":"Smart Grid Game",
   "navbar-headline":"Smart Grid",
   "navbar-welcome":"Welcome",
+  "navbar-tabview":"Show Non-Tab-View",
+  "navbar-nontabview":"Show Tab-View",
   "scorearea":
   {
   	"score":"Score",
@@ -122,5 +124,11 @@
   {
     "allowdischarge":"Allow to discharge car to sellback to the grid when the electricity is expensive",
     "dischargeval":"Discharge at maximum to a battery level at (in %):"
+  },
+  "mainView":
+  {
+    "appliances":"Appliances",
+    "tasks":"Tasks",
+    "score":"Score/Status"
   }
 }
