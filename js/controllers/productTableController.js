@@ -42,10 +42,6 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
   	getAverage();
 
-	$scope.$on('data-fetch-done', function (event){
-		calculateEstimatePowerUsage();
-	});
-
 	$scope.openProductModal = function (selectedProduct) {
     $rootScope.stopGameTime();
 

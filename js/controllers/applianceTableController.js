@@ -53,7 +53,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
       taskPromise.$promise.then(function(response){
         controllerService.StoreAllTasks(response.data);
 
-        $rootScope.$broadcast('data-fetch-done');
       });
     }
   };
