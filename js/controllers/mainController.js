@@ -2,6 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
+	$rootScope.tabView = false;
 	$rootScope.gameSecOnRealSec = 3600;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
@@ -190,4 +191,4 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		d.setUTCSeconds($scope.dateEpoch);
 		return d;
 	}
-} ]);
+}]);
