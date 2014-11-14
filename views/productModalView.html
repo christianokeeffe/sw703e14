@@ -7,25 +7,25 @@
 <div class="modal-body">
     <dl>
         <dt>
-            Name
+            {{'productModal.name'| translation}}
         </dt>
         <dd>
             {{product.name}}
         </dd>
         <dt>
-            Price
+            {{'productModal.price'| translation}}
         </dt>
         <dd>
-            {{product.price}}
+           <font color="#B22222">{{product.price | currencyWithMinus}} </font>
         </dd>
         <dt>
-            Money saved in a year
+            {{'productModal.save'| translation}}
         </dt>
         <dd>
-            {{productsProduction}} kr
+           <font color="green"> {{productsProduction | currencyWithMinus}} kr </font>
         </dd>    
         <dt>
-            Description:
+            {{'productModal.description'| translation}}
         </dt>
         <dd>
             {{product.description}}

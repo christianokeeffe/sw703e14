@@ -38,6 +38,13 @@
     "upgradeBtn":"Upgrade",
     "press":"Activate"
   },
+  "productModal":
+  {
+    "name":"Name",
+    "price":"Price",
+    "save":"Money saved in a year",
+    "description":"Description"
+  },
   "schedularTable":
   {
     "name": "Tasks",

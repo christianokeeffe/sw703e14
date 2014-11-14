@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', 'powerCost', function($scope, $modalInstance, selectedProduct, powerCost){
+myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', 'powerCost','$translate', function($scope, $modalInstance, selectedProduct, powerCost, $translate){
 	$scope.product = selectedProduct;
 
 	$scope.powerCost = parseFloat(powerCost);
