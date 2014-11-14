@@ -31,12 +31,11 @@
             {{product.description}}
         </dd>
     </dl>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-success" ng-click="buy()"> 
+    
+    <button type="button" class="btn {{btnClass}}" ng-click="buy()" style="margin-bottom:15px;"> 
             {{"Buy"}}
-        </button>
-        <button type="button" class="btn" ng-click="cancel()">
-            {{"Cancel"}}
-        </button>
+    </button>
+    <div class="modal-footer">
+        <alert type="danger" ng-show="showAlert">{{'upgradeModal.cannotAfford' | translate}}</alert>
     </div>  
 </div>
