@@ -1,9 +1,16 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('sunController', ['$scope', '$rootScope', function($scope, $rootScope){
+myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', function($scope, $rootScope, priceService){
 	$scope.sunlevel = 700;
 
 	$scope.$watch('dateEpoch', function() {
+
+        var currentSolarPrice = priceService.getCurrentSolarPrice($scope.dateEpoch);
+        if(currentSolarPrice != undefined)
+        {
+            $scope.sunlevel = currentSolarPrice.price*70;
+        }
+
 		var currentHour = $scope.dateEpoch / 60 / 60;
 		currentHour = ((currentHour+2)%24);
 		var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
