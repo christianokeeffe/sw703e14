@@ -3,12 +3,19 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'productsFactory', 'formatRequest', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, productsFactory, formatRequest){
 
 	$rootScope.productArray = {};
-
+	$scope.shownProduct = [];
 	$scope.sortedByTypeArray = [];
 
 	function ProductArray (type) {
 		this.type = type;
 		this.array = [];
+	}
+
+	var findProducts = function()
+	{
+		for(var i = 0; i < $scope.sortedByTypeArray.length; i++){
+			$scope.shownProduct.push($scope.sortedByTypeArray[i].type);
+		}
 	}
 
 	getProducts = function(){
@@ -26,7 +33,6 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
       		productPromise.$promise.then(function(response){
       			var oldType;
       			var index = 0;
-      			console.log(response.data.length);
       			for(var i = 0; i < response.data.length; i++){
       				var element = response.data[i];
 
@@ -35,14 +41,12 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
       					flag = false;
       				} 
      				else if(oldType != undefined){
-     					console.log("added " + JSON.stringify(element));
-     					$scope.sortedByTypeArray[index].array.push(element);
+     					$scope.sortedByTypeArray[index - 1].array.push(element);
      				}
 
       				if(!flag){
       					var tmp = new ProductArray(element.type);
       					tmp.array.push(element);
-      					console.log("create type " + element.type);
       					$scope.sortedByTypeArray.push(tmp);
       					flag = true;
       					oldType = element.type;
@@ -50,7 +54,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
       				}
       			}
 
-        		$rootScope.productArray = response.data;
+      			findProducts();
       		});
 	    }
 	}

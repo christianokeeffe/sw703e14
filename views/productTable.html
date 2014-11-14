@@ -7,9 +7,9 @@
 			<tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="item in productArray">
+			<tr ng-repeat="item in shownProduct">
 				<td>
-					{{item.name}}
+					{{item}}
 				</td>
 				<td>
 					<button type="button" class="btn btn-info" ng-click="openProductModal(item)" ng-show="!item.brought">
