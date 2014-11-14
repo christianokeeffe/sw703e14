@@ -42,33 +42,7 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
     function rgbToHex(r, g, b) {
     	return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 	}
-     
-     $scope.$watch('happiness', function() {
-
-     	if($scope.happiness > 100)
-     	{
-     		$scope.happiness = 100;
-     	}
-     	else if ($scope.happiness < 0)
-     	{
-     		$scope.happiness = 0;
-     	}
-     	var bezier = $scope.happiness - 50;
-
-     	var r = 0.0;
-     	var g = 0.0;
-     	if($scope.happiness <= 50)
-     	{
-     		g = (($scope.happiness)/50)*255;
-     		r = 255;
-     	}
-     	else
-     	{
-     		r = 255-(($scope.happiness-50)/50)*255;
-     		g = 255;
-     	}
-     });
-
+    
     $scope.$watch('sunlevel', function() {
 
         if($scope.sunlevel > 1000)

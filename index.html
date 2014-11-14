@@ -52,6 +52,7 @@
     <script type="text/javascript" src="js/services/dailyOptionalTaskService.js"></script>
     <script type="text/javascript" src="js/controllers/optionalTaskController.js"></script>
     <script type="text/javascript" src="js/controllers/sunController.js"></script>
+    <script type="text/javascript" src="js/controllers/smileyController.js"></script>
     <title>{{'title' | translate}}</title>
   </head>
   <body style=" padding-top: 70px;" ng-controller="rootController">
@@ -62,8 +63,8 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li ng-if="tabView" ng-click="changeView()"><a>{{'navbar-tabview' | translate}}</a></li>
-        <li ng-if="!tabView" ng-click="changeView()"><a>{{'navbar-nontabview' | translate}}</a></li>
+        <li ng-if="tabView && showLogout()" ng-click="changeView()"><a>{{'navbar-tabview' | translate}}</a></li>
+        <li ng-if="!tabView && showLogout()" ng-click="changeView()"><a>{{'navbar-nontabview' | translate}}</a></li>
         <li ng-if="showLogout()"><a>{{'navbar-welcome' | translate}} {{sessions.currentUser.firstname}} {{sessions.currentUser.lastname}}</a></li>
         <li ng-if="showLogout()"><a>{{curDate() | date:'HH:mm, EEEE d MMMM yyyy'}}</a></li>
         <li ng-if="showLogout()" ng-click="logout()"><a href >Logout</a></li>
