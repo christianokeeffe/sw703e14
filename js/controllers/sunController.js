@@ -60,6 +60,8 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
         r = (($scope.sunlevel));
         g = (($scope.sunlevel));
 
+        var Y = 0.2126*r + 0.7152*g + 0.0722*0;
+
         var sunColor = rgbToHex(r,g,0);
 
         // variable that decides if something should be drawn on mousemove
@@ -78,6 +80,16 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
         context.lineWidth = 1;
         context.strokeStyle = 'black';
         context.stroke();
+
+        context.fillStyle = Y < 128 ? "white" : "black";
+        context.font = "16px Helvetica";
+
+        if($rootScope.priceInSun == undefined)
+        {
+            $rootScope.priceInSun = "0.00";
+        }
+
+        context.fillText($rootScope.priceInSun + " kr/t", centerX-30, centerY+7);
 
         //Sun beams
         drawLine(context, centerX + 50, centerY, centerX + 300, centerY, sunColor);
