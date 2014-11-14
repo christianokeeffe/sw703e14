@@ -3,7 +3,7 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
 	$rootScope.tabView = false;
-	$rootScope.gameSecOnRealSec = 3600;
+	$rootScope.gameSecOnRealSec = 900;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
 
