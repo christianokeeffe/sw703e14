@@ -2,7 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'controllerService', function($scope,$rootScope, priceService, controllerService){
   var hour = 3600;
-  var timeForLastpaid = $scope.dateEpoch;
+  var timeForLastpaid = undefined;
   var lastMonth;
   var passiveAppliances = [];
   var runningAppliances = [];
@@ -71,6 +71,12 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
 
   });
   $scope.$watch('dateEpoch', function() {
+    if(angular.isUndefined(timeForLastpaid) || timeForLastpaid === null || isNaN(timeForLastpaid))
+    {
+      timeForLastpaid = $scope.dateEpoch;
+    }
+    if(!(angular.isUndefined(timeForLastpaid) || timeForLastpaid === null || isNaN(timeForLastpaid)))
+    {
     if(angular.isUndefined(lastMonth) || lastMonth === null|| isNaN(lastMonth)){
       lastMonth = null;
       lastMonth = $rootScope.curDate().getMonth();
@@ -88,14 +94,18 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }   
       $scope.addbill(passiveAppliances[x].name, -price);
     }
-    for (var x = 0; x < $rootScope.productArray.length ; x++) {
-      if($rootScope.productArray[x].bought)
-      {
-        var price = priceService.getTotalSolarPrice(timeForLastpaid, $rootScope.gameSecOnRealSec, $rootScope.productArray[x].watt);
-        if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
-          price = 0 ;
-        }   
-        $scope.addbill($rootScope.productArray[x].name, price);
+    if(!angular.isUndefined($rootScope.productArray))
+    {
+      
+      for (var x = 0; x < $rootScope.productArray.length ; x++) {
+        if($rootScope.productArray[x].bought)
+        {
+          var price = priceService.getTotalSolarPrice(timeForLastpaid, $rootScope.gameSecOnRealSec, $rootScope.productArray[x].watt);
+          if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
+            price = 0 ;
+          }   
+          $scope.addbill($rootScope.productArray[x].name, price);
+        }
       }
     }
     for (var i = 0; i < runningAppliances.length; i++) { // if the running time is shorter then gameSecOnRealSec
@@ -125,5 +135,6 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       $scope.resetAddedBills();
       lastMonth = $rootScope.curDate().getMonth();
     }
+  }
   });
 }]);

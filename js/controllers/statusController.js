@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('statusController', ['$scope','$rootScope', function($scope, $rootScope){
+myApp.controller('statusController', ['$scope','$rootScope','priceService', function($scope, $rootScope, priceService){
 	$rootScope.dishes = 100;
 	$rootScope.lastEpochUpdate = $scope.dateEpoch;
 	$rootScope.hygiene = 100;
@@ -131,40 +131,44 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
         currentHour = ((currentHour+2)%24);
         hourOfLastUpdate = (hourOfLastUpdate%24);
 
-        var curSunLevel = (currentHour+12)%24
-        var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+        var currentSolarPrice = priceService.getCurrentSolarPrice($scope.dateEpoch);
 
-        $scope.sunlevel = (-0.4647*(Math.pow(currentHour, 2))) + (10.462*currentHour);
-        $scope.sunlevel *=4;
-
-        if(currentHour <= 4)
+        if(currentSolarPrice != undefined)
         {
-            $scope.sunlevel /=2;
+            $scope.sunlevel = currentSolarPrice.price*70;
         }
-
-        if(currentHour < 8 && currentHour < 17)
-        {
-            $scope.sunlevel += ((Math.floor(Math.random() * 80) + 1)*plusOrMinus)
-        }
-
+       
         var dayOfLastUpdate = $scope.lastEpochUpdate / 60 / 60 / 24;
         var currentDay = $scope.dateEpoch / 60 / 60 / 24;
 
         dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
         currentDay = Math.floor(currentDay%7);
 
-        if( (hourOfLastUpdate < 7 && 7 <= currentHour) || (hourOfLastUpdate < 17 && 17 <= currentHour) )
+        if(hourOfLastUpdate < 7 && 7 <= currentHour && !$scope.onWork && currentDay != 2 && currentDay !=3)
         {
-            if(currentDay != 2 && currentDay !=3 )
+        	if($rootScope.carBattery - ($rootScope.carChange * 2) > 0)
             {
-                if($rootScope.carBattery - 10 <= 0)
-                {
-                    $rootScope.carBattery = statusBarFloorValue;
-                }
-                else
-                {
-                    $rootScope.carBattery -= 10;
-                }
+            	$rootScope.carBattery -= $rootScope.carChange;
+                $scope.onWork = true;
+            }
+            else if ($rootScope.carBattery - ($rootScope.carChange * 2) == 0)
+            {
+            	$rootScope.carBattery = statusBarFloorValue;
+                $scope.onWork = true;
+            }
+        }
+
+        if(hourOfLastUpdate < 17 && 17 <= currentHour && $scope.onWork && currentDay != 2 && currentDay !=3)
+        {
+            if($rootScope.carBattery - $rootScope.carChange > 0)
+            {
+            	$rootScope.carBattery -= $rootScope.carChange;
+                $scope.onWork = false;
+            }
+            else
+            {
+                $rootScope.carBattery = statusBarFloorValue;
+                $scope.onWork = false;
             }
         }
 	});
@@ -283,20 +287,20 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
     $scope.$watch('sunlevel', function() {
 
-        if($scope.sunlevel > 1000)
-        {
-            $scope.sunlevel = 1000;
-        }
-        else if ($scope.sunlevel < 0)
-        {
-            $scope.sunlevel = 0;
-        }
         var bezier = $scope.sunlevel - 50;
         var r = 0.0;
         var g = 0.0;
 
-        r = (($scope.sunlevel));
-        g = (($scope.sunlevel));
+        if($scope.sunlevel > 255)
+        {
+            r = 255;
+            g = 255;
+        }
+        else
+        {
+            r = $scope.sunlevel;
+            g = $scope.sunlevel;
+        }
 
         var sunColor = rgbToHex(r,g,0);
 

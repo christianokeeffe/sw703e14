@@ -2,10 +2,16 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('upgradeModalController', ['$scope', '$rootScope', '$modalInstance','controllerService','allAppliancesFactory','formatRequest', 'tasksFactory', '$translate', function($scope, $rootScope, $modalInstance, controllerService, allAppliancesFactory, formatRequest, tasksFactory, $translate){
 
-    $scope.appliances = [];
-
+    selectedAppliance = controllerService.getAppliance();
     $scope.calledApiFlag = false;
     $scope.result = [];
+    $scope.appliances = $rootScope.allAppliances.where({ type: selectedAppliance.type  });
+
+    for(var i = $scope.appliances.length; i--;) {
+        if($scope.appliances[i].id === selectedAppliance.id) {
+            $scope.appliances.splice(i, 1);
+        }
+    }
 
     //Colors
     var colors = {black:"#000", red:"#ff0000", green:"#27C200", btnDefault:"btn-default", btnGreen:"btn-success", btnRed: 'btn-danger'};
@@ -15,27 +21,6 @@ myApp.controller('upgradeModalController', ['$scope', '$rootScope', '$modalInsta
     $scope.currentEnergyLabelCol = colors.black;
     $scope.selectedEnergyLabelCol = colors.black;
     $scope.btnUpgradeColor = colors.btnDefault;
-
-    var geturl = formatRequest.get({});
-
-    selectedAppliance = controllerService.getAppliance();
-
-    allAppliancesFactory.allAppliances(geturl.endurl, selectedAppliance.type).then(function(result)
-    {
-        var data = result.data.data;
-        data.forEach(function(entry) {
-            if(entry.id != selectedAppliance.id)
-            {
-                $scope.appliances.push(entry);
-            }
-        });
-
-        if($scope.appliances.length == 0)
-        {
-            var noUpgrade = {name:"No upgrade available", id:-1};
-            $scope.appliances.push(noUpgrade);
-        }
-    });
 
     $scope.calTableColors = function(currentAppliance, selectedAppliance) {
         if(selectedAppliance.energyConsumption != undefined)
