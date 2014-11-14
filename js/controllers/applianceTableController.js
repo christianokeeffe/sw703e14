@@ -47,7 +47,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
         }
     };
 
-
     $scope.getAllAppliances = function()
     {
         if(geturl === undefined)
@@ -65,30 +64,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
                     $rootScope.allAppliances.push(entry);
                 });
 
-<<<<<<< HEAD
-      taskPromise.$promise.then(function(response){
-        controllerService.StoreAllTasks(response.data);
-
-      });
-    }
-  };
-
-  $scope.getAppliances();
-
-	$scope.openActionModal = function (selectedAction) {
-    $rootScope.stopGameTime();
-    controllerService.setAppliance(selectedAction);
-    var modalInstance = $modal.open({
-      templateUrl: 'views/actionModal.html',
-      controller: 'actionModalController',
-      size: 'sm'
-    });
-
-    modalInstance.result.then(function (returnValue) {
-      if (returnValue == 'now') {
-          $rootScope.startGameTime();
-        if($scope.checkIndexOnCompleteList(controllerService.getAppliance().name) == -1)
-=======
             });
         }
     };
@@ -98,7 +73,6 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     $scope.getTasks = function (){
         var geturl = formatRequest.get({});
         if(geturl === undefined)
->>>>>>> origin/development
         {
             setTimeout(function(){
                 return $scope.getTasks();
