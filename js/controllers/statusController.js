@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('statusController', ['$scope','$rootScope','priceService', function($scope, $rootScope, priceService){
+myApp.controller('statusController', ['$scope','$rootScope', function($scope, $rootScope){
 	$rootScope.dishes = 100;
 	$rootScope.lastEpochUpdate = $scope.dateEpoch;
 	$rootScope.hygiene = 100;
@@ -10,7 +10,6 @@ myApp.controller('statusController', ['$scope','$rootScope','priceService', func
 	$rootScope.score = 0;
     $scope.carBatCount = 0;
     $scope.onWork = false;
-    $scope.sunlevel = 700;
     $rootScope.lastSave = 0;
 
 
@@ -130,17 +129,8 @@ myApp.controller('statusController', ['$scope','$rootScope','priceService', func
         var currentHour = $scope.dateEpoch / 60 / 60;
         currentHour = ((currentHour+2)%24);
         hourOfLastUpdate = (hourOfLastUpdate%24);
-
-        var currentSolarPrice = priceService.getCurrentSolarPrice($scope.dateEpoch);
-
-        if(currentSolarPrice != undefined)
-        {
-            $scope.sunlevel = currentSolarPrice.price*70;
-        }
-       
         var dayOfLastUpdate = $scope.lastEpochUpdate / 60 / 60 / 24;
         var currentDay = $scope.dateEpoch / 60 / 60 / 24;
-
         dayOfLastUpdate = Math.floor(dayOfLastUpdate%7);
         currentDay = Math.floor(currentDay%7);
 
@@ -274,63 +264,4 @@ myApp.controller('statusController', ['$scope','$rootScope','priceService', func
 	  context.strokeStyle = 'black';
 	  context.stroke();
    });
-
-    function drawLine(context, fromX, fromY, toX, toY, color)
-    {
-        context.beginPath();
-        context.lineCap="square";
-        context.fillStyle = color;
-        context.moveTo(fromX, fromY);
-        context.lineTo(toX, toY);
-        context.stroke();
-    }
-
-    $scope.$watch('sunlevel', function() {
-
-        var bezier = $scope.sunlevel - 50;
-        var r = 0.0;
-        var g = 0.0;
-
-        if($scope.sunlevel > 255)
-        {
-            r = 255;
-            g = 255;
-        }
-        else
-        {
-            r = $scope.sunlevel;
-            g = $scope.sunlevel;
-        }
-
-        var sunColor = rgbToHex(r,g,0);
-
-        // variable that decides if something should be drawn on mousemove
-        var canvas = document.getElementById('sun');
-        var context = canvas.getContext('2d');
-        var centerX = canvas.width / 2;
-        var centerY = canvas.height / 2;
-        var radius = 40;
-
-
-        // draw the yellow circle
-        context.beginPath();
-        context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = sunColor;
-        context.fill();
-        context.lineWidth = 1;
-        context.strokeStyle = 'black';
-        context.stroke();
-
-        //Sun beams
-        drawLine(context, centerX + 50, centerY, centerX + 300, centerY, sunColor);
-        drawLine(context, centerX - 50, centerY, centerX - 300, centerY, sunColor);
-        drawLine(context, centerX, centerY + 50, centerX, centerY + 300, sunColor);
-        drawLine(context, centerX, centerY - 50, centerX, centerY - 300, sunColor);
-
-        drawLine(context, centerX + (centerX/2), centerY + (centerY/2), centerX*1.3 + centerX/2, centerY*1.3 + centerY/2, sunColor);
-        drawLine(context, centerX*0.7 - centerX/2,centerY*0.7 - centerY/2, centerX - (centerX/2), centerY - (centerY/2), sunColor);
-        drawLine(context, centerX*1.3 + centerX/2,centerY*0.7 - centerY/2, centerX + (centerX/2), centerY - (centerY/2), sunColor);
-        drawLine(context, centerX - (centerX/2), centerY + (centerY/2), centerX*0.7 - centerX/2,centerY*1.3 + centerY/2, sunColor);
-
-    });
 }]);
