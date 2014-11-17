@@ -6,6 +6,10 @@
   "navbar-welcome":"Welcome",
   "navbar-tabview":"Show Non-Tab-View",
   "navbar-nontabview":"Show Tab-View",
+  "navbar-login":"Login",
+  "navbar-logout":"Log out",
+  "navbar-register":"Register User",
+  "navbar-settings":"Settings",
   "scorearea":
   {
   	"score":"Score",
