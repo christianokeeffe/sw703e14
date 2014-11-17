@@ -48,6 +48,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	}
 
     //LINQ like where clause for arrays. Usage: myArray.where({ id: 4 });
+    //Source: http://stackoverflow.com/questions/18936774/javascript-equivalent-to-c-sharp-linq-select
     Array.prototype.where = function (filter) {
         switch(typeof filter) {
             case 'function':
