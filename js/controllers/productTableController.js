@@ -2,9 +2,15 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'productsFactory', 'formatRequest', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, productsFactory, formatRequest){
 
-	$rootScope.productArray = {};
+	$rootScope.productArray = [];
+
 	$scope.shownProduct = [];
 	$scope.sortedByTypeArray = [];
+	var broughtProducts = [];
+
+	broughtProducts.push(0);
+	broughtProducts.push(0);
+	broughtProducts.push(0);
 
 	function ProductArray (type) {
 		this.type = type;
@@ -14,8 +20,15 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	var findProducts = function()
 	{
 		for(var i = 0; i < $scope.sortedByTypeArray.length; i++){
-			$scope.shownProduct.push($scope.sortedByTypeArray[i].type);
+			var tempHaveUpgrade = false;
+			
+			if($scope.sortedByTypeArray[i].length > 1){
+				tempHaveUpgrade = true;
+			}
+			console.log(broughtProducts[i]);
+			$scope.shownProduct.push({product: $scope.sortedByTypeArray[i].array[broughtProducts[i]], hasUpgrade: tempHaveUpgrade});
 		}
+		console.log($scope.shownProduct);
 	}
 
 	getProducts = function(){
@@ -61,7 +74,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
 	getProducts();
 
-	$scope.openProductModal = function (selectedProduct) {
+	$scope.openProductModal = function (selectedProduct, index) {
     $rootScope.stopGameTime();
 
     var modalInstance = $modal.open({
@@ -71,6 +84,9 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
       resolve: {
       	selectedProduct: function (){
       		return selectedProduct;
+      	},
+      	arrayOfProducts: function (){
+      		return $scope.sortedByTypeArray[index];
       	},
       	powerCost: function (){
       		return $scope.Average;

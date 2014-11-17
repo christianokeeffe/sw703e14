@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', 'powerCost', 'balance', function($scope, $modalInstance, selectedProduct, powerCost, balance){
+myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', 'arrayOfProducts', 'powerCost', 'balance', function($scope, $modalInstance, selectedProduct, arrayOfProducts, powerCost, balance){
 	$scope.product = selectedProduct;
 	$scope.showAlert = false;
 	$scope.productsProduction = Math.ceil(parseInt($scope.product.watt)*parseFloat(powerCost)/100)*100;

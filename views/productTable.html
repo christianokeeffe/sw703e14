@@ -9,10 +9,10 @@
 		<tbody>
 			<tr ng-repeat="item in shownProduct">
 				<td>
-					{{item}}
+					{{item.product.type}}
 				</td>
 				<td>
-					<button type="button" class="btn btn-info" ng-click="openProductModal(item)" ng-show="!item.brought">
+					<button type="button" class="btn btn-info" ng-click="openProductModal(item.product, $index)" ng-show="!item.product.brought && !item.hasUpgrade">
 						{{"Press"}}
 					</button>
 				</td>
