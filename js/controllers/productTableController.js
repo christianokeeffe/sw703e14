@@ -6,11 +6,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
 	$scope.shownProduct = [];
 	$scope.sortedByTypeArray = [];
-	var broughtProducts = [];
-
-	broughtProducts.push(0);
-	broughtProducts.push(0);
-	broughtProducts.push(0);
+	var boughtProducts = [];
 
 	function ProductArray (type) {
 		this.type = type;
@@ -20,15 +16,35 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	var findProducts = function()
 	{
 		for(var i = 0; i < $scope.sortedByTypeArray.length; i++){
-			var tempHaveUpgrade = false;
+			var tempHaveUpgrade = true;
 			
-			if($scope.sortedByTypeArray[i].length > 1){
-				tempHaveUpgrade = true;
+			for(var j = 0; j < boughtProducts.length; j++){
+				var userProducts = $scope.sortedByTypeArray[i].array.where({id: boughtProducts[j]});
+				if(userProducts == undefined){
+					userProducts = {id: 0, name: "", price: 0, type: "Geothermal heat", watt: 0};
+					tempHaveUpgrade = false;
+				}
+				
+				$scope.shownProduct.push({product: userProducts, hasUpgrade: tempHaveUpgrade});
 			}
-			console.log(broughtProducts[i]);
-			$scope.shownProduct.push({product: $scope.sortedByTypeArray[i].array[broughtProducts[i]], hasUpgrade: tempHaveUpgrade});
+			
 		}
-		console.log($scope.shownProduct);
+	}
+
+	var getUserProducts = function(){
+		var flag = false;
+		var geturl = formatRequest.get({});
+	    if(geturl === undefined)
+	    {
+	      setTimeout(function(){
+	        return getProducts();
+	      }, 10);
+	    }
+	    else
+	    {
+	    	geturl.UserID = $scope.getUserID();
+
+	    }
 	}
 
 	getProducts = function(){
@@ -42,13 +58,14 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	    }
 	    else
 	    {
+	    	geturl.UserID = -1;
 	     	var productPromise = productsFactory.getAllProducts(geturl);
       		productPromise.$promise.then(function(response){
       			var oldType;
       			var index = 0;
       			for(var i = 0; i < response.data.length; i++){
       				var element = response.data[i];
-
+      				console.log(element);
       				if(element.type != oldType)
       				{
       					flag = false;
@@ -74,6 +91,25 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
 	getProducts();
 
+	getAverage = function (){
+    var geturl = formatRequest.get({});
+	    if(geturl === undefined)
+	    {
+	      setTimeout(function(){
+	        return getAverage();
+	      }, 10);
+	    }
+	    else
+	    {
+	      var averagePromise = averageMarketPriceFactory.getAverageMarketPrice(geturl);
+	      	averagePromise.$promise.then(function(response){
+	        $scope.Average = response.data[0].average;
+	      });
+	    }
+  	};
+
+  	getAverage();
+
 	$scope.openProductModal = function (selectedProduct, index) {
     $rootScope.stopGameTime();
 
@@ -97,11 +133,20 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
       }
     });
 
-    modalInstance.result.then(function (broughtProduct) {
+    modalInstance.result.then(function (boughtProduct) {
+    	var typeAlreadyInProductArray = false;
+    	$rootScope.balance = $rootScope.balance - parseInt(boughtProduct.cost);
+    	for(var i = 0; i < $rootScope.productArray.length; i++){
+    		if($rootScope.productArray.type == boughtProduct.type){
+    			$rootScope.productArray.splice(i,1,boughtProduct);
+    			typeAlreadyInProductArray = true;
+    		}
+    	}
 
-    	var index = $rootScope.productArray.indexOf(selectedProduct);
-    	$rootScope.balance = $rootScope.balance - broughtProduct.cost;
-    	$rootScope.productArray[index].brought = true;
+    	if(!typeAlreadyInProductArray){
+    		$rootScope.productArray.push(boughtProduct);
+    	}
+
     	$rootScope.startGameTime();
     }, function (){
     	$rootScope.startGameTime();

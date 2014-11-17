@@ -2,10 +2,18 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', 'arrayOfProducts', 'powerCost', 'balance', function($scope, $modalInstance, selectedProduct, arrayOfProducts, powerCost, balance){
 	$scope.product = selectedProduct;
+	$scope.allProducts = arrayOfProducts.array;
 	$scope.showAlert = false;
-	$scope.productsProduction = Math.ceil(parseInt($scope.product.watt)*parseFloat(powerCost)/100)*100;
+	$scope.productsProduction;
 	
 	var price = parseInt($scope.product.price);
+	var index = 0;
+
+	var calculateProduct = function(){
+		$scope.productsProduction = Math.ceil(parseInt($scope.product.watt)*parseFloat(powerCost)/100)*100;
+	}
+
+	calculateProduct();
 
 	if(balance > price)
 	{
@@ -14,9 +22,15 @@ myApp.controller('productModalController',['$scope', '$modalInstance', 'selected
 		$scope.btnClass = 'btn-danger';
 	}
 
+	$scope.update = function(item){
+		$scope.product = item;
+		index = $scope.allProducts.indexOf(item);
+		calculateProduct();
+	}
+
 	$scope.buy = function(){
 		if(balance > price){
-			$modalInstance.close(selectedProduct);
+			$modalInstance.close($scope.product);
 		} else {
 			$scope.showAlert = true;
 		}
