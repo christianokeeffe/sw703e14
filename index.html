@@ -72,13 +72,14 @@
         <li ng-if="showLogout() && speed != 3" ng-click="changeSpeed(3)"><a><i class="fa fa-fast-forward"></i></a></li>
         <li ng-if="showLogout() && speed == 4"><a><i class="fa fa-pause text-danger"></i></a></li>
         <li ng-if="showLogout() && speed != 4" ng-click="changeSpeed(4)"><a><i class="fa fa-pause"></i></a></li>
-        <li ng-if="tabView && showLogout()" ng-click="changeView()"><a>{{'navbar-tabview' | translate}}</a></li>
-        <li ng-if="!tabView && showLogout()" ng-click="changeView()"><a>{{'navbar-nontabview' | translate}}</a></li>
+        <li ng-if="tabView && !showLogout()" ng-click="changeView()"><a>{{'navbar-tabview' | translate}}</a></li>
+        <li ng-if="!tabView && !showLogout()" ng-click="changeView()"><a>{{'navbar-nontabview' | translate}}</a></li>
         <li ng-if="showLogout()"><a>{{'navbar-welcome' | translate}} {{sessions.currentUser.firstname}} {{sessions.currentUser.lastname}}</a></li>
         <li ng-if="showLogout()"><a>{{curDate() | date:'HH:mm, EEEE d MMMM yyyy'}}</a></li>
-        <li ng-if="showLogout()" ng-click="logout()"><a href >Logout</a></li>
-        <li ng-if="!showLogout()"><a href="#/login" >Login</a></li>
-        <li ng-if="!showLogout()"><a href="#/reg-user" >Register user</a></li>
+        <li ng-if="showLogout()" ng-click="logout()"><a href >{{'navbar-logout' | translate}}}</a></li>
+        <li ng-if="!showLogout()"><a href="#/login">{{'navbar-login' | translate}}</a></li>
+        <li ng-if="!showLogout()"><a href="#/reg-user">{{'navbar-register' | translate}}</a></li>
+        <li ng-if="!showLogout()"><a href="#/settings">{{'navbar-settings' | translate}}</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div>
