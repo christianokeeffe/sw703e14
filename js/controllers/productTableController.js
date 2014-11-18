@@ -15,17 +15,17 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
 	var findProducts = function()
 	{
+		console.log($scope.getUserID());
 		for(var i = 0; i < $scope.sortedByTypeArray.length; i++){
 			var tempHaveUpgrade = true;
-			
+			console.log(boughtProducts);
 			for(var j = 0; j < boughtProducts.length; j++){
-				var userProducts = $scope.sortedByTypeArray[i].array.where({id: boughtProducts[j]});
-				if(userProducts == undefined){
-					userProducts = {id: 0, name: "", price: 0, type: "Geothermal heat", watt: 0};
-					tempHaveUpgrade = false;
+				var userProducts = $scope.sortedByTypeArray[i].array.where({id: boughtProducts[j].id});
+
+				if(userProducts[0] != undefined){
+					console.log(userProducts[0]);
+					$scope.shownProduct.push({product: userProducts[0], hasUpgrade: tempHaveUpgrade});
 				}
-				
-				$scope.shownProduct.push({product: userProducts, hasUpgrade: tempHaveUpgrade});
 			}
 			
 		}
@@ -42,12 +42,17 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	    }
 	    else
 	    {
-	    	geturl.UserID = $scope.getUserID();
+	    	geturl.userID = $scope.getUserID();
+	    	var productPromise = productsFactory.getAllProducts(geturl);
+	    	productPromise.$promise.then(function(response){
+	    		boughtProducts = response.data;
 
+	    		findProducts();
+	    	});
 	    }
 	}
 
-	getProducts = function(){
+	var getProducts = function(){
 		var flag = false;
 		var geturl = formatRequest.get({});
 	    if(geturl === undefined)
@@ -58,14 +63,14 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	    }
 	    else
 	    {
-	    	geturl.UserID = -1;
+	    	geturl.userID = -1;
 	     	var productPromise = productsFactory.getAllProducts(geturl);
       		productPromise.$promise.then(function(response){
       			var oldType;
       			var index = 0;
       			for(var i = 0; i < response.data.length; i++){
       				var element = response.data[i];
-      				console.log(element);
+
       				if(element.type != oldType)
       				{
       					flag = false;
@@ -84,12 +89,14 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
       				}
       			}
 
-      			findProducts();
+      			getUserProducts();
       		});
 	    }
 	}
 
-	getProducts();
+	if($scope.getUserID != -1){
+		getProducts();
+	}
 
 	getAverage = function (){
     var geturl = formatRequest.get({});
