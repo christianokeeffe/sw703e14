@@ -76,7 +76,7 @@
         <li ng-if="!tabView && !showLogout()" ng-click="changeView()"><a>{{'navbar-nontabview' | translate}}</a></li>
         <li ng-if="showLogout()"><a>{{'navbar-welcome' | translate}} {{sessions.currentUser.firstname}} {{sessions.currentUser.lastname}}</a></li>
         <li ng-if="showLogout()"><a>{{curDate() | date:'HH:mm, EEEE d MMMM yyyy'}}</a></li>
-        <li ng-if="showLogout()" ng-click="logout()"><a href >{{'navbar-logout' | translate}}}</a></li>
+        <li ng-if="showLogout()" ng-click="logout()"><a href >{{'navbar-logout' | translate}}</a></li>
         <li ng-if="!showLogout()"><a href="#/login">{{'navbar-login' | translate}}</a></li>
         <li ng-if="!showLogout()"><a href="#/reg-user">{{'navbar-register' | translate}}</a></li>
         <li ng-if="!showLogout()"><a href="#/settings">{{'navbar-settings' | translate}}</a></li>
