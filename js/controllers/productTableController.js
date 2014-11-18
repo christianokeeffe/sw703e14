@@ -13,21 +13,23 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 		this.array = [];
 	}
 
-	var findProducts = function()
+	var sortProducts = function()
 	{
-		console.log($scope.getUserID());
 		for(var i = 0; i < $scope.sortedByTypeArray.length; i++){
 			var tempHaveUpgrade = true;
-			console.log(boughtProducts);
+			var setFlag = false
 			for(var j = 0; j < boughtProducts.length; j++){
-				var userProducts = $scope.sortedByTypeArray[i].array.where({id: boughtProducts[j].id});
 
-				if(userProducts[0] != undefined){
-					console.log(userProducts[0]);
+				var userProducts = $scope.sortedByTypeArray[i].array.where({id: boughtProducts[j]});
+
+				if(userProducts[0] != undefined && !setFlag){
 					$scope.shownProduct.push({product: userProducts[0], hasUpgrade: tempHaveUpgrade});
+					setFlag = true;
+				} else if(!setFlag){
+					$scope.shownProduct.push({product: {id: 0, name: "Not bought", price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
+					setFlag = true;
 				}
 			}
-			
 		}
 	}
 
@@ -37,7 +39,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	    if(geturl === undefined)
 	    {
 	      setTimeout(function(){
-	        return getProducts();
+	        return getUserProducts();
 	      }, 10);
 	    }
 	    else
@@ -47,7 +49,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	    	productPromise.$promise.then(function(response){
 	    		boughtProducts = response.data;
 
-	    		findProducts();
+	    		sortProducts();
 	    	});
 	    }
 	}
@@ -94,7 +96,9 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 	    }
 	}
 
-	if($scope.getUserID != -1){
+	var temp = $scope.getUserID();
+
+	if(temp != -1 && temp != undefined){
 		getProducts();
 	}
 

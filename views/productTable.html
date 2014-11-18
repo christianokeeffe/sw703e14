@@ -9,7 +9,14 @@
 		<tbody>
 			<tr ng-repeat="item in shownProduct">
 				<td>
-					{{item.product.type}}
+					<table>
+						<tr>
+							{{item.product.type}}
+						</tr>
+						<tr>
+							{{item.product.name}}
+						</tr>
+					</table>
 				</td>
 				<td>
 					<button type="button" class="btn btn-info" ng-click="openProductModal(item.product, $index)" ng-show="item.hasUpgrade">
