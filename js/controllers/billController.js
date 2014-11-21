@@ -7,6 +7,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   var passiveAppliances = [];
   var runningAppliances = [];
   var payLastMonth = 0;
+  $rootScope.balanceMove = 0; 
   $rootScope.billPassiveHelper = 0;
   $scope.content = {
     "addedbills":[
@@ -36,6 +37,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
 
   $scope.addbill = function(name, price){
     var inList = false;
+    $rootScope.balanceMove += price;
     for (var i = 0; i < $scope.content.addedbills.length && !inList; i++) {
       if ($scope.content.addedbills[i].item === name) {
         inList = true;

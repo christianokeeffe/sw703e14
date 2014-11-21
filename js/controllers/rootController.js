@@ -16,7 +16,7 @@ myApp.controller('rootController', ['$scope','$location','$rootScope','$sessionS
 
 	$scope.logout = function(){
     	$rootScope.stopGameTime();
-    	$sessionStorage.currentUser = "undefined";
+    	$sessionStorage.currentUser = undefined;
     	$location.path("/logout");
   	};
 

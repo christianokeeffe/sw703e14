@@ -5,6 +5,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	$rootScope.gameSecOnRealSec = 900;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
+	$rootScope.balanceMove = 0;
 
 	$scope.loadData = function()
 	{
