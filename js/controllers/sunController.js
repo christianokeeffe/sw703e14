@@ -8,24 +8,27 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
         var currentSolarPrice = priceService.getCurrentSolarPrice($scope.dateEpoch);
         if(currentSolarPrice != undefined)
         {
-            $scope.sunlevel = currentSolarPrice.price*70;
+            $scope.sunlevel = currentSolarPrice.solar_price_per_unit*500000;
+            console.log($scope.sunlevel);
         }
-
-		var currentHour = $scope.dateEpoch / 60 / 60;
-		currentHour = ((currentHour+2)%24);
-		var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-
-		$scope.sunlevel = (-0.4647*(Math.pow(currentHour, 2))) + (10.462*currentHour);
-        $scope.sunlevel *=4;
-
-        if(currentHour <= 4)
+        else
         {
-            $scope.sunlevel /=2;
-        }
+    		var currentHour = $scope.dateEpoch / 60 / 60;
+    		currentHour = ((currentHour+2)%24);
+    		var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
 
-        if(currentHour < 8 && currentHour < 17)
-        {
-            $scope.sunlevel += ((Math.floor(Math.random() * 80) + 1)*plusOrMinus);
+    		$scope.sunlevel = (-0.4647*(Math.pow(currentHour, 2))) + (10.462*currentHour);
+            $scope.sunlevel *=4;
+
+            if(currentHour <= 4)
+            {
+                $scope.sunlevel /=2;
+            }
+
+            if(currentHour < 8 && currentHour < 17)
+            {
+                $scope.sunlevel += ((Math.floor(Math.random() * 80) + 1)*plusOrMinus);
+            }
         }
 	});
 
