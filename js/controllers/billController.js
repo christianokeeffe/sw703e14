@@ -17,6 +17,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       ]
   }
 
+  //latex start billgetAppliances
   $scope.getAppliances = function(){
     passiveAppliances = [];
     var temp = controllerService.getApplianceArray();
@@ -30,6 +31,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     }
     temp = null;
   };
+  //latex end
 
   $scope.getPayLastMonth = function(){
     return payLastMonth;
@@ -68,7 +70,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   }
 
   $scope.$on('bill-communication', function (event, data){
-    //console.log("test 1");
+
     runningAppliances.push({"name": data.name, "time": data.time , "energyConsumption": data.energyConsumption});
 
   });
@@ -89,6 +91,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     if (passiveAppliances.length > 0) {
       $rootScope.billPassiveHelper = 1;
     }
+    //latex start passiveBill
     for (var x = 0; x < passiveAppliances.length ; x++) {
       var price = priceService.getTotalPrice(timeForLastpaid, $rootScope.gameSecOnRealSec,  passiveAppliances[x].energyConsumption);
       if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
@@ -96,6 +99,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }   
       $scope.addbill(passiveAppliances[x].name, -price);
     }
+    //latex end
     if(!angular.isUndefined($rootScope.productArray))
     {
       
@@ -133,12 +137,14 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }
     };
     timeForLastpaid = $scope.dateEpoch;
+    //latex start billMonth
     if (lastMonth != $rootScope.curDate().getMonth()) { // probem if time is more then a month
       $rootScope.balance += $rootScope.totalBill();
       payLastMonth = $rootScope.totalBill();
       $scope.resetAddedBills();
       lastMonth = $rootScope.curDate().getMonth();
     }
+    //latex end
   }
   });
 }]);
