@@ -99,6 +99,10 @@
   },
  "upgradeModal":
  {
+     "upgrade":"Upgrade",
+     "price":"Price for upgrade:",
+     "label":"Energy label:",
+     "consumption":"Energy consumption:",
      "selectItem":"Select an upgrade",
      "ACTIVATE":"Upgrade",
      "noSelection":"Please select an upgrade",

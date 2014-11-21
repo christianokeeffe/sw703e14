@@ -25,7 +25,6 @@ myApp.controller('optionalTaskController', ['$scope', '$rootScope', 'optionalTas
             for (var i = 0; i < $scope.optionalTasks.length; i++) {
             	$scope.optionalTasks[i].done = false;
             	$scope.optionalTasks[i].timesDone = 0;
-              $scope.optionalTasks[i].day = 1;
             }
             break;
         }
@@ -49,12 +48,9 @@ myApp.controller('optionalTaskController', ['$scope', '$rootScope', 'optionalTas
         $scope.optionalTasks[i].done = false;
         $scope.optionalTasks[i].timesDone = 0;
       } else {
-        if($scope.optionalTasks[i].day == 7) {
-          $scope.optionalTasks[i].day = 1;
+        if($rootScope.curDate().getDay() == 1) {
           $scope.optionalTasks[i].done = false;
           $scope.optionalTasks[i].timesDone = 0;
-        } else {
-          $scope.optionalTasks[i].day += 1;
         }
       }
     }
