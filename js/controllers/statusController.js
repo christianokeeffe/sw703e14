@@ -11,7 +11,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
     $scope.carBatCount = 0;
     $scope.onWork = false;
     $rootScope.lastSave = 0;
-
+    var balanceFactor = 5;
 
 	var statusBarFloorValue = 0.1;
 
@@ -80,7 +80,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 		}
         $rootScope.saveData();
     });
-
+	
 	$scope.$watch('dateEpoch', function() {
 		var hourChange = ($scope.dateEpoch - $rootScope.lastEpochUpdate)/3600;
 		$rootScope.lastEpochUpdate = $scope.dateEpoch;
@@ -96,7 +96,12 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
         $rootScope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.cleanClothes+$rootScope.carBattery)/4;
 
-        $rootScope.score += Math.round(hourChange*$rootScope.happiness);
+        if(!angular.isUndefined($rootScope.balanceMove))
+        {
+        	$rootScope.score += Math.round(hourChange*$rootScope.happiness + balanceFactor*$rootScope.balanceMove);
+        	$rootScope.balanceMove = 0;
+
+        }
 
 		if($rootScope.dishes - $dishChange < 0)
 		{

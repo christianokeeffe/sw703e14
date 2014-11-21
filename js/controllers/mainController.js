@@ -6,6 +6,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
     $rootScope.speed = 1;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
+	$rootScope.balanceMove = 0;
 
 	$scope.loadData = function()
 	{
