@@ -21,14 +21,16 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 			for(var j = 0; j < boughtProducts.length; j++){
 
 				var userProducts = $scope.sortedByTypeArray[i].array.where({id: boughtProducts[j]});
-
 				if(userProducts[0] != undefined && !setFlag){
 					$scope.shownProduct.push({product: userProducts[0], hasUpgrade: tempHaveUpgrade});
+					$rootScope.productArray.push(userProducts[0]);
+					console.log($rootScope.productArray[0]);
 					setFlag = true;
-				} else if(!setFlag){
-					$scope.shownProduct.push({product: {id: 0, name: "Not bought", price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
-					setFlag = true;
-				}
+				} 
+			}
+			if(!setFlag){
+				$scope.shownProduct.push({product: {id: 0, name: "Not bought", price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
+				setFlag = true;
 			}
 		}
 	}
@@ -146,14 +148,15 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
     modalInstance.result.then(function (boughtProduct) {
     	var typeAlreadyInProductArray = false;
-    	$rootScope.balance = $rootScope.balance - parseInt(boughtProduct.cost);
-    	for(var i = 0; i < $rootScope.productArray.length; i++){
-    		if($rootScope.productArray.type == boughtProduct.type){
-    			$rootScope.productArray.splice(i,1,boughtProduct);
-    			typeAlreadyInProductArray = true;
+    	$rootScope.setBalance($rootScope.balance - boughtProduct.price);
+    	if(!angular.isUndefined($rootScope.productArray)){
+	    	for(var i = 0; i < $rootScope.productArray.length; i++){
+	    		if($rootScope.productArray.type == boughtProduct.type){
+	    			$rootScope.productArray.splice(i,1,boughtProduct);
+	    			typeAlreadyInProductArray = true;
+	    		}
     		}
-    	}
-
+		}
     	if(!typeAlreadyInProductArray){
     		$rootScope.productArray.push(boughtProduct);
     	}
