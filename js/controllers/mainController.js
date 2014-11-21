@@ -75,17 +75,20 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
     };
 
 	$rootScope.startGameTime = function() {
-		var pay = 1000;
-		interval = $interval(function(){
-		$scope.dateEpoch += $scope.gameSecOnRealSec;
-		if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
+		if($rootScope.speed != 4)
 		{
-            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
-            $rootScope.timesMissedWork = 0;
-			$scope.saveData();
-			$scope.saveGraphData();
-		}
-		},1000);
+			var pay = 1000;
+			interval = $interval(function(){
+			$scope.dateEpoch += $scope.gameSecOnRealSec;
+			if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
+			{
+	            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
+	            $rootScope.timesMissedWork = 0;
+				$scope.saveData();
+				$scope.saveGraphData();
+			}
+			},1000);
+		}	
 	}
 
 	$rootScope.stopGameTime = function() {

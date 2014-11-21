@@ -43,6 +43,7 @@ myApp.controller('rootController', ['$scope','$location','$rootScope','$sessionS
     {
       if($rootScope.speed == 4)
       {
+        $rootScope.speed = input;
         $rootScope.startGameTime();
       }
 
