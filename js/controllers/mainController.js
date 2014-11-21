@@ -113,6 +113,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	}
 	else
 	{
+		$rootScope.tabView = $sessionStorage.tabView;
 		$rootScope.currentUser = $sessionStorage.currentUser;
 		$scope.loadData();
 	}

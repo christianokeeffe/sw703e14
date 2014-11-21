@@ -29,6 +29,7 @@ $scope.invalidLogin = false;
         {
           case '200':
             $sessionStorage.currentUser = response.data;
+            $sessionStorage.tabView = $rootScope.tabView;
             $location.path("/");
             break;
           case '401':
