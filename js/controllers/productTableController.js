@@ -26,7 +26,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 					$scope.shownProduct.push({product: userProducts[0], hasUpgrade: tempHaveUpgrade});
 					setFlag = true;
 				} else if(!setFlag){
-					$scope.shownProduct.push({product: {id: 0, name: "Not bought", price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
+					$scope.shownProduct.push({product: {id: 0, name: "-Not bought-", price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
 					setFlag = true;
 				}
 			}
