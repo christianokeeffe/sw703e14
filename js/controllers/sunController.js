@@ -9,7 +9,6 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
         if(currentSolarPrice != undefined)
         {
             $scope.sunlevel = currentSolarPrice.solar_price_per_unit*500000;
-            console.log($scope.sunlevel);
         }
         else
         {
