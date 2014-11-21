@@ -17,8 +17,8 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       ]
   }
 
-  //latex start billgetAppliances
   $scope.getAppliances = function(){
+    //latex start billgetAppliances
     passiveAppliances = [];
     var temp = controllerService.getApplianceArray();
     if(angular.isUndefined(temp) || temp === null){
