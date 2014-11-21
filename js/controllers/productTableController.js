@@ -29,7 +29,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 				} 
 			}
 			if(!setFlag){
-				$scope.shownProduct.push({product: {id: 0, name: "Not bought", price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
+				$scope.shownProduct.push({product: {id: 0, name: "-Not bought-", price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
 				setFlag = true;
 			}
 		}
