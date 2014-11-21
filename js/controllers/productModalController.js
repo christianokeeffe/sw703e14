@@ -5,7 +5,7 @@ myApp.controller('productModalController',['$scope', '$modalInstance', 'selected
 	$scope.allProducts = arrayOfProducts.array;
 	$scope.showAlert = false;
 	$scope.productsProduction;
-	
+
 	var price = parseInt($scope.product.price);
 	var index = 0;
 
@@ -15,16 +15,23 @@ myApp.controller('productModalController',['$scope', '$modalInstance', 'selected
 
 	calculateProduct();
 
-	if(balance > price)
-	{
-		$scope.btnClass = 'btn-success';
-	} else {
-		$scope.btnClass = 'btn-danger';
+	var checkIfBuyAble = function(){
+		if(balance > price)
+		{
+			$scope.btnClass = 'btn-success';
+		} else {
+			$scope.btnClass = 'btn-danger';
+		}
 	}
+
+	checkIfBuyAble();
 
 	$scope.update = function(item){
 		$scope.product = item;
 		index = $scope.allProducts.indexOf(item);
+		price = parseInt($scope.product.price);
+		checkIfBuyAble();
+
 		calculateProduct();
 	}
 

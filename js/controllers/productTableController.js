@@ -13,6 +13,63 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 		this.array = [];
 	}
 
+	function saveProduct (newProductID, oldProductID) {
+		var params = {};
+		var UserProduct = {};
+
+		UserProduct.userID = $scope.getUserID();
+		UserProduct.productID = newProductID;
+
+		params.replaceID = oldProductID;
+		params.userProduct = UserProduct;
+
+		var request = formatRequest.put(params);
+		if(request === undefined)
+		{
+			setTimeout(function(){
+			return saveProduct(newProductID, oldProductID);
+			}, 10);
+		}
+		else
+		{ 
+			productsFactory.updateProduct(request,
+			function (response) {
+			//alert(JSON.stringify(response));
+			},
+			function (response) {
+			document.write(JSON.stringify(response));
+			});
+		}
+	}
+
+	function addUserProduct (ProductID) {
+		var params = {};
+		var UserProduct = {};
+
+		UserProduct.userID = $scope.getUserID();
+		UserProduct.productID = ProductID;
+
+		params.userProduct = UserProduct;
+
+		var request = formatRequest.put(params);
+		if(request === undefined)
+		{
+			setTimeout(function(){
+			return addUserProduct(ProductID);
+			}, 10);
+		}
+		else
+		{ 
+			productsFactory.addUserProduct(request,
+			function (response) {
+			//alert(JSON.stringify(response));
+			},
+			function (response) {
+			document.write(JSON.stringify(response));
+			});
+		}
+	}
+
 	var sortProducts = function()
 	{
 		for(var i = 0; i < $scope.sortedByTypeArray.length; i++){
@@ -24,7 +81,6 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 				if(userProducts[0] != undefined && !setFlag){
 					$scope.shownProduct.push({product: userProducts[0], hasUpgrade: tempHaveUpgrade});
 					$rootScope.productArray.push(userProducts[0]);
-					console.log($rootScope.productArray[0]);
 					setFlag = true;
 				} 
 			}
@@ -152,6 +208,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
     	if(!angular.isUndefined($rootScope.productArray)){
 	    	for(var i = 0; i < $rootScope.productArray.length; i++){
 	    		if($rootScope.productArray.type == boughtProduct.type){
+	    			saveProduct($rootScope.productArray[i].id, boughtProduct.id);
 	    			$rootScope.productArray.splice(i,1,boughtProduct);
 	    			typeAlreadyInProductArray = true;
 	    		}
@@ -159,6 +216,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 		}
     	if(!typeAlreadyInProductArray){
     		$rootScope.productArray.push(boughtProduct);
+    		addUserProduct(boughtProduct.id);
     	}
 
     	$rootScope.startGameTime();
