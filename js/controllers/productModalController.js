@@ -37,6 +37,9 @@ myApp.controller('productModalController',['$scope', '$modalInstance', 'selected
 
 	$scope.buy = function(){
 		if(balance > price){
+			if($scope.product.id == 0){
+				$modalInstance.dismiss("CLosed");
+			}
 			$modalInstance.close($scope.product);
 		} else {
 			$scope.showAlert = true;

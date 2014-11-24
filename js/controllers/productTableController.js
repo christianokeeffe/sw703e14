@@ -207,13 +207,22 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
     	$rootScope.setBalance($rootScope.balance - boughtProduct.price);
     	if(!angular.isUndefined($rootScope.productArray)){
 	    	for(var i = 0; i < $rootScope.productArray.length; i++){
-	    		if($rootScope.productArray.type == boughtProduct.type){
-	    			saveProduct($rootScope.productArray[i].id, boughtProduct.id);
+	    		if($rootScope.productArray[i].type == boughtProduct.type){
 	    			$rootScope.productArray.splice(i,1,boughtProduct);
 	    			typeAlreadyInProductArray = true;
+
+	    			saveProduct($rootScope.productArray[i].id, boughtProduct.id);
 	    		}
     		}
 		}
+
+		for(var j = 0; j < $scope.shownProduct.length; j++){
+			if($scope.shownProduct[j].product.type == boughtProduct.type){
+				var tmp = $scope.shownProduct[j].hasUpgrade;
+				$scope.shownProduct.splice(j,1,{product: boughtProduct, hasUpgrade: tmp});
+			}
+		}
+
     	if(!typeAlreadyInProductArray){
     		$rootScope.productArray.push(boughtProduct);
     		addUserProduct(boughtProduct.id);
