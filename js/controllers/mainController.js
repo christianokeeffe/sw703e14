@@ -79,6 +79,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		if($rootScope.speed != 4)
 		{
 			var pay = 1000;
+			//latex start maincontrollerintervalstart
 			interval = $interval(function(){
 			$scope.dateEpoch += $scope.gameSecOnRealSec;
 			var currentDay = $rootScope.curDate().getDay();
@@ -95,6 +96,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 				gotPaidToday = false;
 			}
 			},1000);
+			//latex end
 		}	
 	}
 
