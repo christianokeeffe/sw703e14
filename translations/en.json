@@ -48,7 +48,9 @@
     "name":"Name",
     "price":"Price",
     "save":"Money saved in a year",
-    "description":"Description"
+    "description":"Description",
+    "informationWin":"Information Window",
+    "buy":"Buy"
   },
   "schedularTable":
   {
@@ -145,5 +147,12 @@
     "appliances":"Appliances",
     "tasks":"Tasks",
     "score":"Score/Status"
+  },
+  "productTable":
+  {
+    "product":"Products",
+    "buy":"Buy/Upgrade",
+    "NBought":"-Not bought-",
+    "press":"Press"
   }
 }

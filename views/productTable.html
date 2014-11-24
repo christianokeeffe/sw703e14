@@ -2,8 +2,8 @@
 	<table class ="table table-condensed table-bordered">
 		<thead>
 			<tr>
-				<th>{{"Products"}}</th>
-				<th>{{"Buy/upgrade"}}</th>
+				<th>{{'productTable.product' | translate}}</th>
+				<th>{{'productTable.buy' | translate}}</th>
 			<tr>
 		</thead>
 		<tbody >
@@ -20,7 +20,7 @@
 				</td>
 				<td style="vertical-align: middle;">
 					<button style="width: 100%;" type="button" class="btn btn-primary" ng-click="openProductModal(item.product, $index)" ng-show="item.hasUpgrade">
-						{{"Press"}}
+						{{'productTable.press' | translate}}
 					</button>
 				</td>
 			</tr>
