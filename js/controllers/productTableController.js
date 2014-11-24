@@ -1,6 +1,6 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'productsFactory', 'formatRequest', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, productsFactory, formatRequest){
+myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'productsFactory', 'formatRequest', 'userproductsFactory', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, productsFactory, formatRequest, userproductsFactory){
 
 	$rootScope.productArray = [];
 
@@ -21,7 +21,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 		UserProduct.productID = newProductID;
 
 		params.replaceID = oldProductID;
-		params.userProduct = UserProduct;
+		params.user_product = UserProduct;
 
 		var request = formatRequest.put(params);
 		if(request === undefined)
@@ -32,7 +32,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 		}
 		else
 		{ 
-			productsFactory.updateProduct(request,
+			userproductsFactory.updateProduct(request,
 			function (response) {
 			//alert(JSON.stringify(response));
 			},
@@ -49,7 +49,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 		UserProduct.userID = $scope.getUserID();
 		UserProduct.productID = ProductID;
 
-		params.userProduct = UserProduct;
+		params.user_product = UserProduct;
 
 		var request = formatRequest.put(params);
 		if(request === undefined)
@@ -60,7 +60,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 		}
 		else
 		{ 
-			productsFactory.addUserProduct(request,
+			userproductsFactory.addUserProduct(request,
 			function (response) {
 			//alert(JSON.stringify(response));
 			},
