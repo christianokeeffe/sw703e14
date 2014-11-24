@@ -179,6 +179,20 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
   	getAverage();
 
+  	var checkForUpgrade = function (id, type) {
+		for(var i = 0; i < $scope.sortedByTypeArray.length; i++){
+			var element = $scope.sortedByTypeArray[i];
+			if(element.type == $scope.sortedByTypeArray){
+				for(var j = 0; j < element.array.length; j++){
+					if(element.array[j].id == id){
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+  	}
+
 	$scope.openProductModal = function (selectedProduct, index) {
     $rootScope.stopGameTime();
 
@@ -218,8 +232,8 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 
 		for(var j = 0; j < $scope.shownProduct.length; j++){
 			if($scope.shownProduct[j].product.type == boughtProduct.type){
-				var tmp = $scope.shownProduct[j].hasUpgrade;
-				$scope.shownProduct.splice(j,1,{product: boughtProduct, hasUpgrade: tmp});
+				var upgradeAble = checkForUpgrade($scope.shownProduct[j].product.id, $scope.shownProduct[j].product.type);
+				$scope.shownProduct.splice(j,1,{product: boughtProduct, hasUpgrade: upgradeAble});
 			}
 		}
 
