@@ -78,27 +78,30 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	$rootScope.startGameTime = function() {
 		if($rootScope.speed != 4)
 		{
-			var pay = 1000;
-			//latex start maincontrollerintervalstart
+			//latex start maincontrollerIntervalStart
 			interval = $interval(function(){
-			$scope.dateEpoch += $scope.gameSecOnRealSec;
-			var currentDay = $rootScope.curDate().getDay();
-			if(currentDay == 1 && !gotPaidToday && $rootScope.curDate().getHours() >= 7)
-			{
-	            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
-	            $rootScope.timesMissedWork = 0;
-				$scope.saveData();
-				$scope.saveGraphData();
-				gotPaidToday = true;
-			}
-			else if (currentDay == 2)
-			{
-				gotPaidToday = false;
-			}
+				$scope.dateEpoch += $scope.gameSecOnRealSec;
 			},1000);
 			//latex end
 		}	
 	}
+
+	$scope.$watch('dateEpoch', function() {
+		var pay = 1000;
+		var currentDay = $rootScope.curDate().getDay();
+		if(currentDay == 1 && !gotPaidToday && $rootScope.curDate().getHours() >= 7)
+		{
+            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
+            $rootScope.timesMissedWork = 0;
+			$scope.saveData();
+			$scope.saveGraphData();
+			gotPaidToday = true;
+		}
+		else if (currentDay == 2)
+		{
+			gotPaidToday = false;
+		}
+	});
 
 	$rootScope.stopGameTime = function() {
 		$interval.cancel(interval);
