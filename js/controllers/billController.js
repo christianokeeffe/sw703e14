@@ -7,6 +7,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   var passiveAppliances = [];
   var runningAppliances = [];
   var payLastMonth = 0;
+  $rootScope.balanceMove = 0; 
   $rootScope.billPassiveHelper = 0;
   $scope.content = {
     "addedbills":[
@@ -17,6 +18,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   }
 
   $scope.getAppliances = function(){
+    //latex start billgetAppliances
     passiveAppliances = [];
     var temp = controllerService.getApplianceArray();
     if(angular.isUndefined(temp) || temp === null){
@@ -29,6 +31,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     }
     temp = null;
   };
+  //latex end
 
   $scope.getPayLastMonth = function(){
     return payLastMonth;
@@ -36,6 +39,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
 
   $scope.addbill = function(name, price){
     var inList = false;
+    $rootScope.balanceMove += price;
     for (var i = 0; i < $scope.content.addedbills.length && !inList; i++) {
       if ($scope.content.addedbills[i].item === name) {
         inList = true;
@@ -66,7 +70,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
   }
 
   $scope.$on('bill-communication', function (event, data){
-    //console.log("test 1");
+
     runningAppliances.push({"name": data.name, "time": data.time , "energyConsumption": data.energyConsumption});
 
   });
@@ -87,6 +91,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     if (passiveAppliances.length > 0) {
       $rootScope.billPassiveHelper = 1;
     }
+    //latex start passiveBill
     for (var x = 0; x < passiveAppliances.length ; x++) {
       var price = priceService.getTotalPrice(timeForLastpaid, $rootScope.gameSecOnRealSec,  passiveAppliances[x].energyConsumption);
       if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
@@ -94,15 +99,18 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }   
       $scope.addbill(passiveAppliances[x].name, -price);
     }
+    //latex end
     if(!angular.isUndefined($rootScope.productArray))
     {
       
       for (var x = 0; x < $rootScope.productArray.length ; x++) {
-        var price = priceService.getTotalSolarPrice(timeForLastpaid, $rootScope.gameSecOnRealSec, $rootScope.productArray[x].watt);
-        if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
-          price = 0 ;
-        }   
-        $scope.addbill($rootScope.productArray[x].name, price);
+          var price = priceService.getTotalSolarPrice(timeForLastpaid, $rootScope.gameSecOnRealSec, $rootScope.productArray[x].watt);
+          if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
+            price = 0 ;
+          }
+            console.log("PRICE: " +price);
+            $rootScope.priceInSun = price.toFixed(2);
+            $scope.addbill($rootScope.productArray[x].name, price);
       }
     }
     for (var i = 0; i < runningAppliances.length; i++) { // if the running time is shorter then gameSecOnRealSec
@@ -126,12 +134,14 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }
     };
     timeForLastpaid = $scope.dateEpoch;
+    //latex start billMonth
     if (lastMonth != $rootScope.curDate().getMonth()) { // probem if time is more then a month
       $rootScope.balance += $rootScope.totalBill();
       payLastMonth = $rootScope.totalBill();
       $scope.resetAddedBills();
       lastMonth = $rootScope.curDate().getMonth();
     }
+    //latex end
   }
   });
 }]);

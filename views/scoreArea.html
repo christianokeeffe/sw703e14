@@ -1,12 +1,5 @@
 <div ng-controller="statusController">
-    <canvas id="face" width="150" bezier="0" height="150" >
-    </canvas>
-    <br />
-    <canvas id="sun" width="150" bezier="0" height="150" >
-    </canvas>
-    <br/>
     <h4>{{'scorearea.score' | translate}}: <small>{{score}} {{'scorearea.points' | translate}}</small></h4>
-    <h4>{{'scorearea.balance' | translate}}: <small>{{balance | currency}}</small></h4>
     <label for="dishes"><font color="green">{{'scorearea.dishes' | translate}}</font>/<font color="#B22222">{{'scorearea.dirtyDishes' | translate}}</font></label>
     <progress animate="false" max="100" id="dishes">
         <bar value="dishes" type="success"><b ng-show="dishes >= 10">{{dishes | number:0}}%</b></bar>

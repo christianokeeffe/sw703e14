@@ -1,21 +1,6 @@
-	<div class="container-fluid">
-		<div class ="row">
-			<div ng-controller="mainController">
-			<div class="col-md-2">
-				<div ng-include="'./views/scoreArea.html'"></div>
-			</div>
-			<div class="col-md-4">
-				<div ng-include="'./views/applianceTable.html'"></div>
-				<div ng-include="'./views/schedularTable.html'"></div>
-			</div>
-			<div class="col-md-3">
-				<div ng-include="'./views/dailyTaskTable.html'"></div>
-				<div ng-include="'./views/optionalTaskTable.html'"></div>
-                <div ng-include="'./views/billTable.html'"></div>
-			</div>
-			<div class="col-md-3">
-				<div ng-include="'./views/productTable.html'"></div>
-			</div>
-		</div>
+<div class="container-fluid">
+	<div ng-controller="mainController">
+		<div ng-if="tabView" ng-include="'./views/tabView.html'"></div>
+		<div ng-if="!tabView" ng-include="'./views/nonTabView.html'"></div>
 	</div>
-    </div>
+</div>

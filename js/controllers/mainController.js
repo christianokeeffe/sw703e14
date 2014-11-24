@@ -2,9 +2,12 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
-	$rootScope.gameSecOnRealSec = 3600;
+	$rootScope.gameSecOnRealSec = 900;
+    $rootScope.speed = 1;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
+	$rootScope.balanceMove = 0;
+	var gotPaidToday = false;
 
 	$scope.loadData = function()
 	{
@@ -47,6 +50,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	}
 
     //LINQ like where clause for arrays. Usage: myArray.where({ id: 4 });
+    //Source: http://stackoverflow.com/questions/18936774/javascript-equivalent-to-c-sharp-linq-select
     Array.prototype.where = function (filter) {
         switch(typeof filter) {
             case 'function':
@@ -72,17 +76,26 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
     };
 
 	$rootScope.startGameTime = function() {
-		var pay = 1000;
-		interval = $interval(function(){
-		$scope.dateEpoch += $scope.gameSecOnRealSec;
-		if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
+		if($rootScope.speed != 4)
 		{
-            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
-            $rootScope.timesMissedWork = 0;
-			$scope.saveData();
-			$scope.saveGraphData();
-		}
-		},1000);
+			var pay = 1000;
+			interval = $interval(function(){
+			$scope.dateEpoch += $scope.gameSecOnRealSec;
+			var currentDay = $rootScope.curDate().getDay();
+			if(currentDay == 1 && !gotPaidToday && $rootScope.curDate().getHours() >= 7)
+			{
+	            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
+	            $rootScope.timesMissedWork = 0;
+				$scope.saveData();
+				$scope.saveGraphData();
+				gotPaidToday = true;
+			}
+			else if (currentDay == 2)
+			{
+				gotPaidToday = false;
+			}
+			},1000);
+		}	
 	}
 
 	$rootScope.stopGameTime = function() {
@@ -112,6 +125,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	}
 	else
 	{
+		$rootScope.tabView = $sessionStorage.tabView;
 		$rootScope.currentUser = $sessionStorage.currentUser;
 		$scope.loadData();
 	}
@@ -190,4 +204,4 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		d.setUTCSeconds($scope.dateEpoch);
 		return d;
 	}
-} ]);
+}]);

@@ -4,17 +4,17 @@
   "scorearea":
   {
   	"score":"Score",
-  	"points":"points",
-  	"dishes":"Dishes",
-  	"laundry":"Laundry",
-  	"hygiene":"Hygiene"
+  	"points":"point",
+  	"dishes":"Rene tallerkner",
+  	"laundry":"Rent tøj",
+  	"hygiene":"Hygiejne"
   },
   "textToPriceTable":
   {
-  	"category": "Category",
-  	"price":"Price",
-  	"maxPrice" : "Current price",
-  	"name":"name",
+  	"category": "Kategori",
+  	"price":"Pris",
+  	"maxPrice" : "Nuværende pris",
+  	"name":"navn",
   	"wind":"Wind",
   	"sun":"Sun",
   	"coal":"Coal",
@@ -22,21 +22,21 @@
   },
   "tasktable":
   {
-    "items":"Items"
+    "items":"Ting"
   },
   "TrueTaskTable":
   {
-    "dailyTasks":"Daily tasks",
-    "optimalTasks": "Optimal tasks",
-    "doneq": "Tasks Done?",
+    "dailyTasks":"Daglige opgaver",
+    "optimalTasks": "Valgfrie opgaver",
+    "doneq": "Done?",
     "done": "Task Done",
     "notDone": "Task not done"
   },
   "billTable":
   {
-    "item" : "Item",
-    "expense" : "Expense",
-    "totalBill" : "Total Bill"
+    "item" : "Ting",
+    "expense" : "Udgifter",
+    "totalBill" : "Total Regning"
   },
   "actionModal":
   {
