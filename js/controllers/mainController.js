@@ -86,6 +86,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 		}	
 	}
 
+	//latex start maincontrollerGivePay
 	$scope.$watch('dateEpoch', function() {
 		var pay = 1000;
 		var currentDay = $rootScope.curDate().getDay();
@@ -102,6 +103,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 			gotPaidToday = false;
 		}
 	});
+	//latex end
 
 	$rootScope.stopGameTime = function() {
 		$interval.cancel(interval);
