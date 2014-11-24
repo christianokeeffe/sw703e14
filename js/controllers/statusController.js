@@ -98,7 +98,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
 
         if(!angular.isUndefined($rootScope.balanceMove))
         {
-        	$rootScope.score += Math.round(hourChange*$rootScope.happiness + balanceFactor*$rootScope.balanceMove);
+        	$rootScope.score += Math.round(hourChange*$rootScope.happiness*2 + balanceFactor*$rootScope.balanceMove);
         	$rootScope.balanceMove = 0;
 
         }

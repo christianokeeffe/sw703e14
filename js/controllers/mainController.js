@@ -7,6 +7,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
 	$rootScope.balanceMove = 0;
+	var gotPaidToday = false;
 
 	$scope.loadData = function()
 	{
@@ -80,12 +81,18 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 			var pay = 1000;
 			interval = $interval(function(){
 			$scope.dateEpoch += $scope.gameSecOnRealSec;
-			if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
+			var currentDay = $rootScope.curDate().getDay();
+			if(currentDay == 1 && !gotPaidToday && $rootScope.curDate().getHours() >= 7)
 			{
 	            $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
 	            $rootScope.timesMissedWork = 0;
 				$scope.saveData();
 				$scope.saveGraphData();
+				gotPaidToday = true;
+			}
+			else if (currentDay == 2)
+			{
+				gotPaidToday = false;
 			}
 			},1000);
 		}	

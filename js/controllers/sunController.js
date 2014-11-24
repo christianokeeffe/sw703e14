@@ -3,12 +3,12 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', function($scope, $rootScope, priceService){
 	$scope.sunlevel = 700;
 
-	$scope.$watch('dateEpoch', function() {
+	$scope.$watch('priceInSun', function() {
 
         var currentSolarPrice = priceService.getCurrentSolarPrice($scope.dateEpoch);
         if(currentSolarPrice != undefined)
         {
-            $scope.sunlevel = currentSolarPrice.solar_price_per_unit*500000;
+            $scope.sunlevel = currentSolarPrice.solar_price_per_unit*50000;
         }
         else
         {
@@ -46,24 +46,22 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
 	}
     
     $scope.$watch('sunlevel', function() {
-
-        if($scope.sunlevel > 1000)
-        {
-            $scope.sunlevel = 1000;
-        }
-        else if ($scope.sunlevel < 0)
-        {
-            $scope.sunlevel = 0;
-        }
+        console.log($scope.sunlevel);
         var bezier = $scope.sunlevel - 50;
         var r = 0.0;
         var g = 0.0;
 
-        r = (($scope.sunlevel));
-        g = (($scope.sunlevel));
-
+        if($scope.sunlevel > 255)
+        {
+            r = 255;
+            g = 255;
+        }
+        else
+        {
+            r = $scope.sunlevel;
+            g = $scope.sunlevel;
+        }
         var Y = 0.2126*r + 0.7152*g + 0.0722*0;
-
         var sunColor = rgbToHex(r,g,0);
 
         // variable that decides if something should be drawn on mousemove
