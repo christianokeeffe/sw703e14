@@ -1,11 +1,15 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'productsFactory', 'formatRequest', 'userproductsFactory', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, productsFactory, formatRequest, userproductsFactory){
+myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'controllerService', 'averageMarketPriceFactory', 'productsFactory', 'formatRequest', 'userproductsFactory', '$translate', function($scope, $rootScope, $modal, controllerService, averageMarketPriceFactory, productsFactory, formatRequest, userproductsFactory, $translate){
 
 	$rootScope.productArray = [];
 
 	$scope.shownProduct = [];
 	$scope.sortedByTypeArray = [];
+
+	$scope.translation = "";
+	$translate('productTable.NBought').then(function (translations){$scope.translation = translations;});
+
 	var boughtProducts = [];
 
 	function ProductArray (type) {
@@ -85,7 +89,7 @@ myApp.controller('productTableController',['$scope', '$rootScope', '$modal', 'co
 				} 
 			}
 			if(!setFlag){
-				$scope.shownProduct.push({product: {id: 0, name: "-Not bought-", price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
+				$scope.shownProduct.push({product: {id: 0, name: $scope.translation, price: 0, type: $scope.sortedByTypeArray[i].type, watt: 0, description: ""}, hasUpgrade: tempHaveUpgrade});
 				setFlag = true;
 			}
 		}
