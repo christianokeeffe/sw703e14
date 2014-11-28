@@ -29,7 +29,6 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
                     fromtime = 1409565600;
                     totime = 1409565600;
                 }
-		      //geturl.fromtime = $scope.dateEpoch;
 		      geturl.fromtime = fromtime;
 		      geturl.totime = totime;
 
@@ -87,31 +86,29 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		    getData(timenow,endbefore);
 		}
 	};
-	
+
+	//latex start billgetTotalPrice
 	this.getTotalPrice = function(startTime, runningTime, powerUsage) {
 		starttime = roundTime(startTime);
-		if(startTime + runningTime <= latesttime){
-			//latex start billgetTotalPrice
+		if(startTime + runningTime <= latesttime) {
 			var totalPrice = 0;
 			for (var i = 0 ; i < runningTime ; i=i+3600) {
 				var timeToCalculate =3600;
 				if (runningTime-i <= 3600) {
 					timeToCalculate = runningTime;
 				}
-				else{
+				else {
 					timeToCalculate = 3600;
 				}
-
 				totalPrice += (getPriceNow( startTime+i , powerUsage) /3600) * timeToCalculate;
 			}
 			return totalPrice;
-			//latex end
 		}
-		else
-		{
+		else {
 		    getData(startTime - 3600, startTime + 3600*24*7);
 		}
 	};
+	//latex end
 
 	this.getTotalSolarPrice = function(startTime, runningTime, watt) {
 		if(startTime + runningTime <= latesttime){

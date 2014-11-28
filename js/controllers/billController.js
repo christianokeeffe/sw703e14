@@ -17,8 +17,8 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       ]
   }
 
+  //latex start billgetAppliances
   $scope.getAppliances = function(){
-    //latex start billgetAppliances
     passiveAppliances = [];
     var temp = controllerService.getApplianceArray();
     if(angular.isUndefined(temp) || temp === null){
@@ -94,7 +94,8 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     //latex start passiveBill
     for (var x = 0; x < passiveAppliances.length ; x++) {
       var price = priceService.getTotalPrice(timeForLastpaid, $rootScope.gameSecOnRealSec,  passiveAppliances[x].energyConsumption);
-      if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
+      // a failsafe if the data for the prices is not loaded
+      if(angular.isUndefined(price) || price === null){ 
         price = 0 ;
       }   
       $scope.addbill(passiveAppliances[x].name, -price);
@@ -135,7 +136,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     };
     timeForLastpaid = $scope.dateEpoch;
     //latex start billMonth
-    if (lastMonth != $rootScope.curDate().getMonth()) { // probem if time is more then a month
+    if (lastMonth != $rootScope.curDate().getMonth()) {
       $rootScope.balance += $rootScope.totalBill();
       payLastMonth = $rootScope.totalBill();
       $scope.resetAddedBills();
