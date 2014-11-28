@@ -1,6 +1,5 @@
  {
   "cop":"Copyright © 2014 SW703E14",
-  "HEADLINE":"What an awesome module!",
   "title":"Smart Grid Game",
   "navbar-headline":"Smart Grid",
   "navbar-welcome":"Welcome",
@@ -23,17 +22,6 @@
     "filthy":"Filthy House",
     "carBattery":"Car Battery Charged",
     "dead":"Discharged"
-  },
-  "textToPriceTable":
-  {
-  	"category": "Category",
-  	"price":"Price",
-  	"maxPrice" : "Current price",
-  	"name":"name",
-  	"wind":"Wind",
-  	"sun":"Sun",
-  	"coal":"Coal",
-  	"bio":"BIO"
   },
   "applianceTable":
   {

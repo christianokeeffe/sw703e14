@@ -1,54 +1,146 @@
  {
-  "HEADLINE":"What an awesome module!",
-  "PRESS":"TEST",
+  "cop":"Copyright © 2014 SW703E14",
+  "title":"Smart Grid Spil",
+  "navbar-headline":"Smart Grid",
+  "navbar-welcome":"Velkommen",
+  "navbar-tabview":"Vis samlet oversigt",
+  "navbar-nontabview":"Vis faneblade",
+  "navbar-login":"Log ind",
+  "navbar-logout":"Log ud",
+  "navbar-register":"Ny bruger",
+  "navbar-settings":"Indstillinger",
   "scorearea":
   {
-  	"score":"Score",
-  	"points":"point",
-  	"dishes":"Rene tallerkner",
-  	"laundry":"Rent tøj",
-  	"hygiene":"Hygiejne"
+    "score":"Score",
+    "points":"point",
+    "dishes":"Rene tallerkner",
+    "dirtyDishes":"Opvask",
+    "cleanClothes":"Rent tøj",
+    "wetClothes":"Vådt tøj",
+    "dirtyClothes":"Beskidt tøj",
+    "hygiene":"Rent hus",
+    "filthy":"Beskidt hus",
+    "carBattery":"Bil batteri opladt",
+    "dead":"Strøm brugt"
   },
-  "textToPriceTable":
+  "applianceTable":
   {
-  	"category": "Kategori",
-  	"price":"Pris",
-  	"maxPrice" : "Nuværende pris",
-  	"name":"navn",
-  	"wind":"Wind",
-  	"sun":"Sun",
-  	"coal":"Coal",
-  	"bio":"BIO"
+    "items":"Applikationer",
+    "activate":"Start opgave",
+    "upgrade":"Opgrader applikation",
+    "upgradeBtn":"Opgrader",
+    "press":"Aktiver"
   },
-  "tasktable":
+  "productModal":
   {
-    "items":"Ting"
+    "name":"Navn",
+    "price":"Pris",
+    "save":"Penge sparet på et år",
+    "description":"Beskrivelse",
+    "informationWin":"Informations boks",
+    "buy":"Køb"
+  },
+  "schedularTable":
+  {
+    "name": "Opgaver",
+    "deadline":"Deadline/Tid tilbage"
+  },
+  "lowPriceModal":
+  {
+    "FB":"Færdigør før:",
+    "setTime":"Sæt aktiverings tidspunkt",
+    "delay":"Sæt aktiverings tidspunkt",
+    "alert":"Ugyldigt start tidspunkt: Datoen og/eller tidspnktet er i fortiden eller opgaven kan ikke nås fulført før deadlinen!"
   },
   "TrueTaskTable":
   {
     "dailyTasks":"Daglige opgaver",
     "optimalTasks": "Valgfrie opgaver",
-    "doneq": "Done?",
-    "done": "Task Done",
-    "notDone": "Task not done"
+    "doneq": "Opgave færdig?",
+    "done": "Opgave færdig",
+    "notDone": "Opgave ikke færdig"
+  },
+  "regUser":
+  {
+    "username":"Brugernavn",
+    "lastname":"Efternavn",
+    "firstname":"Fornavn",
+    "email":"Email adresse",
+    "pass":"Kodeord",
+    "submit":"Registrer bruger",
+    "errors":{
+      "usernamereq":"Et brugernavn er påkrævet.",
+      "firstnamereq":"Et fornavn er påkrævet.",
+      "lastnamereq":"Et efternavn er påkrævet.",
+      "emailreq":"En email adresse er påkrævet.",
+      "emailerror":"Email adressen er forkert.",
+      "invalidemailorusername":"Email adressen eller brugernavnet er allerede i brug.",
+      "passwordreq":"Et kodeord er påkrævet."
+    }
   },
   "billTable":
   {
-    "item" : "Ting",
+    "item" : "Regning",
     "expense" : "Udgifter",
-    "totalBill" : "Total Regning"
+    "payLastMonth" : "Tjent sidste måned",
+    "totalBill" : "Total regning",
+    "balance":"Balance"
   },
   "actionModal":
   {
+    "duration":"Varighed",
     "selectItem":"Vælg en opgave",
-    "ACTIVATE":"Start nu",
-    "delay":"Laveste pris",
-    "noSelection":"Vælg venligst en opgave"
+    "ACTIVATE":"Aktiver",
+    "delay":"Sæt aktiverings tidspunkt",
+    "noSelection":"Vælg venligst en opgave først."
   },
  "upgradeModal":
  {
+     "upgrade":"Opgrader",
+     "price":"Pris for opgraderingen:",
+     "label":"Energi label:",
+     "consumption":"Energi forbrug:",
      "selectItem":"Vælg en opgradering",
      "ACTIVATE":"Opgrader",
-     "noSelection":"Du skal vælge en opgradering"
- }
+     "noSelection":"Vælg venligst en opgradering.",
+     "cannotAfford":"Du har ikke penge nok til denne opgradering."
+ },
+  "Login":
+  {
+    "ButtonText":"Log ind",
+    "errors":
+    {
+      "invalidlogin":"Forkert brugernavn eller kodeord."
+    }
+  },
+  "dailyTaskTable":
+  {
+    "dailyTasks":"Daglige opgaver",
+    "deadline":"Deadline",
+    "taskSolved":"Opgave løst"
+  },
+  "optimalTasks":
+  {
+    "optionalTasks":"Valgfrie opgaver",
+    "completed":"Kan løses",
+    "times":"Gange løst/Løst"
+  },
+  "settings":
+  {
+    "allowdischarge":"Tillad at aflade bilen for at sælge strømmen tilbage til gridet når prisen er dyr",
+    "dischargeval":"Aflad maximalt til et batteri niveau på (i %):"
+  },
+  "mainView":
+  {
+    "appliances":"Applikationer",
+    "tasks":"Opgaver",
+    "score":"Score/Status"
+  },
+  "productTable":
+  {
+    "product":"Produkter",
+    "buy":"Køb/Opgrader",
+    "NBought":"-Ikke købt-",
+    "press":"Tryk"
+  }
 }
