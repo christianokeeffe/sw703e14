@@ -2,7 +2,7 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('rootController', ['$scope','$location','$rootScope','$sessionStorage', function($scope,$location,$rootScope,$sessionStorage){
 
-   $rootScope.tabView = true;
+   $rootScope.tabView = false;
 
 	if($sessionStorage.currentUser == "undefined")
 	{
