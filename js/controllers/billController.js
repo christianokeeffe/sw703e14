@@ -100,19 +100,27 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       }   
       $scope.addbill(passiveAppliances[x].name, -price);
     }
+    var hasSolar = false;
     //latex end
     if(!angular.isUndefined($rootScope.productArray))
     {
       
       for (var x = 0; x < $rootScope.productArray.length ; x++) {
+        if($rootScope.productArray[x].typeID == 9)
+        {
           var price = priceService.getTotalSolarPrice(timeForLastpaid, $rootScope.gameSecOnRealSec, $rootScope.productArray[x].watt);
           if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
             price = 0 ;
           }
-            console.log("PRICE: " +price);
-            $rootScope.priceInSun = price.toFixed(2);
-            $scope.addbill($rootScope.productArray[x].name, price);
+          hasSolar = true;
+          $rootScope.solarUpdate(price.toFixed(2),timeForLastpaid);
+          $scope.addbill($rootScope.productArray[x].name, price);
+        }
       }
+    }
+    if(!hasSolar)
+    {
+      $rootScope.priceInSun = -$scope.dateEpoch;
     }
     for (var i = 0; i < runningAppliances.length; i++) { // if the running time is shorter then gameSecOnRealSec
       if (runningAppliances[i].time < $rootScope.gameSecOnRealSec) {

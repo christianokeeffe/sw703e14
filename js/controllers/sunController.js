@@ -3,20 +3,21 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', function($scope, $rootScope, priceService){
 	$scope.sunlevel = 700;
 
-	$scope.$watch('priceInSun', function() {
-
-        var currentSolarPrice = priceService.getCurrentSolarPrice($scope.dateEpoch);
+    $rootScope.solarUpdate = function(priceInSun, time)
+    {
+        $rootScope.priceInSun = priceInSun;
+        var currentSolarPrice = priceService.getCurrentSolarPrice(time);
         if(currentSolarPrice != undefined)
         {
-            $scope.sunlevel = currentSolarPrice.solar_price_per_unit*50000;
+            $scope.sunlevel = Math.log10(currentSolarPrice.solar_price_per_unit*120000)*100;
         }
         else
         {
-    		var currentHour = $scope.dateEpoch / 60 / 60;
-    		currentHour = ((currentHour+2)%24);
-    		var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+            var currentHour = $scope.dateEpoch / 60 / 60;
+            currentHour = ((currentHour+2)%24);
+            var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
 
-    		$scope.sunlevel = (-0.4647*(Math.pow(currentHour, 2))) + (10.462*currentHour);
+            $scope.sunlevel = (-0.4647*(Math.pow(currentHour, 2))) + (10.462*currentHour);
             $scope.sunlevel *=4;
 
             if(currentHour <= 4)
@@ -29,7 +30,7 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
                 $scope.sunlevel += ((Math.floor(Math.random() * 80) + 1)*plusOrMinus);
             }
         }
-	});
+    }
 
 	function drawLine(context, fromX, fromY, toX, toY, color)
     {
@@ -46,7 +47,6 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
 	}
     
     $scope.$watch('sunlevel', function() {
-        console.log($scope.sunlevel);
         var bezier = $scope.sunlevel - 50;
         var r = 0.0;
         var g = 0.0;
@@ -55,6 +55,11 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
         {
             r = 255;
             g = 255;
+        }
+        else if ($scope.sunlevel < 0)
+        {
+            r = 0;
+            g = 0;
         }
         else
         {
@@ -84,12 +89,13 @@ myApp.controller('sunController', ['$scope', '$rootScope', 'priceService', funct
         context.fillStyle = Y < 128 ? "white" : "black";
         context.font = "16px Helvetica";
 
-        if($rootScope.priceInSun == undefined)
+        var priceInSunText = $rootScope.priceInSun;
+        if(priceInSunText == undefined || priceInSunText < 0)
         {
-            $rootScope.priceInSun = "0.00";
+            priceInSunText = "0.00";
         }
 
-        context.fillText($rootScope.priceInSun + " kr/t", centerX-30, centerY+7);
+        context.fillText(priceInSunText + " kr/t", centerX-30, centerY+7);
 
         //Sun beams
         drawLine(context, centerX + 50, centerY, centerX + 300, centerY, sunColor);
