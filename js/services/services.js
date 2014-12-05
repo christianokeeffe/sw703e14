@@ -71,6 +71,7 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
 		}
 	}
 
+    //latex start apiPost
     this.post = function(input) {
         if (thisvar.checkSession()) {
             input.language = $translate.use();
@@ -85,6 +86,7 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
             return headersVar;
         }
     };
+    //latex end
     this.put = function(input) {
     	if (thisvar.checkSession()) {
 	    	input.language = $translate.use();
@@ -99,12 +101,14 @@ services.service('formatRequest', ['$translate','authFactory', function($transla
 	        return headersVar;
         }
     };
+    //latex start apiGet
     this.get = function(input) {
     	if (thisvar.checkSession()) {
 	    	input.endurl = "/" + $translate.use() + "/" + sessionid;
 	        return input;
         }
     };
+    //latex end
 }]);
 
 services.factory("authFactory", function($resource) {
