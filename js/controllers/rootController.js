@@ -2,6 +2,8 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('rootController', ['$scope','$location','$rootScope','$sessionStorage', function($scope,$location,$rootScope,$sessionStorage){
 
+   $rootScope.tabView = false;
+
 	if($sessionStorage.currentUser == "undefined")
 	{
 		$sessionStorage.currentUser = undefined;
@@ -12,8 +14,11 @@ myApp.controller('rootController', ['$scope','$location','$rootScope','$sessionS
   }
 
 	$scope.logout = function(){
-    	$rootScope.stopGameTime();
-    	$sessionStorage.currentUser = "undefined";
+      if($scope.speed != 4)
+      {
+        $rootScope.stopGameTime();
+      }
+    	$sessionStorage.currentUser = undefined;
     	$location.path("/logout");
   	};
 
@@ -31,6 +36,33 @@ myApp.controller('rootController', ['$scope','$location','$rootScope','$sessionS
       else 
       {
         $rootScope.tabView = true;
+      }
+    }
+
+    $scope.changeSpeed = function(input)
+    {
+      if($rootScope.speed == 4)
+      {
+        $rootScope.speed = input;
+        $rootScope.startGameTime();
+      }
+
+      $rootScope.speed = input;
+      if (input == 1)
+      {
+        $rootScope.gameSecOnRealSec = 900;
+      }
+      else if (input == 2)
+      {
+        $rootScope.gameSecOnRealSec = 1800;
+      }
+      else if (input == 3)
+      {
+        $rootScope.gameSecOnRealSec = 3600;
+      }
+      else
+      {
+        $rootScope.stopGameTime();
       }
     }
 }]);

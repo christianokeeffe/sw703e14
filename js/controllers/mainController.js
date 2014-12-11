@@ -2,10 +2,12 @@ var myApp = angular.module('smartgridgame');
 
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
-	$rootScope.tabView = false;
-	$rootScope.gameSecOnRealSec = 3600;
+	$rootScope.gameSecOnRealSec = 900;
+    $rootScope.speed = 1;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
+	$rootScope.balanceMove = 0;
+	var gotPaidToday = false;
 
 	$scope.loadData = function()
 	{
@@ -48,6 +50,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	}
 
     //LINQ like where clause for arrays. Usage: myArray.where({ id: 4 });
+    //Source: http://stackoverflow.com/questions/18936774/javascript-equivalent-to-c-sharp-linq-select
     Array.prototype.where = function (filter) {
         switch(typeof filter) {
             case 'function':
@@ -73,18 +76,34 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
     };
 
 	$rootScope.startGameTime = function() {
+		if($rootScope.speed != 4)
+		{
+			//latex start maincontrollerIntervalStart
+			interval = $interval(function(){
+				$scope.dateEpoch += $scope.gameSecOnRealSec;
+			},1000);
+			//latex end
+		}	
+	}
+
+	//latex start maincontrollerGivePay
+	$scope.$watch('dateEpoch', function() {
 		var pay = 1000;
-		interval = $interval(function(){
-		$scope.dateEpoch += $scope.gameSecOnRealSec;
-		if(($scope.dateEpoch - startDate)%secondsInWeek == 0)
+		var currentDay = $rootScope.curDate().getDay();
+		if(currentDay == 1 && !gotPaidToday && $rootScope.curDate().getHours() >= 7)
 		{
             $rootScope.balance += pay - (pay/5 * $rootScope.timesMissedWork);
             $rootScope.timesMissedWork = 0;
 			$scope.saveData();
 			$scope.saveGraphData();
+			gotPaidToday = true;
 		}
-		},1000);
-	}
+		else if (currentDay == 2)
+		{
+			gotPaidToday = false;
+		}
+	});
+	//latex end
 
 	$rootScope.stopGameTime = function() {
 		$interval.cancel(interval);
@@ -113,6 +132,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 	}
 	else
 	{
+		$rootScope.tabView = $sessionStorage.tabView;
 		$rootScope.currentUser = $sessionStorage.currentUser;
 		$scope.loadData();
 	}

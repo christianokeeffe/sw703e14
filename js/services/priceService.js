@@ -8,7 +8,13 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
         return typeof n== "number" && isFinite(n) && n%1===0;
     }
 
+    function roundTime(time) {
+    	return time - (time%3600);
+    }
+
 	getData = function(fromtime, totime) {
+		fromtime = roundTime(fromtime);
+		totime = roundTime(totime);
 		geturl = formatRequest.get({});
 		    if(geturl === undefined)
 		    {
@@ -23,7 +29,6 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
                     fromtime = 1409565600;
                     totime = 1409565600;
                 }
-		      //geturl.fromtime = $scope.dateEpoch;
 		      geturl.fromtime = fromtime;
 		      geturl.totime = totime;
 
@@ -48,6 +53,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 	this.getCheapestStarttime = function(timenow, endbefore, duration) {
 		if(endbefore <= latesttime)
 		{
+			timenow = roundTime(timenow);
 			var beststart = timenow;
 			var bestprice = 999999999999999999999;
 			var id = 0;
@@ -60,7 +66,12 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 				var thisprice = 0;
 				for(var j = 0; j < duration; j = j+3600)
 				{
-					thisprice += parseFloat(timevars[id+((i-timenow)/3600)+(j/3600)].price);
+					var jump = 3600;
+					if(j+3600 > duration)
+					{
+						jump = duration%3600;
+					}
+					thisprice += (parseFloat(timevars[id+((i-timenow)/3600)+(j/3600)].price)/3600)*jump;
 				}
 				if(bestprice > thisprice)
 				{
@@ -75,38 +86,36 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 		    getData(timenow,endbefore);
 		}
 	};
-	
+
+	//latex start billgetTotalPrice
 	this.getTotalPrice = function(startTime, runningTime, powerUsage) {
-		//console.log("starttime: " +  startTime + " latesttime: "+latesttime);
-		if(startTime + runningTime <= latesttime){
+		starttime = roundTime(startTime);
+		if(startTime + runningTime <= latesttime) {
 			var totalPrice = 0;
-			//console.log("test 42");
 			for (var i = 0 ; i < runningTime ; i=i+3600) {
-				var timeToCalculate =0;
+				var timeToCalculate =3600;
 				if (runningTime-i <= 3600) {
 					timeToCalculate = runningTime;
 				}
-				else{
+				else {
 					timeToCalculate = 3600;
 				}
-
 				totalPrice += (getPriceNow( startTime+i , powerUsage) /3600) * timeToCalculate;
 			}
 			return totalPrice;
 		}
-		else
-		{
-			//console.log("test");
+		else {
 		    getData(startTime - 3600, startTime + 3600*24*7);
 		}
 	};
+	//latex end
 
 	this.getTotalSolarPrice = function(startTime, runningTime, watt) {
 		if(startTime + runningTime <= latesttime){
 			var totalPrice = 0;
 
 			for (var i = 0 ; i < runningTime ; i=i+3600) {
-				var timeToCalculate =0;
+				var timeToCalculate =3600;
 				if (runningTime-i <= 3600) {
 					timeToCalculate = runningTime;
 				}
@@ -125,7 +134,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 	};
 
 	getSolarPriceNow = function(time, watt) {
-
+		time = roundTime(time);
 		if(time <= latesttime){
 			var price = 0;
 			var id = 0;
@@ -146,7 +155,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 
 
 	getPriceNow = function(time, powerUsage) {
-
+		time = roundTime(time);
 		if(time <= latesttime){
 			var price = 0;
 			var id = 0;
@@ -165,6 +174,7 @@ myApp.service('priceService',['formatRequest','marketpriceFactory', function(for
 	};
 
     this.getCurrentSolarPrice = function(timenow) {
+    	timenow = roundTime(timenow);
         if(timenow <= latesttime)
         {
             var id = 0;

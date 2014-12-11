@@ -2,56 +2,52 @@
     <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
     <span aria-hidden="true">&times;</span>
     <span class="sr-only">Close</span></button>
-    <h3 class="modal-title">Information Window</h3>
+    <h3 class="modal-title">{{'productModal.informationWin'| translate}}</h3>
 </div>
 <div class="modal-body">
-    <dl class="dl">
+    <div class="btn-group" dropdown is-open="status.isopen" style="margin-bottom: 15px">
+        <button type="button" class="btn btn-primary dropdown-toggle">
+            {{product.name}}<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="item in allProducts" dropdown-toggle>
+                <a href ng-click="update(item);">
+                    {{item.name}}
+                </a>
+            </li>
+        </ul> 
+    </div>
+    <dl>
         <dt>
-            Name:
+            {{'productModal.name'| translate}}
         </dt>
         <dd>
             {{product.name}}
         </dd>
         <dt>
-            Cost:
+            {{'productModal.price'| translate}}
         </dt>
         <dd>
-            {{product.cost}}
+           <font color="#B22222">{{product.price | currencyWithMinus}} </font>
         </dd>
         <dt>
-            Saving Factor:
+            {{'productModal.save'| translate}}
         </dt>
         <dd>
-            <p> Enter a value between 0 and 1200 to preview how much you would save by buying this product.</p>
-            <div class="row" style ="display: flex; align-items:center;">
-                <div class="col-xs-6">
-                    <form name="previewForm">
-                        <input name="numberField" type="number" class="form-control" min="0" max="1200" ng-model="times" ng-change="preformCheck(times)">
-                    </form>
-                </div>
-            <div class="col-xs-1"><label> = </label></div>
-                <div class="col-xs-5">
-                    <label>
-                        {{calculatedResult}}
-                    </label>
-                </div>
-            </div>
-            <div class="alert alert-danger" style="margin-top: 10px" role="alert" ng-show="!previewForm.numberField.$valid">May only contain numbers.</div>
-
-        </dd>
+           <font color="green"> {{productsProduction | currencyWithMinus}} </font>
+        </dd>    
         <dt>
-            Description:
+            {{'productModal.description'| translate}}
         </dt>
         <dd>
             {{product.description}}
         </dd>
     </dl>
+    
+    <button type="button" class="btn {{btnClass}}" ng-click="buy()" style="margin-bottom:15px;"> 
+            {{'productModal.buy'| translate}}
+    </button>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" ng-click="buy()"> 
-            {{"Buy"}}
-        </button>
-        <button type="button" class="btn" ng-click="cancel()">
-            {{"Cancel"}}
-        </button>
+        <alert type="danger" ng-show="showAlert">{{'upgradeModal.cannotAfford' | translate}}</alert>
     </div>  
 </div>

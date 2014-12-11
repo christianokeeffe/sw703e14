@@ -50,12 +50,17 @@ myApp.service('controllerService', function () {
 	};
 
 	this.getTask = function() {
-		return StoredTasks[Appliance.id][TaskID];
+		var temp = this.getTasks();
+		return temp[TaskID];
 	};
 
 	this.getTasks = function() {
-		return StoredTasks[Appliance.id];
+		return this.getTasksByID(Appliance.id);
 	};
+
+	this.getTasksByID = function(id) {
+		return StoredTasks[id];
+	}
 	
 	this.StoreAllTasks = function(tasks) {
 		for (var i = 0; i < ApplianceArray.length; i++){

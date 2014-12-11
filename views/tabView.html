@@ -21,17 +21,31 @@
 	</tab>
 	<tab heading="{{'mainView.score' | translate}}">
 		<div class="row">
+			<br>
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+				<div ng-include="'./views/smiley.html'"></div>
+			</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+				<div ng-include="'./views/sun.html'"></div>
+			</div>
+			<div class="col-md-6"></div>
+		</div>
+		<div class="row">
 		<br>
 			<div class="col-md-3">
 				<div ng-include="'./views/scoreArea.html'"></div>
 			</div>
 			<div class="col-md-3">
-				<div ng-include="'./views/sun.html'"></div>
-				<div ng-include="'./views/productTable.html'"></div>
+				<div ng-include="'./views/billTable.html'"></div>
 			</div>
 			<div class="col-md-3">
-				<div ng-include="'./views/billTable.html'"></div>
+				<br>
+				<br>
+				<div ng-include="'./views/productTable.html'"></div>
 			</div>
 		</div>
 	</tab>
 	</tabset>
+

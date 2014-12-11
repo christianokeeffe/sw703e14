@@ -1,12 +1,12 @@
         <div class="modal-header" >
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h3 class="modal-title">Upgrade {{chosenAppliance.typeString}}: {{chosenAppliance.name}}</h3>
+            <h3 class="modal-title">{{upgradeModal.upgrade | translate}} {{chosenAppliance.typeString}}: {{chosenAppliance.name}}</h3>
         </div>
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-4">
                     <div class="btn-group" dropdown is-open="status.isopen" style="margin-bottom: 15px">
-                        <button type="button" class="btn btn-danger dropdown-toggle">
+                        <button type="button" class="btn btn-primary dropdown-toggle">
                             {{selectedItem}}<span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -18,7 +18,7 @@
                         </ul>
                     </div>
                     <div>
-                        Price for upgrade: <b>{{selected.price | currency}}</b>
+                        {{'upgradeModal.price' | translate}} <b>{{selected.price | currency}}</b>
                     </div>
                     <div>
                         <button class="btn {{btnUpgradeColor}}" ng-click="ok('now', selected)" style="margin-top:30px;" style={{buttonStyle}}>{{'upgradeModal.ACTIVATE' | translate}}</button>
@@ -35,14 +35,14 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>EnergyLabel</td>
+                            <td>{{'upgradeModal.label' | translate}}</td>
                             <td><span style="color: {{currentEnergyLabelCol}};">{{chosenAppliance.energyLabel}}</span></td>
                             <td><span style="color: {{selectedEnergyLabelCol}};">{{selected.energyLabel}}</span></td>
                         </tr>
                         <tr>
-                            <td>EnergyConsumption</td>
-                            <td><span style="color: {{currentEnergyConsumpCol}};">{{chosenAppliance.energyConsumption}}</span></td>
-                            <td><span style="color: {{selectedEnergyConsumpCol}};">{{selected.energyConsumption}}</span></td>
+                            <td>{{'upgradeModal.consumption' | translate}}</td>
+                            <td><span style="color: {{currentEnergyConsumpCol}};">{{chosenAppliance.energyConsumption}} kWh</span></td>
+                            <td><span style="color: {{selectedEnergyConsumpCol}};">{{selected.energyConsumption}} kWh</span></td>
                         </tr>
                         </tbody>
                     </table>

@@ -1,32 +1,52 @@
 var myApp = angular.module('smartgridgame');
 
-myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', function($scope, $modalInstance, selectedProduct){
+myApp.controller('productModalController',['$scope', '$modalInstance', 'selectedProduct', 'arrayOfProducts', 'powerCost', 'balance', function($scope, $modalInstance, selectedProduct, arrayOfProducts, powerCost, balance){
 	$scope.product = selectedProduct;
-	$scope.calculatedResult;
-	$scope.times = 1;
+	$scope.allProducts = arrayOfProducts.array;
+	$scope.showAlert = false;
+	$scope.productsProduction;
 
-	$scope.calculatePreview = function()
-	{
-		$scope.calculatedResult = (500*$scope.times)*(100-$scope.product.saveFactor);
+	var price = parseInt($scope.product.price);
+	var index = 0;
+
+	var calculateProduct = function(){
+		$scope.productsProduction = Math.ceil(parseInt($scope.product.watt)*parseFloat(powerCost)/100)*100;
 	}
 
-	$scope.calculatePreview();
+	calculateProduct();
 
-	$scope.preformCheck = function(time){
-		if(time == undefined){
-			$scope.times = 0;
+	var checkIfBuyAble = function(){
+		if(balance > price)
+		{
+			$scope.btnClass = 'btn-success';
 		} else {
-			$scope.times = time;
+			$scope.btnClass = 'btn-danger';
 		}
-		$scope.calculatePreview();
+	}
+
+	checkIfBuyAble();
+
+	$scope.update = function(item){
+		$scope.product = item;
+		index = $scope.allProducts.indexOf(item);
+		price = parseInt($scope.product.price);
+		checkIfBuyAble();
+
+		calculateProduct();
 	}
 
 	$scope.buy = function(){
-		$modalInstance.close(selectedProduct);
+		if(balance > price){
+			if($scope.product.id == 0){
+				$modalInstance.dismiss("CLosed");
+			}
+			$modalInstance.close($scope.product);
+		} else {
+			$scope.showAlert = true;
+		}
 	}
 
 	$scope.cancel = function(){
 		$modalInstance.dismiss("Closed");
 	}
-
 }]);
