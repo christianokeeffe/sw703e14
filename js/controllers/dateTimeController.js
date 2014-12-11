@@ -24,13 +24,7 @@ myApp.controller('dateTimePickerController', ['$scope', '$rootScope' ,'controlle
 
   //methods to update the chosen date and time
   $scope.opdateDateTime = function(date, time){
-    if(!angular.isUndefined(date) && !angular.isUndefined(time))
-    {
-      if(date != null && time != null)
-      {
-        controllerService.setTimer(new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0));
-      }
-    }
+    controllerService.setTimer(new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0));
   };
 
   $scope.changed = function () {
