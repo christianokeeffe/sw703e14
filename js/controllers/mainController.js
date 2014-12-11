@@ -3,7 +3,7 @@ var myApp = angular.module('smartgridgame');
 myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataFactory', 'graphdataFactory', 'formatRequest','$location','$sessionStorage','priceService', function($scope,$interval,$rootScope,gamedataFactory,graphdataFactory,formatRequest,$location,$sessionStorage,priceService){
 
 	$rootScope.gameSecOnRealSec = 900;
-    $rootScope.speed = 1;
+    $rootScope.speed = 4;
 	var startDate = 1409565600;
 	var secondsInWeek = 604800;
 	$rootScope.balanceMove = 0;
@@ -30,7 +30,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					            $rootScope.score = parseInt(response.data.score);
                                 $rootScope.balance = parseInt(response.data.savings);
 					            $scope.dateEpoch = parseInt(response.data.date);
-								$rootScope.startGameTime();
+								//$rootScope.startGameTime();
 					            $rootScope.lastEpochUpdate = parseInt(response.data.date);
 					            $rootScope.dishes = parseFloat(response.data.dishes);
 					            $rootScope.hygiene = parseFloat(response.data.hygiene);
@@ -39,7 +39,7 @@ myApp.controller('mainController', ['$scope','$interval','$rootScope','gamedataF
 					            $rootScope.carBattery = parseFloat(response.data.carBattery);
 					            break;
 					        case '204':
-								$rootScope.startGameTime();
+								//$rootScope.startGameTime();
 					          	break;
 					        }
 	    		},
