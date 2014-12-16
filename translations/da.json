@@ -84,7 +84,8 @@
     "expense" : "Udgifter",
     "payLastMonth" : "Tjent sidste måned",
     "totalBill" : "Total regning",
-    "balance":"Balance"
+    "balance":"Balance",
+    "lastsave":"Regning ved sidste gemte spil"
   },
   "actionModal":
   {
