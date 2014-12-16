@@ -94,7 +94,7 @@ myApp.controller('statusController', ['$scope','$rootScope', function($scope, $r
             $rootScope.lastSave = $scope.dateEpoch;
         }
 
-        $rootScope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.cleanClothes+$rootScope.carBattery)/4;
+        $rootScope.happiness = ($rootScope.dishes+$rootScope.hygiene+$rootScope.cleanClothes)/3;
 
         if(!angular.isUndefined($rootScope.balanceMove))
         {
