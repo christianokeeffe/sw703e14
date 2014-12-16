@@ -91,7 +91,10 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     $scope.getAppliances();
 
     $scope.openActionModal = function (selectedAction) {
-        $rootScope.stopGameTime();
+        if ($rootScope.speed != 4)
+        {
+            $rootScope.stopGameTime();
+        }
         controllerService.setAppliance(selectedAction);
         var modalInstance = $modal.open({
             templateUrl: 'views/actionModal.html',
@@ -154,7 +157,10 @@ myApp.controller('applianceTableController', ['$scope', '$rootScope', '$modal','
     };
 
     $scope.openUpgradeModal = function(selectedAction) {
-        $rootScope.stopGameTime();
+        if ($rootScope.speed != 4)
+        {
+            $rootScope.stopGameTime();
+        }
         controllerService.setAppliance(selectedAction);
         var modalInstance = $modal.open({
             templateUrl: 'views/upgradeModal.html',
