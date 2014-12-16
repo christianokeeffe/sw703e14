@@ -13,7 +13,7 @@ myApp.controller('dateTimePickerController', ['$scope', '$rootScope' ,'controlle
   //data used by the timepicker
   $scope.time = $scope.date;
   $scope.hstep = 1;
-  $scope.mstep = 1;
+  $scope.mstep = 15;
   $scope.ismeridian = false;
 
    $scope.open = function($event) {

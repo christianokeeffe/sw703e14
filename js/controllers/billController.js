@@ -37,7 +37,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
     return payLastMonth;
   };
 
-  $scope.addbill = function(name, price){
+  $rootScope.addbill = function(name, price){
     var inList = false;
     $rootScope.balanceMove += price;
     for (var i = 0; i < $scope.content.addedbills.length && !inList; i++) {
@@ -98,7 +98,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
       if(angular.isUndefined(price) || price === null){ 
         price = 0 ;
       }   
-      $scope.addbill(passiveAppliances[x].name, -price);
+      $rootScope.addbill(passiveAppliances[x].name, -price);
     }
     var hasSolar = false;
     //latex end
@@ -114,7 +114,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
           }
           hasSolar = true;
           $rootScope.solarUpdate(price.toFixed(2),timeForLastpaid);
-          $scope.addbill($rootScope.productArray[x].name, price);
+          $rootScope.addbill($rootScope.productArray[x].name, price);
         }
       }
     }
@@ -128,7 +128,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
         if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
           price = 0 ;
         }   
-        $scope.addbill(runningAppliances[i].name, -price);
+        $rootScope.addbill(runningAppliances[i].name, -price);
         $scope.removetask(i);
       }
       else{ // if the running time is longer then gameSecOnRealSec
@@ -138,7 +138,7 @@ myApp.controller('billController', ['$scope','$rootScope', 'priceService' , 'con
         if(angular.isUndefined(price) || price === null){ // a failsafe if the data for the prices is not loaded
           price = 0 ;
         }
-        $scope.addbill(runningAppliances[i].name, -price);
+        $rootScope.addbill(runningAppliances[i].name, -price);
 
       }
     };

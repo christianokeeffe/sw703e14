@@ -84,7 +84,8 @@
     "expense" : "Expense",
     "payLastMonth" : "Pay last month",
     "totalBill" : "Total Bill",
-    "balance":"Balance"
+    "balance":"Balance",
+    "lastsave":"Bill at last save"
   },
   "actionModal":
   {
